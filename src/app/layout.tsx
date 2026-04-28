@@ -26,6 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${publicSans.variable} h-full antialiased`} suppressHydrationWarning>
       <body className="min-h-full flex flex-col">
+        <a href="#main-content" className="skip-link">Skip to main content</a>
         <SettingsProvider>
           <UtilityBar />
           <Header />

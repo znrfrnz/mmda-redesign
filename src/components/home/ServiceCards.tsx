@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useSettingsStore } from "@/stores/useSettingsStore";
-import { mockServices, type ServiceItem } from "@/lib/mock-data";
+import { mockServices } from "@/lib/mock-data";
 import {
   IdentificationCard,
   Warning,
