@@ -74,7 +74,7 @@ export function NewsArticleDetail({ article }: { article: NewsArticle }) {
           {t("news.breadcrumbNews" as never, language)}
         </Link>
         <CaretRight className="size-3 shrink-0" weight="bold" />
-        <span className="text-foreground font-medium truncate max-w-50 sm:max-w-sm" aria-current="page">
+        <span className="text-foreground font-medium truncate max-w-[200px] sm:max-w-sm" aria-current="page">
           {title}
         </span>
       </nav>
@@ -102,7 +102,7 @@ export function NewsArticleDetail({ article }: { article: NewsArticle }) {
 
         {/* Hero image */}
         {article.imageUrl && (
-          <div className="relative aspect-video w-full overflow-hidden rounded-xl mb-8">
+          <div className="relative aspect-[16/9] w-full overflow-hidden rounded-xl mb-8">
             <Image
               src={article.imageUrl}
               alt={title}

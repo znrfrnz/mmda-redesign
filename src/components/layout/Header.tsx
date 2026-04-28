@@ -127,7 +127,7 @@ export function Header() {
       />
 
       {/* MMDA brand stripes */}
-      <div className="flex h-0.75" aria-hidden="true">
+      <div className="flex h-[3px]" aria-hidden="true">
         <div className="flex-1 bg-mmda-blue" />
         <div className="flex-1 bg-mmda-red" />
         <div className="flex-1 bg-mmda-gold" />

@@ -105,7 +105,7 @@ export function NewsListing() {
                 >
                   <Card className="h-full transition-all hover:shadow-md hover:border-primary/20 group-focus-visible:ring-2 group-focus-visible:ring-ring">
                     {article.imageUrl && (
-                      <div className="relative aspect-video w-full overflow-hidden">
+                      <div className="relative aspect-[16/9] w-full overflow-hidden">
                         <Image
                           src={article.imageUrl}
                           alt=""
