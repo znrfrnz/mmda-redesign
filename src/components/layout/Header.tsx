@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useSettingsStore } from "@/stores/useSettingsStore";
 import { t } from "@/lib/translations";
@@ -31,8 +32,9 @@ export function Header() {
           href="/"
           className="flex shrink-0 items-center gap-2.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
         >
-          <div className="flex size-9 items-center justify-center rounded-lg bg-primary text-primary-foreground font-bold text-sm">
-            M
+          <div className="flex items-center gap-1.5">
+            <Image src="/Bagong_Pilipinas.svg" alt="Bagong Pilipinas" width={36} height={36} className="size-9 object-contain" />
+            <Image src="/Logo.svg" alt="MMDA Logo" width={36} height={36} className="size-9 object-contain" />
           </div>
           <div className="hidden sm:block">
             <p className="text-sm font-bold leading-tight tracking-tight">
@@ -123,6 +125,13 @@ export function Header() {
         items={NAV_ITEMS}
         pathname={pathname}
       />
+
+      {/* MMDA brand stripes */}
+      <div className="flex h-[3px]" aria-hidden="true">
+        <div className="flex-1 bg-mmda-blue" />
+        <div className="flex-1 bg-mmda-red" />
+        <div className="flex-1 bg-mmda-gold" />
+      </div>
     </header>
   );
 }

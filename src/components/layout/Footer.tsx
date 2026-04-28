@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useSettingsStore } from "@/stores/useSettingsStore";
 import { t } from "@/lib/translations";
-import { Separator } from "@/components/ui/separator";
 import { XLogo, FacebookLogo, Phone } from "@phosphor-icons/react";
 
 export function Footer() {
@@ -11,15 +11,22 @@ export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-border bg-muted/30 mt-auto">
+    <footer className="border-t border-border mt-auto">
+      {/* MMDA brand stripes */}
+      <div className="flex h-[3px]" aria-hidden="true">
+        <div className="flex-1 bg-mmda-blue" />
+        <div className="flex-1 bg-mmda-red" />
+        <div className="flex-1 bg-mmda-gold" />
+      </div>
+
+      <div className="bg-muted/30 mx-auto max-w-full">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {/* About */}
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <div className="flex size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground font-bold text-xs">
-                M
-              </div>
+              <Image src="/Bagong_Pilipinas.svg" alt="Bagong Pilipinas" width={32} height={32} className="size-8 object-contain" />
+              <Image src="/Logo.svg" alt="MMDA Logo" width={32} height={32} className="size-8 object-contain" />
               <h3 className="text-sm font-bold">{t("footer.about", language)}</h3>
             </div>
             <p className="text-sm leading-relaxed text-muted-foreground">
@@ -124,11 +131,16 @@ export function Footer() {
           </div>
         </div>
 
-        <Separator className="my-8" />
+      </div>
+      </div>
 
-        <p className="text-center text-xs text-muted-foreground">
-          {t("footer.copyright", language).replace("{year}", String(year))}
-        </p>
+      {/* Accessibility / copyright bar */}
+      <div className="bg-mmda-blue">
+        <div className="mx-auto max-w-7xl px-4 py-3 sm:px-6 lg:px-8">
+          <p className="text-center text-xs text-white/90">
+            {t("footer.copyright", language).replace("{year}", String(year))}
+          </p>
+        </div>
       </div>
     </footer>
   );
