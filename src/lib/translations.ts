@@ -54,6 +54,29 @@ const translations = {
     "a11y.mainNav": "Main navigation",
     "a11y.utilNav": "Utility navigation",
     "a11y.footerNav": "Footer navigation",
+
+    // News & Advisories page
+    "news.title": "News & Advisories",
+    "news.description": "Stay informed with the latest updates, advisories, and press releases from MMDA.",
+    "news.filterAll": "All",
+    "news.filterAdvisories": "Advisories",
+    "news.filterPress": "Press Releases",
+    "news.filterNotices": "Public Notices",
+    "news.noResults": "No articles found in this category.",
+    "news.loadMore": "Load more",
+    "news.showing": "Showing {count} of {total} articles",
+
+    // News detail page
+    "news.backToNews": "Back to News",
+    "news.shareArticle": "Share this article",
+    "news.copyLink": "Copy link",
+    "news.linkCopied": "Link copied!",
+    "news.shareX": "Share on X",
+    "news.shareFacebook": "Share on Facebook",
+    "news.breadcrumbHome": "Home",
+    "news.breadcrumbNews": "News",
+    "news.articleNotFound": "Article not found",
+    "news.articleNotFoundDesc": "The article you're looking for doesn't exist or has been removed.",
   },
   fil: {
     // Utility bar
@@ -110,6 +133,29 @@ const translations = {
     "a11y.mainNav": "Pangunahing nabigasyon",
     "a11y.utilNav": "Utility na nabigasyon",
     "a11y.footerNav": "Footer na nabigasyon",
+
+    // News & Advisories page
+    "news.title": "Balita at Abiso",
+    "news.description": "Manatiling updated sa mga pinakabagong balita, abiso, at pahayag mula sa MMDA.",
+    "news.filterAll": "Lahat",
+    "news.filterAdvisories": "Mga Abiso",
+    "news.filterPress": "Pahayag sa Press",
+    "news.filterNotices": "Pampublikong Abiso",
+    "news.noResults": "Walang nahanap na artikulo sa kategoryang ito.",
+    "news.loadMore": "Magpakita pa",
+    "news.showing": "Nagpapakita ng {count} sa {total} na artikulo",
+
+    // News detail page
+    "news.backToNews": "Bumalik sa Balita",
+    "news.shareArticle": "Ibahagi ang artikulong ito",
+    "news.copyLink": "Kopyahin ang link",
+    "news.linkCopied": "Nakopya na ang link!",
+    "news.shareX": "Ibahagi sa X",
+    "news.shareFacebook": "Ibahagi sa Facebook",
+    "news.breadcrumbHome": "Tahanan",
+    "news.breadcrumbNews": "Balita",
+    "news.articleNotFound": "Hindi nahanap ang artikulo",
+    "news.articleNotFoundDesc": "Ang artikulong hinahanap mo ay hindi umiiral o tinanggal na.",
   },
 } as const;
 
