@@ -1,114 +1,162 @@
 "use client";
 
+import { useMemo, useState } from "react";
 import Link from "next/link";
 import { useSettingsStore } from "@/stores/useSettingsStore";
-import { mockServices } from "@/lib/mock-data";
-import { Card } from "@/components/ui/card";
+import { mockServices, type ServiceItem } from "@/lib/mock-data";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
-const categoryInfo = {
-  licensing: {
-    en: { title: "Licensing", description: "Register and manage driver licenses and vehicle documentation." },
-    fil: { title: "Pagpaparehistro", description: "Magparehistro at pamahalaan ang driver licenses at vehicle documentation." },
+type ServiceFilter = "all" | ServiceItem["category"];
+
+const ITEMS_PER_PAGE = 6;
+
+const tabLabels = {
+  en: {
+    all: "All",
+    licensing: "Licensing",
+    violations: "Violations & Fines",
+    assistance: "Assistance & Supports",
+    permits: "Permits & Authorizations",
   },
-  violations: {
-    en: { title: "Violations & Fines", description: "Check traffic violations and pay outstanding fines online." },
-    fil: { title: "Paglabag & Multa", description: "I-check ang traffic violations at magbayad ng outstanding fines online." },
+  fil: {
+    all: "Lahat",
+    licensing: "Licensing",
+    violations: "Violations & Fines",
+    assistance: "Assistance & Supports",
+    permits: "Permits & Authorizations",
   },
-  assistance: {
-    en: { title: "Assistance & Support", description: "Get help with towing, impound, and roadside emergencies." },
-    fil: { title: "Tulong at Suporta", description: "Makakuha ng tulong sa towing, impound, at roadside emergencies." },
-  },
-  permits: {
-    en: { title: "Permits & Authorizations", description: "Apply for special permits and event authorizations." },
-    fil: { title: "Permit & Pahintulot", description: "Mag-apply para sa special permits at event authorizations." },
-  },
-};
+} as const;
+
+const categoryBadges = {
+  licensing: { en: "Licensing", fil: "Licensing", variant: "secondary" as const },
+  violations: { en: "Violations & Fines", fil: "Violations & Fines", variant: "destructive" as const },
+  assistance: { en: "Assistance & Supports", fil: "Assistance & Supports", variant: "outline" as const },
+  permits: { en: "Permits & Authorizations", fil: "Permits & Authorizations", variant: "secondary" as const },
+} as const;
 
 export default function ServicesPage() {
   const { language } = useSettingsStore();
+  const [activeFilter, setActiveFilter] = useState<ServiceFilter>("all");
+  const [visibleCount, setVisibleCount] = useState(ITEMS_PER_PAGE);
 
-  // Group services by category
-  const groupedServices = {
-    licensing: mockServices.filter((s) => s.category === "licensing"),
-    violations: mockServices.filter((s) => s.category === "violations"),
-    assistance: mockServices.filter((s) => s.category === "assistance"),
-    permits: mockServices.filter((s) => s.category === "permits"),
-  };
+  const filteredServices = useMemo(() => {
+    if (activeFilter === "all") return mockServices;
+    return mockServices.filter((service) => service.category === activeFilter);
+  }, [activeFilter]);
 
-  const categories = ["licensing", "violations", "assistance", "permits"] as const;
+  const visibleServices = filteredServices.slice(0, visibleCount);
+  const hasMore = visibleCount < filteredServices.length;
+
+  const filterTabs: { key: ServiceFilter }[] = [
+    { key: "all" },
+    { key: "licensing" },
+    { key: "violations" },
+    { key: "assistance" },
+    { key: "permits" },
+  ];
 
   return (
-    <main className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
-      {/* Page Header */}
-      <div className="mb-16">
-        <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-gray-50 mb-3">
+    <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold tracking-tight">
           {language === "en" ? "Citizen Services" : "Serbisyo para sa Mamamayan"}
         </h1>
-        <p className="text-lg text-gray-600 dark:text-gray-400">
+        <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
           {language === "en"
             ? "Access MMDA services online, from licensing to permit applications."
             : "Palakasin ang access sa MMDA services online, mula licensing hanggang permit applications."}
         </p>
       </div>
 
-      {/* Service Categories */}
-      <div className="space-y-20">
-        {categories.map((category) => {
-          const services = groupedServices[category];
-          const info = categoryInfo[category];
-          const label = info[language as "en" | "fil"];
+      <nav className="mb-8 flex flex-wrap gap-2" role="tablist" aria-label="Service categories">
+        <div className="flex flex-wrap gap-2">
+          {filterTabs.map((tab) => {
+            const label = tabLabels[language as "en" | "fil"][tab.key];
 
-          return (
-            <section key={category} className="border-t border-gray-200 dark:border-gray-700 pt-12">
-              {/* Category Header */}
-              <div className="mb-10">
-                <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-50 mb-2">{label.title}</h2>
-                <p className="text-gray-600 dark:text-gray-400">{label.description}</p>
-              </div>
+            return (
+              <button
+                key={tab.key}
+                role="tab"
+                aria-selected={activeFilter === tab.key}
+                aria-label={label}
+                onClick={() => {
+                  setActiveFilter(tab.key);
+                  setVisibleCount(ITEMS_PER_PAGE);
+                }}
+                className={cn(
+                  "rounded-lg px-4 py-2 text-sm font-medium transition-colors",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                  activeFilter === tab.key
+                    ? "bg-primary text-primary-foreground"
+                    : "bg-muted text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+                )}
+              >
+                {label}
+              </button>
+            );
+          })}
+        </div>
+      </nav>
 
-              {/* Service Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-                {services.map((service) => (
-                  <Link key={service.id} href={service.href}>
-                    <Card className="h-full hover:shadow-md dark:hover:shadow-md transition-shadow cursor-pointer flex flex-col">
-                      <div className="p-6 flex flex-col h-full">
-                        {/* Service Title */}
-                        <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-50 mb-2">
-                          {language === "en" ? service.title : service.titleFil}
-                        </h3>
+      {visibleServices.length === 0 ? (
+        <p className="py-16 text-center text-sm text-muted-foreground">
+          {language === "en" ? "No services found." : "Walang serbisyong nahanap."}
+        </p>
+      ) : (
+        <>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {visibleServices.map((service) => {
+            const group = categoryBadges[service.category];
 
-                        {/* Service Description */}
-                        <p className="text-gray-600 dark:text-gray-400 text-sm grow">
-                          {language === "en" ? service.description : service.descriptionFil}
-                        </p>
+            return (
+              <Link key={service.id} href={service.href} className="group">
+                <Card className="h-full transition-all hover:shadow-md hover:border-primary/20 group-focus-visible:ring-2 group-focus-visible:ring-ring">
+                  <CardContent className="flex h-full flex-col gap-3 p-5">
+                    <div className="flex items-center gap-2">
+                      <Badge variant={group.variant} className="text-[10px] px-1.5 py-0">
+                        {language === "en" ? group.en : group.fil}
+                      </Badge>
+                      <span className="text-[10px] text-muted-foreground">
+                        {language === "en" ? "Service" : "Serbisyo"}
+                      </span>
+                    </div>
+                    <h3 className="text-sm font-semibold leading-snug group-hover:text-primary transition-colors">
+                      {language === "en" ? service.title : service.titleFil}
+                    </h3>
+                    <p className="text-xs leading-relaxed text-muted-foreground">
+                      {language === "en" ? service.description : service.descriptionFil}
+                    </p>
+                    <span className="mt-auto text-xs font-medium text-primary">
+                      {language === "en" ? "Learn more" : "Matuto pa"}
+                    </span>
+                  </CardContent>
+                </Card>
+              </Link>
+            );
+          })}
+          </div>
 
-                        {/* Arrow/Link indicator */}
-                        <div className="mt-4 inline-flex items-center text-blue-600 dark:text-blue-400 text-sm font-medium">
-                          {language === "en" ? "Learn more" : "Matuto pa"}
-                          <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M9 5l7 7-7 7"
-                            />
-                          </svg>
-                        </div>
-                      </div>
-                    </Card>
-                  </Link>
-                ))}
-              </div>
-
-              {/* Category CTA Button */}
-              <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600">
-                {language === "en" ? `View all ${label.title}` : `Tingnan ang lahat ng ${label.title}`}
+          {hasMore && (
+            <div className="mt-8 flex flex-col items-center gap-3">
+              <p className="text-xs text-muted-foreground">
+                {language === "en"
+                  ? `Showing ${visibleServices.length} of ${filteredServices.length} services`
+                  : `Nagpapakita ng ${visibleServices.length} sa ${filteredServices.length} na serbisyo`}
+              </p>
+              <Button
+                variant="outline"
+                onClick={() => setVisibleCount((count) => count + ITEMS_PER_PAGE)}
+                className="active:scale-[0.98] transition-transform"
+              >
+                {language === "en" ? "Load more" : "Mag-load pa"}
               </Button>
-            </section>
-          );
-        })}
-      </div>
+            </div>
+          )}
+        </>
+      )}
     </main>
   );
 }

@@ -25,7 +25,7 @@ export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur-sm supports-[backdrop-filter]:bg-background/80">
+    <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur-sm supports-backdrop-filter:bg-background/80">
       <div className="mx-auto flex h-16 max-w-7xl items-center gap-4 px-4 sm:px-6 lg:px-8">
         {/* Logo / Wordmark */}
         <Link
@@ -127,7 +127,7 @@ export function Header() {
       />
 
       {/* MMDA brand stripes */}
-      <div className="flex h-[3px]" aria-hidden="true">
+      <div className="flex h-0.75" aria-hidden="true">
         <div className="flex-1 bg-mmda-blue" />
         <div className="flex-1 bg-mmda-red" />
         <div className="flex-1 bg-mmda-gold" />
