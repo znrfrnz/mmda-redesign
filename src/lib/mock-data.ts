@@ -20,6 +20,7 @@ export interface ServiceItem {
   descriptionFil: string;
   href: string;
   icon: string;
+  category: "licensing" | "violations" | "assistance" | "permits";
 }
 
 export interface TrafficRoute {
@@ -70,6 +71,7 @@ export const mockNews: NewsArticle[] = [
 ];
 
 export const mockServices: ServiceItem[] = [
+  // Licensing
   {
     id: "drivers-license",
     title: "Driver's License",
@@ -78,7 +80,19 @@ export const mockServices: ServiceItem[] = [
     descriptionFil: "I-verify ang mga paglabag, i-check ang clearance status, at resolbahin ang mga usapin sa lisensya.",
     href: "/services/drivers-license",
     icon: "IdentificationCard",
+    category: "licensing",
   },
+  {
+    id: "vehicle-registration",
+    title: "Vehicle Registration",
+    titleFil: "Pagpaparehistro ng Sasakyan",
+    description: "Register vehicles, renew registration, and obtain proof of registration.",
+    descriptionFil: "Magparehistro ng sasakyan, muling pagpaparehistro, at makakuha ng proof of registration.",
+    href: "/services/vehicle-registration",
+    icon: "File",
+    category: "licensing",
+  },
+  // Violations
   {
     id: "traffic-violations",
     title: "Traffic Violations",
@@ -87,7 +101,19 @@ export const mockServices: ServiceItem[] = [
     descriptionFil: "Hanapin ang mga paglabag, magbayad ng multa, at unawain ang mga parusa sa trapiko.",
     href: "/services/traffic-violations",
     icon: "Warning",
+    category: "violations",
   },
+  {
+    id: "unpaid-fines",
+    title: "Unpaid Fines",
+    titleFil: "Hindi Nabayarang Multa",
+    description: "Check and pay outstanding traffic fines online with secure payment options.",
+    descriptionFil: "I-check at bayaran ang outstanding traffic fines online gamit ang secure payment.",
+    href: "/services/unpaid-fines",
+    icon: "CreditCard",
+    category: "violations",
+  },
+  // Assistance
   {
     id: "report-concern",
     title: "Report a Concern",
@@ -96,6 +122,7 @@ export const mockServices: ServiceItem[] = [
     descriptionFil: "Mag-submit ng ulat tungkol sa mga problema sa kalsada, iligal na istruktura, baha, o iba pa.",
     href: "/services/report-concern",
     icon: "ChatCircleDots",
+    category: "assistance",
   },
   {
     id: "towing-impound",
@@ -105,6 +132,48 @@ export const mockServices: ServiceItem[] = [
     descriptionFil: "Hanapin ang na-tow na sasakyan, i-check ang impound status, at i-process ang paglabas.",
     href: "/services/towing-impound",
     icon: "Truck",
+    category: "assistance",
+  },
+  {
+    id: "roadside-assistance",
+    title: "Roadside Assistance",
+    titleFil: "Tulong sa Gilid ng Kalsada",
+    description: "Emergency road assistance for breakdowns, accidents, and vehicle-related emergencies.",
+    descriptionFil: "Emergency assistance para sa breakdowns, aksidente, at emergency na may kaugnayan sa sasakyan.",
+    href: "/services/roadside-assistance",
+    icon: "Phone",
+    category: "assistance",
+  },
+  // Permits
+  {
+    id: "special-permits",
+    title: "Special Permits",
+    titleFil: "Espesyal na Permit",
+    description: "Apply for special permits for oversized or hazardous cargo transport.",
+    descriptionFil: "Mag-apply para sa special permits para sa oversized o hazardous cargo transport.",
+    href: "/services/special-permits",
+    icon: "FileCheck",
+    category: "permits",
+  },
+  {
+    id: "event-permits",
+    title: "Event Permits",
+    titleFil: "Event Permit",
+    description: "Get permits for road events, closures, and special traffic arrangements.",
+    descriptionFil: "Makakuha ng permits para sa road events, closures, at special traffic arrangements.",
+    href: "/services/event-permits",
+    icon: "Calendar",
+    category: "permits",
+  },
+  {
+    id: "construction-permits",
+    title: "Construction Permits",
+    titleFil: "Construction Permit",
+    description: "Request permits for road construction, maintenance, and utility work.",
+    descriptionFil: "Mag-request ng permits para sa road construction, maintenance, at utility work.",
+    href: "/services/construction-permits",
+    icon: "Hammer",
+    category: "permits",
   },
 ];
 
