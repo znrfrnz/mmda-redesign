@@ -51,7 +51,7 @@ export function NewsPreview() {
       </div>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {mockNews.map((article) => {
+        {mockNews.slice(0, 3).map((article) => {
           const cat = categoryConfig[article.category];
           return (
             <Link key={article.id} href={`/news/${article.slug}`} className="group">
