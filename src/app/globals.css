@@ -58,7 +58,6 @@
 }
 
 :root {
-  /* MMDA Brand Colors — #0054A6 blue, #C8102E red, gold accent */
   --mmda-blue: oklch(0.44 0.16 255);
   --mmda-blue-light: oklch(0.94 0.03 255);
   --mmda-red: oklch(0.48 0.2 22);
@@ -66,25 +65,25 @@
   --mmda-gold: oklch(0.75 0.15 85);
   --mmda-gold-light: oklch(0.95 0.04 85);
 
-  --background: oklch(0.995 0 0);
-  --foreground: oklch(0.155 0.01 255);
-  --card: oklch(0.995 0.003 255);
-  --card-foreground: oklch(0.155 0.01 255);
-  --popover: oklch(0.995 0.003 255);
-  --popover-foreground: oklch(0.155 0.01 255);
-  --primary: oklch(0.44 0.16 255);
+  --background: oklch(0.985 0.007 255);
+  --foreground: oklch(0.2 0.03 257);
+  --card: oklch(0.992 0.005 255);
+  --card-foreground: oklch(0.2 0.03 257);
+  --popover: oklch(0.995 0.005 255);
+  --popover-foreground: oklch(0.2 0.03 257);
+  --primary: oklch(0.5 0.17 255);
   --primary-foreground: oklch(0.99 0 0);
-  --secondary: oklch(0.96 0.01 255);
-  --secondary-foreground: oklch(0.25 0.06 255);
-  --muted: oklch(0.965 0 0);
-  --muted-foreground: oklch(0.5 0.01 255);
-  --accent: oklch(0.94 0.03 255);
-  --accent-foreground: oklch(0.25 0.06 255);
+  --secondary: oklch(0.965 0.012 255);
+  --secondary-foreground: oklch(0.26 0.06 255);
+  --muted: oklch(0.958 0.008 255);
+  --muted-foreground: oklch(0.5 0.022 255);
+  --accent: oklch(0.935 0.02 255);
+  --accent-foreground: oklch(0.26 0.06 255);
   --destructive: oklch(0.48 0.2 22);
-  --border: oklch(0.915 0.005 255);
-  --input: oklch(0.915 0.005 255);
-  --ring: oklch(0.44 0.16 255);
-  --chart-1: oklch(0.44 0.16 255);
+  --border: oklch(0.9 0.01 255);
+  --input: oklch(0.9 0.01 255);
+  --ring: oklch(0.5 0.17 255);
+  --chart-1: oklch(0.5 0.17 255);
   --chart-2: oklch(0.48 0.2 22);
   --chart-3: oklch(0.75 0.15 85);
   --chart-4: oklch(0.58 0.12 255);
@@ -101,55 +100,78 @@
 }
 
 .dark {
-  --mmda-blue: oklch(0.62 0.16 255);
+  --mmda-blue: oklch(0.68 0.16 255);
   --mmda-blue-light: oklch(0.22 0.06 255);
   --mmda-red: oklch(0.65 0.18 22);
   --mmda-red-light: oklch(0.22 0.06 22);
   --mmda-gold: oklch(0.8 0.14 85);
   --mmda-gold-light: oklch(0.22 0.06 85);
 
-  --background: oklch(0.12 0.005 255);
-  --foreground: oklch(0.955 0.005 255);
-  --card: oklch(0.17 0.01 255);
-  --card-foreground: oklch(0.955 0.005 255);
-  --popover: oklch(0.17 0.01 255);
-  --popover-foreground: oklch(0.955 0.005 255);
-  --primary: oklch(0.62 0.16 255);
-  --primary-foreground: oklch(0.12 0.005 255);
-  --secondary: oklch(0.22 0.02 255);
+  --background: oklch(0.16 0.02 256);
+  --foreground: oklch(0.96 0.006 255);
+  --card: oklch(0.205 0.02 256);
+  --card-foreground: oklch(0.96 0.006 255);
+  --popover: oklch(0.205 0.02 256);
+  --popover-foreground: oklch(0.96 0.006 255);
+  --primary: oklch(0.68 0.16 255);
+  --primary-foreground: oklch(0.12 0.01 255);
+  --secondary: oklch(0.24 0.022 255);
   --secondary-foreground: oklch(0.9 0 0);
-  --muted: oklch(0.22 0.01 255);
-  --muted-foreground: oklch(0.65 0 0);
-  --accent: oklch(0.25 0.04 255);
+  --muted: oklch(0.23 0.016 255);
+  --muted-foreground: oklch(0.75 0.01 255);
+  --accent: oklch(0.29 0.045 255);
   --accent-foreground: oklch(0.9 0 0);
   --destructive: oklch(0.65 0.18 22);
-  --border: oklch(0.25 0.015 255);
-  --input: oklch(0.25 0.02 255);
-  --ring: oklch(0.62 0.16 255);
-  --chart-1: oklch(0.62 0.16 255);
+  --border: oklch(0.3 0.02 255);
+  --input: oklch(0.28 0.02 255);
+  --ring: oklch(0.68 0.16 255);
+  --chart-1: oklch(0.68 0.16 255);
   --chart-2: oklch(0.65 0.18 22);
   --chart-3: oklch(0.8 0.14 85);
   --chart-4: oklch(0.52 0.1 255);
   --chart-5: oklch(0.42 0.08 255);
-  --sidebar: oklch(0.15 0.01 255);
+  --sidebar: oklch(0.16 0.015 255);
   --sidebar-foreground: oklch(0.96 0 0);
-  --sidebar-primary: oklch(0.62 0.16 255);
+  --sidebar-primary: oklch(0.68 0.16 255);
   --sidebar-primary-foreground: oklch(0.12 0.005 255);
-  --sidebar-accent: oklch(0.22 0.02 255);
+  --sidebar-accent: oklch(0.24 0.022 255);
   --sidebar-accent-foreground: oklch(0.9 0 0);
-  --sidebar-border: oklch(0.25 0.015 255);
-  --sidebar-ring: oklch(0.62 0.16 255);
+  --sidebar-border: oklch(0.3 0.02 255);
+  --sidebar-ring: oklch(0.68 0.16 255);
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
-  body {
-    @apply bg-background text-foreground;
-  }
   html {
     @apply font-sans;
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground;
+    min-height: 100vh;
+    overflow-x: hidden;
+    background-image:
+      radial-gradient(circle at top, oklch(0.93 0.03 255 / 0.9), transparent 32%),
+      linear-gradient(180deg, oklch(0.99 0.002 255), oklch(0.97 0.01 255));
+    background-attachment: fixed;
+  }
+  .dark body {
+    background-image:
+      radial-gradient(circle at top, oklch(0.33 0.09 255 / 0.55), transparent 35%),
+      linear-gradient(180deg, oklch(0.15 0.02 256), oklch(0.18 0.02 255));
+  }
+  ::selection {
+    background: oklch(0.5 0.17 255 / 0.18);
+    color: currentColor;
+  }
+  a,
+  button {
+    -webkit-tap-highlight-color: transparent;
+  }
+  :focus-visible {
+    outline-offset: 3px;
   }
 }
 
@@ -159,5 +181,55 @@
   }
   .shadow-brand-lg {
     box-shadow: 0 4px 16px -4px oklch(0.44 0.16 255 / 0.08);
+  }
+  .marquee-track {
+    overflow: hidden;
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  }
+  .marquee-row {
+    display: flex;
+    width: max-content;
+    gap: 1rem;
+    animation: marquee 28s linear infinite;
+  }
+}
+
+.high-contrast {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.1 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.1 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.2 0 0);
+  --border: oklch(0.2 0 0);
+  --input: oklch(0.2 0 0);
+  --ring: oklch(0.35 0.12 255);
+  --primary: oklch(0.35 0.12 255);
+  --primary-foreground: oklch(1 0 0);
+}
+
+.dark.high-contrast {
+  --background: oklch(0.08 0 0);
+  --foreground: oklch(1 0 0);
+  --card: oklch(0.08 0 0);
+  --card-foreground: oklch(1 0 0);
+  --muted: oklch(0.14 0 0);
+  --muted-foreground: oklch(0.92 0 0);
+  --border: oklch(0.95 0 0);
+  --input: oklch(0.95 0 0);
+  --ring: oklch(0.88 0.02 255);
+}
+
+/* Contain Leaflet z-index within map wrappers so it doesn't overlap the navbar */
+.leaflet-container {
+  z-index: 0 !important;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
   }
 }

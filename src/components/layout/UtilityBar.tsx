@@ -6,11 +6,11 @@ import {
   Globe,
   Moon,
   Sun,
-  MagnifyingGlass,
   TextAa,
   Plus,
   Minus,
   EyeSlash,
+  Phone,
 } from "@phosphor-icons/react";
 import {
   DropdownMenu,
@@ -35,28 +35,41 @@ export function UtilityBar() {
   } = useSettingsStore();
 
   return (
-    <div className="border-b border-border bg-muted/50">
-      <div className="mx-auto flex h-9 max-w-7xl items-center justify-end gap-1 px-4 sm:px-6 lg:px-8">
-        {/* Language Toggle */}
+    <div className="border-b border-white/10 bg-[#06122c] text-white">
+      <div className="mx-auto flex min-h-11 max-w-7xl flex-wrap items-center justify-between gap-2 px-4 py-2 sm:px-6 lg:px-8">
+        <div className="flex items-center gap-3 text-[0.7rem] uppercase tracking-[0.2em] text-white/60">
+          <span>
+            {language === "en"
+              ? "Official Metro Manila public service portal"
+              : "Opisyal na public service portal ng Metro Manila"}
+          </span>
+          <span className="hidden h-3 w-px bg-white/15 md:block" />
+          <a
+            href="tel:136"
+            className="hidden items-center gap-1.5 text-white/74 transition-colors hover:text-white md:inline-flex focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+          >
+            <Phone className="size-3.5" weight="bold" />
+            Metrobase 136
+          </a>
+        </div>
+
+        <div className="flex items-center gap-1.5">
         <Button
           variant="ghost"
           size="sm"
           onClick={() => setLanguage(language === "en" ? "fil" : "en")}
-          className="h-7 gap-1.5 px-2 text-xs text-muted-foreground hover:text-foreground"
+          className="h-8 gap-1.5 rounded-full border border-white/10 px-3 text-xs text-white/72 hover:bg-white/10 hover:text-white"
           aria-label={`Switch language to ${language === "en" ? "Filipino" : "English"}`}
         >
           <Globe className="size-3.5" weight="bold" />
           <span>{language === "en" ? "EN" : "FIL"}</span>
         </Button>
 
-        <div className="h-4 w-px bg-border" role="separator" />
-
-        {/* Dark Mode Toggle */}
         <Button
           variant="ghost"
           size="sm"
           onClick={toggleDarkMode}
-          className="h-7 gap-1.5 px-2 text-xs text-muted-foreground hover:text-foreground"
+          className="h-8 rounded-full border border-white/10 px-3 text-xs text-white/72 hover:bg-white/10 hover:text-white"
           aria-label={darkMode ? t("util.lightMode", language) : t("util.darkMode", language)}
         >
           {darkMode ? (
@@ -66,15 +79,12 @@ export function UtilityBar() {
           )}
         </Button>
 
-        <div className="h-4 w-px bg-border" role="separator" />
-
-        {/* Accessibility Menu */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button
               variant="ghost"
               size="sm"
-              className="h-7 gap-1.5 px-2 text-xs text-muted-foreground hover:text-foreground"
+              className="h-8 rounded-full border border-white/10 px-3 text-xs text-white/72 hover:bg-white/10 hover:text-white"
               aria-label={t("util.accessibility", language)}
             >
               <TextAa className="size-3.5" weight="bold" />
@@ -104,20 +114,8 @@ export function UtilityBar() {
           </DropdownMenuContent>
         </DropdownMenu>
 
-        <div className="h-4 w-px bg-border" role="separator" />
 
-        {/* Search Shortcut */}
-        <Button
-          variant="ghost"
-          size="sm"
-          className="h-7 gap-1.5 px-2 text-xs text-muted-foreground hover:text-foreground"
-          aria-label={t("util.search", language)}
-          asChild
-        >
-          <a href="/search">
-            <MagnifyingGlass className="size-3.5" weight="bold" />
-          </a>
-        </Button>
+      </div>
       </div>
     </div>
   );

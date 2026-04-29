@@ -6,12 +6,13 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useSettingsStore } from "@/stores/useSettingsStore";
 import { t } from "@/lib/translations";
-import { MagnifyingGlass, List } from "@phosphor-icons/react";
-import { Button } from "@/components/ui/button";
+import { MagnifyingGlass, List, Phone, Warning } from "@phosphor-icons/react";
 import { MobileNav } from "./MobileNav";
+import { SearchDialog } from "./SearchDialog";
 import { cn } from "@/lib/utils";
 
 const NAV_ITEMS = [
+  { key: "nav.home" as const, href: "/" },
   { key: "nav.services" as const, href: "/services" },
   { key: "nav.traffic" as const, href: "/traffic" },
   { key: "nav.news" as const, href: "/news" },
@@ -23,102 +24,107 @@ export function Header() {
   const { language } = useSettingsStore();
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur-sm supports-backdrop-filter:bg-background/80">
-      <div className="mx-auto flex h-16 max-w-7xl items-center gap-4 px-4 sm:px-6 lg:px-8">
-        {/* Logo / Wordmark */}
-        <Link
-          href="/"
-          className="flex shrink-0 items-center gap-2.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
-        >
-          <div className="flex items-center gap-1.5">
-            <Image src="/Bagong_Pilipinas.svg" alt="Bagong Pilipinas" width={36} height={36} className="size-9 object-contain" />
-            <Image src="/Logo.svg" alt="MMDA Logo" width={36} height={36} className="size-9 object-contain" />
-          </div>
-          <div className="hidden sm:block">
-            <p className="text-sm font-bold leading-tight tracking-tight">
-              MMDA
-            </p>
-            <p className="text-[11px] leading-tight text-muted-foreground">
-              Metropolitan Manila
-              <br />
-              Development Authority
-            </p>
-          </div>
-        </Link>
-
-        {/* Desktop Navigation */}
-        <nav
-          className="hidden lg:flex items-center gap-1 ml-6"
-          aria-label={t("a11y.mainNav", language)}
-        >
-          {NAV_ITEMS.map((item) => {
-            const isActive = pathname === item.href || pathname.startsWith(item.href + "/");
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={cn(
-                  "rounded-md px-3 py-2 text-sm font-medium transition-colors",
-                  "hover:bg-accent hover:text-accent-foreground",
-                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
-                  isActive
-                    ? "bg-accent text-accent-foreground"
-                    : "text-muted-foreground"
-                )}
-                aria-current={isActive ? "page" : undefined}
-              >
-                {t(item.key, language)}
-              </Link>
-            );
-          })}
-        </nav>
-
-        {/* Spacer */}
-        <div className="flex-1" />
-
-        {/* Search Bar (desktop) */}
-        <div className="hidden md:flex items-center">
+    <header className="sticky top-3 z-40 px-3 sm:px-4 lg:px-6">
+      <div className="mx-auto max-w-7xl">
+        <div className="flex min-h-[78px] items-center gap-4 rounded-[1.8rem] border border-white/10 bg-[#06142d]/88 px-4 shadow-[0_24px_80px_-42px_rgba(7,20,40,0.95)] backdrop-blur sm:px-6">
           <Link
-            href="/search"
-            className={cn(
-              "flex h-9 w-64 items-center gap-2 rounded-lg border border-input bg-muted/50 px-3 text-sm text-muted-foreground transition-colors",
-              "hover:bg-muted hover:border-border",
-              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-            )}
-            aria-label={t("search.label", language)}
+            href="/"
+            className="flex shrink-0 items-center gap-3 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
           >
-            <MagnifyingGlass className="size-4 shrink-0" weight="bold" />
-            <span className="truncate">{t("search.placeholder", language)}</span>
+            <div className="flex items-center gap-2">
+              <Image src="/Bagong_Pilipinas.svg" alt="Bagong Pilipinas" width={40} height={40} className="size-10 object-contain" />
+              <Image src="/Logo.svg" alt="MMDA Logo" width={40} height={40} className="size-10 object-contain" />
+            </div>
+            <div className="hidden min-[430px]:block">
+              <p className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-white/58">
+                {language === "en" ? "Metropolitan Manila" : "Kalakhang Maynila"}
+              </p>
+              <p className="mt-1 text-sm font-semibold tracking-[-0.02em] text-white">
+                {language === "en"
+                  ? "Development Authority"
+                  : "Development Authority"}
+              </p>
+            </div>
           </Link>
-        </div>
 
-        {/* Mobile: Search + Hamburger */}
-        <div className="flex items-center gap-1 lg:hidden">
-          <Button
-            variant="ghost"
-            size="sm"
-            className="size-9 p-0 md:hidden"
-            asChild
+          <nav
+            className="ml-3 hidden items-center gap-1 xl:flex"
+            aria-label={t("a11y.mainNav", language)}
           >
-            <Link href="/search" aria-label={t("util.search", language)}>
-              <MagnifyingGlass className="size-5" weight="bold" />
+            {NAV_ITEMS.map((item) => {
+              const isActive =
+                item.href === "/"
+                  ? pathname === "/"
+                  : pathname === item.href || pathname.startsWith(item.href + "/");
+
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={cn(
+                    "rounded-full px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white",
+                    isActive
+                      ? "bg-white text-slate-950"
+                      : "text-white/72 hover:bg-white/10 hover:text-white"
+                  )}
+                  aria-current={isActive ? "page" : undefined}
+                >
+                  {t(item.key, language)}
+                </Link>
+              );
+            })}
+          </nav>
+
+          <div className="ml-auto hidden items-center gap-2 md:flex">
+            <a
+              href="tel:136"
+              className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/6 px-4 py-2 text-sm font-medium text-white/80 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+            >
+              <Phone className="size-4" weight="bold" />
+              136
+            </a>
+
+            <Link
+              href="/services/report-concern"
+              className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white px-4 py-2 text-sm font-semibold text-slate-950 transition-transform hover:-translate-y-0.5 hover:bg-white/92 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+            >
+              <Warning className="size-4" weight="bold" />
+              {language === "en" ? "Report a concern" : "Mag-ulat ng problema"}
             </Link>
-          </Button>
-          <Button
-            variant="ghost"
-            size="sm"
-            className="size-9 p-0"
-            onClick={() => setMobileOpen(true)}
-            aria-label={t("nav.menu", language)}
-          >
-            <List className="size-5" weight="bold" />
-          </Button>
+
+            <button
+              onClick={() => setSearchOpen(true)}
+              className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/6 px-4 py-2 text-sm font-medium text-white/80 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+              aria-label={t("search.label", language)}
+            >
+              <MagnifyingGlass className="size-4" weight="bold" />
+              <span className="hidden lg:inline">{t("util.search", language)}</span>
+            </button>
+          </div>
+
+          <div className="ml-auto flex items-center gap-2 md:hidden">
+            <button
+              onClick={() => setSearchOpen(true)}
+              className="inline-flex size-10 items-center justify-center rounded-full border border-white/10 bg-white/6 text-white/78 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+              aria-label={t("util.search", language)}
+            >
+              <MagnifyingGlass className="size-5" weight="bold" />
+            </button>
+            <button
+              type="button"
+              className="inline-flex size-10 items-center justify-center rounded-full border border-white/10 bg-white/6 text-white/78 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+              onClick={() => setMobileOpen(true)}
+              aria-label={t("nav.menu", language)}
+            >
+              <List className="size-5" weight="bold" />
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* Mobile Navigation Drawer */}
       <MobileNav
         open={mobileOpen}
         onOpenChange={setMobileOpen}
@@ -126,12 +132,7 @@ export function Header() {
         pathname={pathname}
       />
 
-      {/* MMDA brand stripes */}
-      <div className="flex h-[3px]" aria-hidden="true">
-        <div className="flex-1 bg-mmda-blue" />
-        <div className="flex-1 bg-mmda-red" />
-        <div className="flex-1 bg-mmda-gold" />
-      </div>
+      <SearchDialog open={searchOpen} onOpenChange={setSearchOpen} />
     </header>
   );
 }

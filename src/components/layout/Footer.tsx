@@ -4,42 +4,83 @@ import Link from "next/link";
 import Image from "next/image";
 import { useSettingsStore } from "@/stores/useSettingsStore";
 import { t } from "@/lib/translations";
-import { XLogo, FacebookLogo, Phone } from "@phosphor-icons/react";
+import { ArrowRight, FacebookLogo, Phone, Warning, XLogo } from "@phosphor-icons/react";
 
 export function Footer() {
   const { language } = useSettingsStore();
   const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-border mt-auto">
-      {/* MMDA brand stripes */}
-      <div className="flex h-[3px]" aria-hidden="true">
-        <div className="flex-1 bg-mmda-blue" />
-        <div className="flex-1 bg-mmda-red" />
-        <div className="flex-1 bg-mmda-gold" />
-      </div>
-
-      <div className="bg-muted/30 mx-auto max-w-full">
-      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-          {/* About */}
-          <div>
-            <div className="flex items-center gap-2 mb-4">
-              <Image src="/Bagong_Pilipinas.svg" alt="Bagong Pilipinas" width={32} height={32} className="size-8 object-contain" />
-              <Image src="/Logo.svg" alt="MMDA Logo" width={32} height={32} className="size-8 object-contain" />
-              <h3 className="text-sm font-bold">{t("footer.about", language)}</h3>
+    <footer className="mt-auto border-t border-white/10 bg-[#06142d] text-white">
+      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
+        <div className="overflow-hidden rounded-[2.25rem] border border-white/10 bg-white/6 p-6 shadow-[0_24px_80px_-42px_rgba(7,20,40,1)] md:p-8 lg:p-10">
+          <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-white/56">
+                {language === "en" ? "Need assistance?" : "Kailangan mo ba ng tulong?"}
+              </p>
+              <h2 className="mt-5 max-w-2xl text-[clamp(2rem,3.8vw,3.5rem)] font-semibold leading-[0.98] tracking-[-0.04em]">
+                {language === "en"
+                  ? "Need help right now, or need the next official update?"
+                  : "Kailangan mo ba ng tulong ngayon, o ng susunod na opisyal na update?"}
+              </h2>
+              <p className="mt-4 max-w-2xl text-sm leading-7 text-white/68 md:text-base">
+                {language === "en"
+                  ? "Use the faster reporting path for incidents, or go straight to the live traffic tools for road conditions and coding guidance."
+                  : "Gamitin ang mas mabilis na reporting path para sa mga insidente, o dumiretso sa live traffic tools para sa kondisyon ng kalsada at coding guidance."}
+              </p>
             </div>
-            <p className="text-sm leading-relaxed text-muted-foreground">
+
+            <div className="flex flex-col gap-3 sm:flex-row lg:justify-end">
+              <Link
+                href="/services/report-concern"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3.5 text-sm font-semibold text-slate-950 transition-transform hover:-translate-y-0.5 hover:bg-white/92 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+              >
+                <Warning className="size-4" weight="bold" />
+                {language === "en" ? "Report a concern" : "Mag-ulat ng problema"}
+              </Link>
+              <Link
+                href="/traffic"
+                className="inline-flex items-center justify-center gap-2 rounded-full border border-white/12 bg-white/8 px-6 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-white/14 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+              >
+                {language === "en" ? "Open traffic tools" : "Buksan ang traffic tools"}
+                <ArrowRight className="size-4" weight="bold" />
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-14 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-[1.3fr_0.9fr_0.9fr_0.9fr]">
+          <div>
+            <div className="flex items-center gap-3">
+              <Image src="/Bagong_Pilipinas.svg" alt="Bagong Pilipinas" width={40} height={40} className="size-10 object-contain" />
+              <Image src="/Logo.svg" alt="MMDA Logo" width={40} height={40} className="size-10 object-contain" />
+              <div>
+                <h3 className="text-sm font-semibold uppercase tracking-[0.18em] text-white/56">
+                  MMDA
+                </h3>
+                <p className="mt-1 text-lg font-semibold text-white">
+                  {language === "en"
+                    ? "Metropolitan Manila Development Authority"
+                    : "Metropolitan Manila Development Authority"}
+                </p>
+              </div>
+            </div>
+            <p className="mt-5 max-w-md text-sm leading-7 text-white/66">
               {t("footer.aboutDesc", language)}
+            </p>
+            <p className="mt-5 text-sm text-white/52">
+              {language === "en"
+                ? "A redesigned public-facing experience focused on clarity, accessibility, and service readiness."
+                : "Isang inayos na public-facing experience na nakatuon sa kalinawan, accessibility, at kahandaan sa serbisyo."}
             </p>
           </div>
 
-          {/* Services */}
           <div>
-            <h3 className="mb-4 text-sm font-bold">
+            <h3 className="text-sm font-semibold uppercase tracking-[0.18em] text-white/56">
               {t("footer.services", language)}
             </h3>
-            <ul className="space-y-2.5" role="list">
+            <ul className="mt-5 space-y-3" role="list">
               {[
                 { label: "footer.driversLicense" as const, href: "/services/drivers-license" },
                 { label: "footer.vehicleRegistration" as const, href: "/services/vehicle-registration" },
@@ -50,7 +91,7 @@ export function Footer() {
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
+                    className="text-sm text-white/68 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
                   >
                     {t(item.label, language)}
                   </Link>
@@ -59,12 +100,11 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Resources */}
           <div>
-            <h3 className="mb-4 text-sm font-bold">
+            <h3 className="text-sm font-semibold uppercase tracking-[0.18em] text-white/56">
               {t("footer.resources", language)}
             </h3>
-            <ul className="space-y-2.5" role="list">
+            <ul className="mt-5 space-y-3" role="list">
               {[
                 { label: "footer.trafficUpdates" as const, href: "/traffic" },
                 { label: "footer.floodUpdates" as const, href: "/news?category=advisories" },
@@ -75,7 +115,7 @@ export function Footer() {
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
+                    className="text-sm text-white/68 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
                   >
                     {t(item.label, language)}
                   </Link>
@@ -84,16 +124,15 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Connect */}
           <div>
-            <h3 className="mb-4 text-sm font-bold">
+            <h3 className="text-sm font-semibold uppercase tracking-[0.18em] text-white/56">
               {t("footer.connect", language)}
             </h3>
-            <ul className="space-y-2.5" role="list">
+            <ul className="mt-5 space-y-3" role="list">
               <li>
                 <a
                   href="tel:136"
-                  className="inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
+                  className="inline-flex items-center gap-2 text-sm text-white/68 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
                 >
                   <Phone className="size-4" weight="bold" />
                   {t("footer.hotline", language)}
@@ -104,13 +143,11 @@ export function Footer() {
                   href="https://x.com/ABORMMDA"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
+                  className="inline-flex items-center gap-2 text-sm text-white/68 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
                 >
                   <XLogo className="size-4" weight="bold" />
                   {t("footer.followX", language)}
-                  <span className="sr-only">
-                    ({t("a11y.opensNewTab", language)})
-                  </span>
+                  <span className="sr-only">({t("a11y.opensNewTab", language)})</span>
                 </a>
               </li>
               <li>
@@ -118,26 +155,19 @@ export function Footer() {
                   href="https://facebook.com/mabormmda"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
+                  className="inline-flex items-center gap-2 text-sm text-white/68 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
                 >
                   <FacebookLogo className="size-4" weight="bold" />
                   {t("footer.followFacebook", language)}
-                  <span className="sr-only">
-                    ({t("a11y.opensNewTab", language)})
-                  </span>
+                  <span className="sr-only">({t("a11y.opensNewTab", language)})</span>
                 </a>
               </li>
             </ul>
           </div>
         </div>
 
-      </div>
-      </div>
-
-      {/* Accessibility / copyright bar */}
-      <div className="bg-mmda-blue">
-        <div className="mx-auto max-w-7xl px-4 py-3 sm:px-6 lg:px-8">
-          <p className="text-center text-xs text-white/90">
+        <div className="mt-12 border-t border-white/10 pt-6">
+          <p className="text-center text-xs text-white/52">
             {t("footer.copyright", language).replace("{year}", String(year))}
           </p>
         </div>

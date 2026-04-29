@@ -1,38 +1,21 @@
 "use client";
 
-import { useState } from "react";
-import { useSettingsStore } from "@/stores/useSettingsStore";
-import { Separator } from "@/components/ui/separator";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import Link from "next/link";
 import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import {
-  Eye,
-  Target,
-  Scroll,
-  TrafficSign,
-  Recycle,
-  Drop,
-  Heartbeat,
+  ArrowRight,
   Buildings,
-  MapTrifold,
-  ShieldCheck,
+  Drop,
+  Eye,
   Handshake,
-  CaretDown,
+  Heartbeat,
+  MapTrifold,
+  Recycle,
+  Scroll,
+  ShieldCheck,
+  Target,
+  TrafficSign,
 } from "@phosphor-icons/react";
-
-const mandateColors = [
-  "text-primary",
-  "text-mmda-red",
-  "text-amber-600",
-  "text-primary",
-  "text-mmda-red",
-  "text-amber-600",
-  "text-primary",
-];
+import { useSettingsStore } from "@/stores/useSettingsStore";
 
 const mandates = [
   { label: "Development Planning", icon: MapTrifold },
@@ -53,276 +36,309 @@ const frontlineOffices = [
   {
     name: "Solid Waste Management Office",
     mission:
-      "To promote door to door garbage collection in all LGUs of Metro Manila as a means to achieve litter-free, garbage-free streets, sidewalks, vacant lots and waterways and as a tool in advancing proper collection of recyclable materials thereby reducing the amount of solid waste that would require land filling to the final disposal facilities that MMDA assures to provide.",
+      "To promote proper garbage collection and cleaner streets while advancing recyclable recovery and reducing landfill dependency across Metro Manila.",
   },
   {
     name: "Flood Control and Sewerage Management Office",
     mission:
-      "To prevent flooding in Metro Manila and to make all roads flood-free and passable to all types of vehicles and pedestrians at all times.",
+      "To prevent flooding in Metro Manila and make major roads passable for vehicles and pedestrians through continuous drainage and pumping operations.",
   },
   {
     name: "Health, Public Safety and Environmental Protection Office",
     mission:
-      "To safeguard the health and sanitation of the region, enhance ecological balance and prevent, control and abate environmental pollution. To continuously implement programs, policies and procedures to achieve public safety, especially disaster preparedness for preventive or rescue operations during times of calamities and disasters.",
+      "To safeguard sanitation and environmental quality while implementing disaster preparedness and emergency response operations.",
   },
 ];
 
 const history = [
-  { year: "1975", event: "Metro Manila Commission (MMC) established under Presidential Decree No. 824.", eventFil: "Itinatag ang Metro Manila Commission (MMC) sa ilalim ng Presidential Decree No. 824." },
-  { year: "1990", event: "MMC reorganized into the Metropolitan Manila Authority (MMA) under Executive Order No. 392.", eventFil: "Iniorganisa muli ang MMC bilang Metropolitan Manila Authority (MMA) sa ilalim ng Executive Order No. 392." },
-  { year: "1995", event: "MMDA created by Republic Act No. 7924, replacing the MMA with expanded mandate.", eventFil: "Itinatag ang MMDA sa pamamagitan ng Republic Act No. 7924, pumalit sa MMA na may pinalawak na mandato." },
-  { year: "2003", event: "MMDA implements the Unified Vehicular Volume Reduction Program (Number Coding).", eventFil: "Ipinatupad ng MMDA ang Unified Vehicular Volume Reduction Program (Number Coding)." },
-  { year: "2014", event: "Flood control master plan adopted, 72 pumping stations modernized.", eventFil: "Pinagtibay ang flood control master plan, 72 pumping stations ang na-modernize." },
-  { year: "2020", event: "EDSA Bus Carousel launched as emergency public transport response.", eventFil: "Inilunsad ang EDSA Bus Carousel bilang emergency public transport response." },
-  { year: "2026", event: "Digital transformation initiative launched — new citizen portal, unified fare system.", eventFil: "Inilunsad ang digital transformation initiative — bagong citizen portal, unified fare system." },
+  {
+    year: "1975",
+    event: "Metro Manila Commission (MMC) established under Presidential Decree No. 824.",
+    eventFil: "Itinatag ang Metro Manila Commission (MMC) sa ilalim ng Presidential Decree No. 824.",
+  },
+  {
+    year: "1990",
+    event: "MMC reorganized into the Metropolitan Manila Authority (MMA) under Executive Order No. 392.",
+    eventFil: "Iniorganisa muli ang MMC bilang Metropolitan Manila Authority (MMA) sa ilalim ng Executive Order No. 392.",
+  },
+  {
+    year: "1995",
+    event: "MMDA created by Republic Act No. 7924, replacing the MMA with expanded mandate.",
+    eventFil: "Itinatag ang MMDA sa pamamagitan ng Republic Act No. 7924, kapalit ng MMA na may pinalawak na mandato.",
+  },
+  {
+    year: "2003",
+    event: "MMDA implements the Unified Vehicular Volume Reduction Program (Number Coding).",
+    eventFil: "Ipinatupad ng MMDA ang Unified Vehicular Volume Reduction Program (Number Coding).",
+  },
+  {
+    year: "2014",
+    event: "Flood control master plan adopted and pumping stations modernized.",
+    eventFil: "Pinagtibay ang flood control master plan at in-upgrade ang pumping stations.",
+  },
+  {
+    year: "2020",
+    event: "EDSA Bus Carousel launched as emergency public transport response.",
+    eventFil: "Inilunsad ang EDSA Bus Carousel bilang emergency public transport response.",
+  },
+  {
+    year: "2026",
+    event: "Digital transformation initiative launched for integrated public service delivery.",
+    eventFil: "Inilunsad ang digital transformation initiative para sa integrated public service delivery.",
+  },
 ];
-
-function FrontlineOfficeItem({ office }: { office: { name: string; mission: string } }) {
-  const [open, setOpen] = useState(false);
-
-  return (
-    <Collapsible open={open} onOpenChange={setOpen}>
-      <CollapsibleTrigger asChild>
-        <button className="flex w-full items-center justify-between rounded-lg border border-border px-5 py-4 text-left transition-colors hover:bg-muted/50">
-          <span className="text-sm font-bold">{office.name}</span>
-          <CaretDown
-            weight="bold"
-            className={`size-4 shrink-0 text-muted-foreground transition-transform duration-200 ${open ? "rotate-180" : ""}`}
-          />
-        </button>
-      </CollapsibleTrigger>
-      <CollapsibleContent>
-        <div className="px-5 pb-4 pt-2">
-          <p className="text-sm leading-relaxed text-foreground/80">{office.mission}</p>
-        </div>
-      </CollapsibleContent>
-    </Collapsible>
-  );
-}
 
 export default function AboutPage() {
   const { language } = useSettingsStore();
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-      {/* Page header */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold tracking-tight">
-          {language === "en" ? "About MMDA" : "Tungkol sa MMDA"}
-        </h1>
-        <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
-          {language === "en"
-            ? "The Metropolitan Manila Development Authority serves Metro Manila's 16 cities and 1 municipality."
-            : "Ang Metropolitan Manila Development Authority ay nagsisilbi sa 16 na lungsod at 1 munisipalidad ng Metro Manila."}
-        </p>
-      </div>
+    <section className="overflow-x-hidden w-full max-w-full">
+      <section className="relative isolate overflow-hidden px-4 pb-24 pt-16 sm:px-6 lg:px-8 lg:pb-32">
+        <div
+          className="absolute inset-0 bg-cover bg-center opacity-24 mix-blend-luminosity"
+          style={{ backgroundImage: "url('https://picsum.photos/seed/mmda-about-hero/1920/1080')" }}
+        />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(43,92,182,0.36),transparent_48%),linear-gradient(180deg,rgba(2,8,23,0.12),rgba(2,8,23,0))]" />
+        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background to-transparent" />
 
-      {/* Tab navigation */}
-      <Tabs defaultValue="overview" className="w-full">
-        <TabsList className="mb-6">
-          <TabsTrigger value="overview">
-            {language === "en" ? "Overview" : "Pangkalahatang-tanaw"}
-          </TabsTrigger>
-          <TabsTrigger value="mandates">
-            {language === "en" ? "Mandates" : "Mga Mandato"}
-          </TabsTrigger>
-          <TabsTrigger value="charter">
-            {language === "en" ? "Citizen's Charter" : "Citizen's Charter"}
-          </TabsTrigger>
-          <TabsTrigger value="history">
-            {language === "en" ? "History" : "Kasaysayan"}
-          </TabsTrigger>
-        </TabsList>
+        <div className="relative mx-auto max-w-7xl rounded-[2.5rem] border border-white/14 bg-[#071428]/88 px-6 py-14 text-white shadow-[0_32px_120px_-48px_rgba(7,20,40,0.9)] backdrop-blur xl:px-12 xl:py-18">
+          <div className="mx-auto max-w-6xl text-center">
+            <p className="text-sm font-medium leading-7 text-white/72">
+              {language === "en"
+                ? "Learn how MMDA coordinates metro-wide transport, safety, flood control, and urban operations for Metro Manila."
+                : "Alamin kung paano kino-coordinate ng MMDA ang metro-wide transport, safety, flood control, at urban operations para sa Metro Manila."}
+            </p>
+            <h1 className="mx-auto mt-8 max-w-6xl text-[clamp(3rem,5vw,5.4rem)] font-semibold leading-[0.94] tracking-[-0.05em]">
+              {language === "en"
+                ? "About the Metropolitan Manila Development Authority."
+                : "Tungkol sa Metropolitan Manila Development Authority."}
+            </h1>
+            <p className="mx-auto mt-8 max-w-3xl text-base leading-8 text-white/72 md:text-lg">
+              {language === "en"
+                ? "Vision, mission, mandates, frontline offices, citizen charter commitments, and institutional milestones of the MMDA."
+                : "Bisyon, misyon, mandato, frontline offices, citizen charter commitments, at institutional milestones ng MMDA."}
+            </p>
 
-        {/* ── Overview Tab ── */}
-        <TabsContent value="overview">
-          <section className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl">
-              {/* Vision */}
-              <div className="rounded-lg border border-primary/20 bg-primary/5 p-6">
-                <div className="flex items-center gap-2 mb-3">
-                  <Eye weight="bold" className="size-5 text-primary" />
-                  <h3 className="text-sm font-bold uppercase tracking-wider text-primary">
-                    {language === "en" ? "Vision" : "Bisyon"}
+            <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+              <Link
+                href="/services"
+                className="inline-flex min-w-[220px] items-center justify-center gap-2 rounded-full bg-white px-7 py-4 text-sm font-semibold text-slate-950 transition-transform hover:-translate-y-0.5 hover:bg-white/92 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+              >
+                {language === "en" ? "View citizen services" : "Tingnan ang citizen services"}
+                <ArrowRight className="size-4" weight="bold" />
+              </Link>
+              <Link
+                href="/contact"
+                className="inline-flex min-w-[220px] items-center justify-center gap-2 rounded-full border border-white/20 bg-white/10 px-7 py-4 text-sm font-semibold text-white transition-colors hover:bg-white/16 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+              >
+                {language === "en" ? "Contact MMDA" : "Makipag-ugnayan sa MMDA"}
+                <ArrowRight className="size-4" weight="bold" />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
+        <div className="grid gap-5 md:grid-cols-2">
+          <article className="rounded-[1.9rem] border border-border bg-card p-7 shadow-[0_2px_16px_-6px_rgba(0,0,0,0.08)]">
+            <div className="inline-flex items-center gap-2 rounded-full border border-primary/15 bg-primary/8 px-3 py-1 text-xs font-semibold text-primary">
+              <Eye className="size-4" weight="bold" />
+              {language === "en" ? "Vision" : "Bisyon"}
+            </div>
+            <h2 className="mt-5 text-3xl font-semibold leading-tight tracking-[-0.03em] text-foreground">
+              {language === "en" ? "Towards a humane, world-class metropolis." : "Tungo sa makatao at world-class na kalakhang lungsod."}
+            </h2>
+            <p className="mt-4 text-sm leading-7 text-muted-foreground md:text-base">
+              {language === "en"
+                ? "Metro Manila should remain livable, workable, and resilient through integrated governance and sustained metro-wide services."
+                : "Dapat manatiling livable, workable, at resilient ang Metro Manila sa pamamagitan ng integrated governance at tuloy-tuloy na metro-wide services."}
+            </p>
+          </article>
+
+          <article className="rounded-[1.9rem] border border-border bg-card p-7 shadow-[0_2px_16px_-6px_rgba(0,0,0,0.08)]">
+            <div className="inline-flex items-center gap-2 rounded-full border border-primary/15 bg-primary/8 px-3 py-1 text-xs font-semibold text-primary">
+              <Target className="size-4" weight="bold" />
+              {language === "en" ? "Mission" : "Misyon"}
+            </div>
+            <h2 className="mt-5 text-3xl font-semibold leading-tight tracking-[-0.03em] text-foreground">
+              {language === "en"
+                ? "Coordinate transport, safety, and urban systems at metro scale."
+                : "I-coordinate ang transport, safety, at urban systems sa metro scale."}
+            </h2>
+            <p className="mt-4 text-sm leading-7 text-muted-foreground md:text-base">
+              {language === "en"
+                ? "MMDA supports local governments through unified planning, operations, and response frameworks for high-impact public concerns."
+                : "Sinusuportahan ng MMDA ang mga lokal na pamahalaan sa pamamagitan ng unified planning, operations, at response framework para sa mahahalagang public concern."}
+            </p>
+          </article>
+        </div>
+
+        <article className="mt-6 rounded-[1.9rem] border border-border bg-card p-7 shadow-[0_2px_16px_-6px_rgba(0,0,0,0.08)]">
+          <div className="inline-flex items-center gap-2 rounded-full border border-primary/15 bg-primary/8 px-3 py-1 text-xs font-semibold text-primary">
+            <Scroll className="size-4" weight="bold" />
+            {language === "en" ? "Statement of policy" : "Pahayag ng patakaran"}
+          </div>
+          <p className="mt-5 max-w-[95ch] text-sm leading-7 text-muted-foreground md:text-base">
+            {language === "en"
+              ? "Metropolitan Manila as a special development and administrative region shall delineate and consider basic services affecting or involving Metro Manila. The Authority shall plan, supervise, regulate, monitor, coordinate, or implement metro-wide programs in alignment with national policy while respecting the autonomy of local government units."
+              : "Ang Metropolitan Manila bilang isang espesyal na rehiyon ng pagpapaunlad at pangangasiwa ay dapat magtakda at isaalang-alang ang mga pangunahing serbisyong nakakaapekto o may kinalaman sa Metro Manila. Ang Awtoridad ay dapat magplano, mangasiwa, mangasiwa, mag-monitor, mag-coordinate, o magpatupad ng mga metro-wide na programa na naaayon sa patakarang pambansa habang iginagalang ang awtonomiya ng mga lokal na yunit ng pamahalaan."}
+          </p>
+        </article>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-4 pb-24 sm:px-6 lg:px-8 lg:pb-32">
+        <div className="max-w-3xl">
+          <h2 className="text-[clamp(2.1rem,3.8vw,3.6rem)] font-semibold leading-[0.98] tracking-[-0.04em] text-foreground">
+            {language === "en" ? "The seven MMDA mandates." : "Ang pitong mandato ng MMDA."}
+          </h2>
+          <p className="mt-4 text-sm leading-7 text-muted-foreground md:text-base">
+            {language === "en"
+              ? "Mandates are presented in a denser service map so each operational domain is easy to identify."
+              : "Ipinapakita ang mandato sa mas siksik na service map upang madaling makita ang bawat operational domain."}
+          </p>
+        </div>
+
+        <div className="mt-10 grid grid-cols-1 gap-4 lg:grid-cols-12 lg:grid-flow-dense">
+          {mandates.map((mandate, index) => {
+            const Icon = mandate.icon;
+            const spanClass =
+              index < 2 ? "lg:col-span-6" : index < 5 ? "lg:col-span-4" : "lg:col-span-6";
+
+            return (
+              <article
+                key={mandate.label}
+                className={`group relative overflow-hidden rounded-[1.65rem] border border-border bg-card shadow-[0_2px_16px_-6px_rgba(0,0,0,0.08)] transition-shadow hover:shadow-[0_4px_24px_-8px_rgba(0,0,0,0.12)] ${spanClass}`}
+              >
+                <div
+                  className="absolute inset-0 opacity-18 transition-transform duration-700 ease-out group-hover:scale-105"
+                  style={{
+                    backgroundImage: `url('https://picsum.photos/seed/${mandate.label.replace(/\s+/g, "-")}/1200/800')`,
+                    backgroundPosition: "center",
+                    backgroundSize: "cover",
+                  }}
+                />
+                <div className="absolute inset-0 bg-[linear-gradient(140deg,rgba(255,255,255,0.94),rgba(248,250,252,0.86))] dark:bg-[linear-gradient(140deg,rgba(6,20,45,0.9),rgba(10,30,66,0.84))]" />
+                <div className="relative p-6">
+                  <Icon className="size-5 text-primary" weight="bold" />
+                  <h3 className="mt-4 text-xl font-semibold leading-snug tracking-[-0.02em] text-foreground">
+                    {mandate.label}
                   </h3>
                 </div>
-                <p className="text-sm font-semibold mb-3">
-                  &ldquo;TOWARDS A HUMANE, WORLD-CLASS METROPOLIS&rdquo;
-                </p>
-                <p className="text-sm leading-relaxed text-foreground/90">
-                  As a humane metropolis, Metropolitan Manila will become a livable and workable
-                  physical environment for all.
-                </p>
-              </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
 
-              {/* Mission */}
-              <div className="rounded-lg border border-amber-200 bg-amber-50 p-6 dark:border-amber-800 dark:bg-amber-950/20">
-                <div className="flex items-center gap-2 mb-3">
-                  <Target weight="bold" className="size-5 text-amber-600" />
-                  <h3 className="text-sm font-bold uppercase tracking-wider text-amber-600">
-                    {language === "en" ? "Mission" : "Misyon"}
-                  </h3>
-                </div>
-                <div className="space-y-3 text-sm leading-relaxed text-foreground/90">
-                  <p>
-                    As a global-oriented metropolis, Metropolitan Manila will evolve into a major
-                    business and transaction center in the Asia-Pacific region.
-                  </p>
-                  <p>
-                    As a center of a growth polygon for Luzon Island, Metropolitan Manila will
-                    influence the creation of socio-economic opportunities in the areas beyond its
-                    political and administrative boundaries.
-                  </p>
-                </div>
-              </div>
-            </div>
+      <section className="mx-auto max-w-7xl px-4 pb-24 sm:px-6 lg:px-8 lg:pb-32">
+        <div className="max-w-3xl">
+          <h2 className="text-[clamp(2.1rem,3.8vw,3.6rem)] font-semibold leading-[0.98] tracking-[-0.04em] text-foreground">
+            {language === "en" ? "Frontline offices and operating focus." : "Mga frontline office at pokus sa operasyon."}
+          </h2>
+          <p className="mt-4 text-sm leading-7 text-muted-foreground md:text-base">
+            {language === "en"
+              ? "Each office below represents a key operational pillar for metropolitan service delivery."
+              : "Bawat office sa ibaba ay kumakatawan sa mahalagang operational pillar para sa metropolitan service delivery."}
+          </p>
+        </div>
 
-            {/* The MMDA's Vision (expanded) */}
-            <div className="max-w-5xl rounded-lg border border-primary/10 bg-primary/[0.03] p-6">
-              <h3 className="text-sm font-bold mb-3">
-                {language === "en" ? "The MMDA's Vision" : "Ang Bisyon ng MMDA"}
-              </h3>
-              <div className="space-y-3 text-sm leading-relaxed text-foreground/90">
-                <p>
-                  With Metro Manila as the seat of the National Government and center of Private
-                  Business in the country, the challenge of making it a livable, ecological-friendly
-                  and dynamic urban center rests with the MMDA and the 17 political units therein.
-                </p>
-                <p>
-                  Thus, the role of the MMDA is to assist the 17 political units in crafting and
-                  implementing an integrated development plan characterized by unity of purpose,
-                  innovation, resiliency, sustainability, adaptability and creativity in meeting the
-                  challenges of transport decongestion, climate change, waste management, and disaster
-                  prevention among others, in order to achieve a decent quality of life for Metro
-                  Manilans.
-                </p>
-              </div>
-            </div>
-
-            {/* Statement of Policy */}
-            <div className="max-w-5xl">
-              <Separator className="mb-6" />
-              <h3 className="text-base font-bold tracking-tight mb-4">
-                {language === "en" ? "Statement of Policy" : "Pahayag ng Patakaran"}
-              </h3>
-              <div className="flex gap-3 max-w-[75ch]">
-                <Scroll weight="bold" className="size-5 shrink-0 text-primary mt-0.5" />
-                <p className="text-sm leading-relaxed text-foreground/90">
-                  Metropolitan Manila as a special development and administrative region shall
-                  delineate and consider basic services affecting or involving Metropolitan Manila.
-                  The Authority shall plan, supervise, regulate, monitor, coordinate or implement
-                  policies, programs and projects where appropriate, in conformity with the national
-                  government policies without prejudice to the autonomy of metro local government
-                  units.
-                </p>
-              </div>
-            </div>
-          </section>
-        </TabsContent>
-
-        {/* ── Mandates Tab ── */}
-        <TabsContent value="mandates">
-          <section className="space-y-8">
-            {/* Mandates grid */}
-            <div>
-              <h2 className="text-base font-bold tracking-tight mb-4">
-                {language === "en" ? "Seven Mandates" : "Pitong Mandato"}
-              </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 max-w-5xl">
-                {mandates.map((m, i) => (
-                  <div
-                    key={m.label}
-                    className="flex items-center gap-3 rounded-lg border border-border px-4 py-3"
-                  >
-                    <m.icon weight="bold" className={`size-5 shrink-0 ${mandateColors[i]}`} />
-                    <span className="text-sm font-medium">{m.label}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Frontline Offices */}
-            <div>
-              <Separator className="mb-6" />
-              <h2 className="text-base font-bold tracking-tight mb-4">
-                {language === "en" ? "Frontline Offices" : "Mga Frontline na Tanggapan"}
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-w-5xl">
-                {frontlineOffices.map((office) => (
-                  <FrontlineOfficeItem key={office.name} office={office} />
-                ))}
-              </div>
-            </div>
-          </section>
-        </TabsContent>
-
-        {/* ── Citizen's Charter Tab ── */}
-        <TabsContent value="charter">
-          <section>
-            <div className="max-w-[75ch] rounded-lg border border-primary/20 bg-primary/5 p-6">
-              <div className="flex items-center gap-2 mb-4">
-                <Handshake weight="bold" className="size-5 text-primary" />
-                <h3 className="text-sm font-bold uppercase tracking-wider text-primary">
-                  Performance Pledge
-                </h3>
-              </div>
-              <p className="text-sm leading-relaxed text-foreground/90 mb-4">
-                We, the officers and employees of the Metropolitan Manila Development Authority,
-                commit to:
-              </p>
-              <ul className="space-y-3 text-sm leading-relaxed text-foreground/90 list-disc pl-5">
-                <li>
-                  Serve the public efficiently with sincerity and utmost courtesy Mondays to Fridays,
-                  8:00 a.m. to 5:00 p.m. and if necessary, shall extend our services beyond office
-                  hours to immediately respond to the needs of the public.
-                </li>
-                <li>
-                  Promptly provide and deliver efficient and effective metro-wide services that are
-                  responsive to the needs of Metro Manilans pursuant to the mandates of MMDA under RA
-                  7924.
-                </li>
-                <li>
-                  Ensure strict compliance with service standards, with written explanation for any
-                  delays in frontline services.
-                </li>
-                <li>
-                  Empower the public through 24/7 access to information on policies, activities,
-                  programs and projects thru the website (www.mmda.gov.ph) and thru hotline 136.
-                </li>
-              </ul>
-              <p className="mt-4 text-sm font-semibold text-amber-600">
-                All these we pledge because YOU deserve the BEST.
-              </p>
-            </div>
-          </section>
-        </TabsContent>
-
-        {/* ── History Tab ── */}
-        <TabsContent value="history">
-          <section>
-            <div className="relative max-w-2xl">
+        <div className="mt-10 hidden h-[360px] overflow-hidden rounded-[2rem] border border-border lg:flex">
+          {frontlineOffices.map((office, index) => (
+            <article
+              key={office.name}
+              className="group relative flex-1 overflow-hidden border-l border-white/10 first:border-l-0 transition-[flex] duration-700 ease-out hover:flex-[1.75]"
+            >
               <div
-                className="absolute left-[18px] top-2 bottom-2 w-px bg-primary/20"
-                aria-hidden="true"
+                className="absolute inset-0 opacity-24 transition-transform duration-700 ease-out group-hover:scale-105"
+                style={{
+                  backgroundImage: `url('https://picsum.photos/seed/frontline-${index + 1}/1000/1200')`,
+                  backgroundPosition: "center",
+                  backgroundSize: "cover",
+                }}
               />
-              <div className="space-y-6">
-                {history.map((item) => (
-                  <div key={item.year} className="relative flex gap-4 pl-1">
-                    <div className="relative z-10 flex size-9 shrink-0 items-center justify-center rounded-full border border-primary/30 bg-primary text-primary-foreground">
-                      <span className="text-[11px] font-bold">{item.year}</span>
-                    </div>
-                    <div className="pt-1.5">
-                      <p className="text-sm leading-relaxed text-foreground/90">
-                        {language === "en" ? item.event : item.eventFil}
-                      </p>
-                    </div>
-                  </div>
-                ))}
+              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,20,45,0.22),rgba(6,20,45,0.9))]" />
+              <div className="relative flex h-full flex-col justify-end p-6 text-white">
+                <h3 className="text-xl font-semibold leading-snug">{office.name}</h3>
+                <p className="mt-3 max-h-0 overflow-hidden text-sm leading-7 text-white/74 opacity-0 transition-all duration-500 group-hover:max-h-56 group-hover:opacity-100">
+                  {office.mission}
+                </p>
               </div>
+            </article>
+          ))}
+        </div>
+
+        <div className="mt-10 grid gap-4 lg:hidden">
+          {frontlineOffices.map((office) => (
+            <article key={office.name} className="rounded-[1.55rem] border border-border bg-card p-5 shadow-[0_2px_16px_-6px_rgba(0,0,0,0.08)]">
+              <h3 className="text-lg font-semibold text-foreground">{office.name}</h3>
+              <p className="mt-3 text-sm leading-7 text-muted-foreground">{office.mission}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-4 pb-24 sm:px-6 lg:px-8 lg:pb-32">
+        <div className="rounded-[2rem] border border-border bg-card p-7 shadow-[0_2px_16px_-6px_rgba(0,0,0,0.08)] md:p-9">
+          <div className="inline-flex items-center gap-2 rounded-full border border-primary/15 bg-primary/8 px-3 py-1 text-xs font-semibold text-primary">
+            <Handshake className="size-4" weight="bold" />
+            {language === "en" ? "Citizen charter commitment" : "Pangako sa citizen's charter"}
+          </div>
+          <h2 className="mt-5 text-[clamp(1.9rem,3.4vw,3.1rem)] font-semibold leading-tight tracking-[-0.03em] text-foreground">
+            {language === "en"
+              ? "Service standards and public accountability."
+              : "Service standards at public accountability."}
+          </h2>
+          <ul className="mt-6 space-y-3 text-sm leading-7 text-muted-foreground md:text-base">
+            <li>
+              {language === "en"
+                ? "Serve the public efficiently with courtesy during office hours and emergency operations when required."
+                : "Maglingkod sa publiko nang mahusay at may paggalang sa oras ng opisina at sa emergency operations kung kinakailangan."}
+            </li>
+            <li>
+              {language === "en"
+                ? "Provide responsive metro-wide services aligned with MMDA mandates under RA 7924."
+                : "Magbigay ng mga responsive na metro-wide na serbisyo na naaayon sa mandato ng MMDA sa ilalim ng RA 7924."}
+            </li>
+            <li>
+              {language === "en"
+                ? "Maintain frontline service standards and provide clear explanation for delays when they occur."
+                : "Panatilihin ang mga pamantayan sa frontline service at magbigay ng malinaw na paliwanag para sa mga pagkaantala kung mangyari man."}
+            </li>
+            <li>
+              {language === "en"
+                ? "Keep the public informed through official channels including website updates and hotline 136 support."
+                : "Panatilihing may kaalaman ang publiko sa pamamagitan ng mga opisyal na channel kabilang ang website updates at hotline 136 support."}
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-4 pb-24 sm:px-6 lg:px-8 lg:pb-32">
+        <div className="max-w-3xl">
+          <h2 className="text-[clamp(2.1rem,3.8vw,3.6rem)] font-semibold leading-[0.98] tracking-[-0.04em] text-foreground">
+            {language === "en" ? "Institutional milestones." : "Mga institutional na milestone."}
+          </h2>
+        </div>
+
+        <div className="mt-10 rounded-[2rem] border border-border bg-card p-6 shadow-[0_2px_16px_-6px_rgba(0,0,0,0.08)] md:p-8">
+          <div className="relative">
+            <div className="absolute bottom-0 left-4 top-2 w-px bg-primary/20" aria-hidden="true" />
+            <div className="space-y-7">
+              {history.map((item) => (
+                <div key={item.year} className="relative flex gap-4 pl-1">
+                  <div className="relative z-10 flex size-8 shrink-0 items-center justify-center rounded-full border border-primary/30 bg-primary text-[11px] font-bold text-primary-foreground">
+                    {item.year}
+                  </div>
+                  <p className="pt-1 text-sm leading-7 text-muted-foreground md:text-base">
+                    {language === "en" ? item.event : item.eventFil}
+                  </p>
+                </div>
+              ))}
             </div>
-          </section>
-        </TabsContent>
-      </Tabs>
-    </div>
+          </div>
+        </div>
+      </section>
+    </section>
   );
 }
