@@ -142,7 +142,7 @@ export default function SearchPage() {
                     <p className="mt-1 text-xs text-muted-foreground">
                       {language === "en" ? article.excerpt : article.excerptFil}
                     </p>
-                    <p className="mt-1.5 text-[10px] text-muted-foreground">
+                    <p className="mt-1.5 text-[11px] text-muted-foreground">
                       {new Date(article.date).toLocaleDateString(
                         language === "en" ? "en-US" : "fil-PH",
                         { month: "short", day: "numeric", year: "numeric" }

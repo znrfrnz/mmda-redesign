@@ -215,7 +215,7 @@ export default function TrafficPage() {
                     <p className={cn("text-base font-bold tabular-nums", config.text)}>
                       {route.speed}
                     </p>
-                    <p className="text-[10px] text-muted-foreground">km/h</p>
+                    <p className="text-[11px] text-muted-foreground">km/h</p>
                   </div>
                 </button>
               );

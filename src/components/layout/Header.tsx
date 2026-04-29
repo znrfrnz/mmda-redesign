@@ -40,7 +40,7 @@ export function Header() {
             <p className="text-sm font-bold leading-tight tracking-tight">
               MMDA
             </p>
-            <p className="text-[10px] leading-tight text-muted-foreground">
+            <p className="text-[11px] leading-tight text-muted-foreground">
               Metropolitan Manila
               <br />
               Development Authority

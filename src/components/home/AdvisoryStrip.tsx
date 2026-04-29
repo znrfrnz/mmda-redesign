@@ -11,7 +11,7 @@ export function AdvisoryStrip() {
 
   return (
     <div
-      className="border-b border-mmda-gold/20 bg-mmda-gold-light"
+      className={`border-b ${mockAdvisory.type === "weather" ? "border-mmda-gold/20 bg-mmda-gold-light" : "border-mmda-red/20 bg-red-50 dark:bg-red-950/20"}`}
       role="alert"
       aria-live="polite"
     >
@@ -19,7 +19,7 @@ export function AdvisoryStrip() {
         {mockAdvisory.type === "weather" ? (
           <CloudRain className="size-5 shrink-0 text-mmda-gold" weight="bold" />
         ) : (
-          <Warning className="size-5 shrink-0 text-mmda-gold" weight="bold" />
+          <Warning className="size-5 shrink-0 text-mmda-red" weight="bold" />
         )}
         <p className="text-sm font-medium text-foreground">
           {language === "en" ? mockAdvisory.title : mockAdvisory.titleFil}

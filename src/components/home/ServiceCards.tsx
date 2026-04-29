@@ -8,27 +8,51 @@ import {
   Warning,
   ChatCircleDots,
   Truck,
+  File,
+  CreditCard,
+  Phone,
+  Hammer,
+  Calendar,
+  CheckCircle,
+  ArrowRight,
 } from "@phosphor-icons/react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowRight } from "@phosphor-icons/react";
+import { Button } from "@/components/ui/button";
 
 const iconMap: Record<string, React.ElementType> = {
   IdentificationCard,
   Warning,
   ChatCircleDots,
   Truck,
+  File,
+  CreditCard,
+  Phone,
+  Hammer,
+  Calendar,
+  CheckCircle,
+  FileCheck: CheckCircle,
 };
 
 const categoryBadges = {
   licensing: { en: "Licensing", fil: "Licensing", variant: "secondary" as const },
   violations: { en: "Violations & Fines", fil: "Violations & Fines", variant: "destructive" as const },
-  assistance: { en: "Assistance & Supports", fil: "Assistance & Supports", variant: "outline" as const },
-  permits: { en: "Permits & Authorizations", fil: "Permits & Authorizations", variant: "secondary" as const },
+  assistance: { en: "Assistance", fil: "Tulong", variant: "outline" as const },
+  permits: { en: "Permits", fil: "Permits", variant: "secondary" as const },
 } as const;
+
+const actionLabels: Record<ServiceItem["category"], { en: string; fil: string }> = {
+  licensing: { en: "Apply now", fil: "Mag-apply" },
+  violations: { en: "Check status", fil: "Tingnan ang status" },
+  assistance: { en: "Get help", fil: "Humingi ng tulong" },
+  permits: { en: "Start application", fil: "Magsimula" },
+};
 
 export function ServiceCards() {
   const { language } = useSettingsStore();
+
+  const reportConcern = mockServices.find((s) => s.href === "/services/report-concern");
+  const otherServices = mockServices.filter((s) => s.href !== "/services/report-concern");
 
   return (
     <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
@@ -52,19 +76,50 @@ export function ServiceCards() {
         </Link>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {mockServices.map((service) => {
+      {/* Featured: Report a Concern — full-width banner */}
+      {reportConcern && (
+        <Link href={reportConcern.href} className="group mb-4 block">
+          <Card className="border-mmda-red/20 bg-red-50 dark:bg-red-950/20 transition-colors hover:border-mmda-red/30 group-focus-visible:ring-2 group-focus-visible:ring-ring">
+            <CardContent className="flex items-center gap-5 p-5 sm:p-6">
+              <div className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-mmda-red/10 text-mmda-red">
+                <ChatCircleDots className="size-6" weight="bold" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2">
+                  <h3 className="text-base font-semibold group-hover:text-mmda-red transition-colors">
+                    {language === "en" ? reportConcern.title : reportConcern.titleFil}
+                  </h3>
+                  <Badge variant="destructive" className="text-[11px] px-1.5 py-0">
+                    {language === "en" ? "Assistance" : "Tulong"}
+                  </Badge>
+                </div>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  {language === "en" ? reportConcern.description : reportConcern.descriptionFil}
+                </p>
+              </div>
+              <Button variant="destructive" size="sm" className="hidden shrink-0 sm:inline-flex">
+                {language === "en" ? "Get help" : "Humingi ng tulong"}
+              </Button>
+            </CardContent>
+          </Card>
+        </Link>
+      )}
+
+      {/* Remaining services — 3-column grid */}
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {otherServices.map((service) => {
           const Icon = iconMap[service.icon] || IdentificationCard;
           const group = categoryBadges[service.category];
+          const action = actionLabels[service.category];
           return (
             <Link key={service.id} href={service.href} className="group">
-              <Card className="h-full transition-all hover:shadow-md hover:border-primary/20 group-focus-visible:ring-2 group-focus-visible:ring-ring">
+              <Card className="h-full transition-colors hover:border-primary/20 group-focus-visible:ring-2 group-focus-visible:ring-ring">
                 <CardContent className="flex flex-col gap-3 p-5">
                   <div className="flex items-center justify-between">
                     <div className="flex size-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
                       <Icon className="size-5" weight="bold" />
                     </div>
-                    <Badge variant={group.variant} className="text-[10px] px-1.5 py-0">
+                    <Badge variant={group.variant} className="text-[11px] px-1.5 py-0">
                       {language === "en" ? group.en : group.fil}
                     </Badge>
                   </div>
@@ -76,6 +131,10 @@ export function ServiceCards() {
                       {language === "en" ? service.description : service.descriptionFil}
                     </p>
                   </div>
+                  <span className="mt-auto inline-flex items-center gap-1 text-xs font-medium text-primary">
+                    {language === "en" ? action.en : action.fil}
+                    <ArrowRight className="size-3" weight="bold" />
+                  </span>
                 </CardContent>
               </Card>
             </Link>

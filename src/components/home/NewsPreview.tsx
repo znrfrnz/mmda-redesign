@@ -58,10 +58,10 @@ export function NewsPreview() {
               <Card className="h-full transition-all hover:shadow-md hover:border-primary/20 group-focus-visible:ring-2 group-focus-visible:ring-ring">
                 <CardContent className="flex flex-col gap-3 p-5">
                   <div className="flex items-center gap-2">
-                    <Badge variant={cat.variant} className="text-[10px] px-1.5 py-0">
+                    <Badge variant={cat.variant} className="text-[11px] px-1.5 py-0">
                       {language === "en" ? cat.label : cat.labelFil}
                     </Badge>
-                    <span className="flex items-center gap-1 text-[10px] text-muted-foreground">
+                    <span className="flex items-center gap-1 text-[11px] text-muted-foreground">
                       <CalendarBlank className="size-3" weight="bold" />
                       {new Date(article.date).toLocaleDateString(
                         language === "en" ? "en-US" : "fil-PH",

@@ -116,10 +116,10 @@ export default function ServicesPage() {
                 <Card className="h-full transition-all hover:shadow-md hover:border-primary/20 group-focus-visible:ring-2 group-focus-visible:ring-ring">
                   <CardContent className="flex h-full flex-col gap-3 p-5">
                     <div className="flex items-center gap-2">
-                      <Badge variant={group.variant} className="text-[10px] px-1.5 py-0">
+                      <Badge variant={group.variant} className="text-[11px] px-1.5 py-0">
                         {language === "en" ? group.en : group.fil}
                       </Badge>
-                      <span className="text-[10px] text-muted-foreground">
+                      <span className="text-[11px] text-muted-foreground">
                         {language === "en" ? "Service" : "Serbisyo"}
                       </span>
                     </div>
@@ -130,7 +130,9 @@ export default function ServicesPage() {
                       {language === "en" ? service.description : service.descriptionFil}
                     </p>
                     <span className="mt-auto text-xs font-medium text-primary">
-                      {language === "en" ? "Learn more" : "Matuto pa"}
+                      {language === "en"
+                        ? service.category === "licensing" ? "Apply now" : service.category === "violations" ? "Check status" : service.category === "assistance" ? "Get help" : "Start application"
+                        : service.category === "licensing" ? "Mag-apply" : service.category === "violations" ? "Tingnan ang status" : service.category === "assistance" ? "Humingi ng tulong" : "Magsimula"}
                     </span>
                   </CardContent>
                 </Card>
@@ -149,7 +151,7 @@ export default function ServicesPage() {
               <Button
                 variant="outline"
                 onClick={() => setVisibleCount((count) => count + ITEMS_PER_PAGE)}
-                className="active:scale-[0.98] transition-transform"
+                className=""
               >
                 {language === "en" ? "Load more" : "Mag-load pa"}
               </Button>
