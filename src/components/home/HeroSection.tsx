@@ -12,7 +12,6 @@ import {
   Phone,
   ArrowRight,
 } from "@phosphor-icons/react";
-import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const statusConfig = {
@@ -110,7 +109,7 @@ export function HeroSection() {
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
             MMDA
           </p>
-          <h1 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">
+          <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
             {language === "en"
               ? "What do you need today?"
               : "Ano ang kailangan mo ngayon?"}
@@ -172,7 +171,7 @@ export function HeroSection() {
 
         {/* Right — Live Traffic widget */}
         <div className="lg:col-span-2">
-          <div className="rounded-xl border border-border bg-background p-5 shadow-[0_1px_8px_-4px_rgba(0,0,0,0.05)]">
+          <div className="rounded-xl border border-border bg-background p-5 shadow-[0_2px_8px_-2px_rgba(0,84,166,0.06)]">
             {/* Widget header */}
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
@@ -223,13 +222,7 @@ export function HeroSection() {
               })}
             </div>
 
-            <div className="mt-4">
-              <Button variant="outline" size="sm" className="w-full" asChild>
-                <Link href="/traffic">
-                  {language === "en" ? "Open traffic map" : "Buksan ang mapa ng trapiko"}
-                </Link>
-              </Button>
-            </div>
+
           </div>
         </div>
       </div>

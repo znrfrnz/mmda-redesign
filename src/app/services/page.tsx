@@ -4,8 +4,6 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import { useSettingsStore } from "@/stores/useSettingsStore";
 import { mockServices, type ServiceItem } from "@/lib/mock-data";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -28,13 +26,6 @@ const tabLabels = {
     assistance: "Assistance & Supports",
     permits: "Permits & Authorizations",
   },
-} as const;
-
-const categoryBadges = {
-  licensing: { en: "Licensing", fil: "Licensing", variant: "secondary" as const },
-  violations: { en: "Violations & Fines", fil: "Violations & Fines", variant: "destructive" as const },
-  assistance: { en: "Assistance & Supports", fil: "Assistance & Supports", variant: "outline" as const },
-  permits: { en: "Permits & Authorizations", fil: "Permits & Authorizations", variant: "secondary" as const },
 } as const;
 
 export default function ServicesPage() {
@@ -107,38 +98,28 @@ export default function ServicesPage() {
         </p>
       ) : (
         <>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {visibleServices.map((service) => {
-            const group = categoryBadges[service.category];
-
-            return (
-              <Link key={service.id} href={service.href} className="group">
-                <Card className="h-full transition-all hover:shadow-md hover:border-primary/20 group-focus-visible:ring-2 group-focus-visible:ring-ring">
-                  <CardContent className="flex h-full flex-col gap-3 p-5">
-                    <div className="flex items-center gap-2">
-                      <Badge variant={group.variant} className="text-[11px] px-1.5 py-0">
-                        {language === "en" ? group.en : group.fil}
-                      </Badge>
-                      <span className="text-[11px] text-muted-foreground">
-                        {language === "en" ? "Service" : "Serbisyo"}
-                      </span>
-                    </div>
-                    <h3 className="text-sm font-semibold leading-snug group-hover:text-primary transition-colors">
-                      {language === "en" ? service.title : service.titleFil}
-                    </h3>
-                    <p className="text-xs leading-relaxed text-muted-foreground">
-                      {language === "en" ? service.description : service.descriptionFil}
-                    </p>
-                    <span className="mt-auto text-xs font-medium text-primary">
-                      {language === "en"
-                        ? service.category === "licensing" ? "Apply now" : service.category === "violations" ? "Check status" : service.category === "assistance" ? "Get help" : "Start application"
-                        : service.category === "licensing" ? "Mag-apply" : service.category === "violations" ? "Tingnan ang status" : service.category === "assistance" ? "Humingi ng tulong" : "Magsimula"}
-                    </span>
-                  </CardContent>
-                </Card>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-border rounded-lg overflow-hidden border border-border">
+            {visibleServices.map((service) => (
+              <Link
+                key={service.id}
+                href={service.href}
+                className="group flex items-center gap-4 bg-background px-5 py-4 transition-colors hover:bg-muted/50"
+              >
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-semibold group-hover:text-primary transition-colors">
+                    {language === "en" ? service.title : service.titleFil}
+                  </p>
+                  <p className="mt-0.5 text-xs text-muted-foreground line-clamp-1">
+                    {language === "en" ? service.description : service.descriptionFil}
+                  </p>
+                </div>
+                <span className="shrink-0 text-xs font-medium text-primary">
+                  {language === "en"
+                    ? service.category === "licensing" ? "Apply now" : service.category === "violations" ? "Check status" : service.category === "assistance" ? "Get help" : "Start application"
+                    : service.category === "licensing" ? "Mag-apply" : service.category === "violations" ? "Tingnan ang status" : service.category === "assistance" ? "Humingi ng tulong" : "Magsimula"}
+                </span>
               </Link>
-            );
-          })}
+            ))}
           </div>
 
           {hasMore && (

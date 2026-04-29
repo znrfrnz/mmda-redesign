@@ -34,13 +34,6 @@ const iconMap: Record<string, React.ElementType> = {
   FileCheck: CheckCircle,
 };
 
-const categoryBadges = {
-  licensing: { en: "Licensing", fil: "Licensing", variant: "secondary" as const },
-  violations: { en: "Violations & Fines", fil: "Violations & Fines", variant: "destructive" as const },
-  assistance: { en: "Assistance", fil: "Tulong", variant: "outline" as const },
-  permits: { en: "Permits", fil: "Permits", variant: "secondary" as const },
-} as const;
-
 const actionLabels: Record<ServiceItem["category"], { en: string; fil: string }> = {
   licensing: { en: "Apply now", fil: "Mag-apply" },
   violations: { en: "Check status", fil: "Tingnan ang status" },
@@ -78,7 +71,7 @@ export function ServiceCards() {
 
       {/* Featured: Report a Concern — full-width banner */}
       {reportConcern && (
-        <Link href={reportConcern.href} className="group mb-4 block">
+        <Link href={reportConcern.href} className="group mb-6 block">
           <Card className="border-mmda-red/20 bg-red-50 dark:bg-red-950/20 transition-colors hover:border-mmda-red/30 group-focus-visible:ring-2 group-focus-visible:ring-ring">
             <CardContent className="flex items-center gap-5 p-5 sm:p-6">
               <div className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-mmda-red/10 text-mmda-red">
@@ -105,41 +98,36 @@ export function ServiceCards() {
         </Link>
       )}
 
-      {/* Remaining services — 3-column grid */}
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {otherServices.map((service) => {
-          const Icon = iconMap[service.icon] || IdentificationCard;
-          const group = categoryBadges[service.category];
-          const action = actionLabels[service.category];
-          return (
-            <Link key={service.id} href={service.href} className="group">
-              <Card className="h-full transition-colors hover:border-primary/20 group-focus-visible:ring-2 group-focus-visible:ring-ring">
-                <CardContent className="flex flex-col gap-3 p-5">
-                  <div className="flex items-center justify-between">
-                    <div className="flex size-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
-                      <Icon className="size-5" weight="bold" />
-                    </div>
-                    <Badge variant={group.variant} className="text-[11px] px-1.5 py-0">
-                      {language === "en" ? group.en : group.fil}
-                    </Badge>
-                  </div>
-                  <div>
-                    <h3 className="text-sm font-semibold group-hover:text-primary transition-colors">
-                      {language === "en" ? service.title : service.titleFil}
-                    </h3>
-                    <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
-                      {language === "en" ? service.description : service.descriptionFil}
-                    </p>
-                  </div>
-                  <span className="mt-auto inline-flex items-center gap-1 text-xs font-medium text-primary">
-                    {language === "en" ? action.en : action.fil}
-                    <ArrowRight className="size-3" weight="bold" />
-                  </span>
-                </CardContent>
-              </Card>
-            </Link>
-          );
-        })}
+      {/* Service directory — 2-column asymmetric grid with 1px dividers */}
+      <div className="overflow-hidden rounded-lg border border-border">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-border">
+          {otherServices.map((service) => {
+            const Icon = iconMap[service.icon] || IdentificationCard;
+            const action = actionLabels[service.category];
+            return (
+              <Link
+                key={service.id}
+                href={service.href}
+                className="group flex items-center gap-4 bg-background px-5 py-4 transition-colors hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset"
+              >
+                <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary/8 text-primary">
+                  <Icon className="size-5" weight="bold" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-semibold group-hover:text-primary transition-colors">
+                    {language === "en" ? service.title : service.titleFil}
+                  </p>
+                  <p className="mt-0.5 text-xs text-muted-foreground truncate">
+                    {language === "en" ? service.description : service.descriptionFil}
+                  </p>
+                </div>
+                <span className="shrink-0 text-xs font-medium text-primary opacity-0 group-hover:opacity-100 transition-opacity">
+                  {language === "en" ? action.en : action.fil} →
+                </span>
+              </Link>
+            );
+          })}
+        </div>
       </div>
 
       <div className="mt-6 text-center sm:hidden">
