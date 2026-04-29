@@ -1,16 +1,52 @@
 "use client";
 
-import Image from "next/image";
 import { useSettingsStore } from "@/stores/useSettingsStore";
 import { Separator } from "@/components/ui/separator";
+import {
+  Eye,
+  Target,
+  Scroll,
+  TrafficSign,
+  Recycle,
+  Drop,
+  Heartbeat,
+  Buildings,
+  MapTrifold,
+  ShieldCheck,
+  Handshake,
+} from "@phosphor-icons/react";
 
-const leadership = [
-  { name: "Romando Artes", position: "Chairman", positionFil: "Tagapangulo" },
-  { name: "Maria Santos", position: "General Manager", positionFil: "General Manager" },
-  { name: "Carlos Reyes", position: "Assistant General Manager for Planning", positionFil: "Assistant General Manager para sa Planning" },
-  { name: "Jose dela Cruz", position: "Assistant General Manager for Operations", positionFil: "Assistant General Manager para sa Operations" },
-  { name: "Ana Villanueva", position: "Director, Traffic Discipline Office", positionFil: "Direktor, Traffic Discipline Office" },
-  { name: "Roberto Gonzales", position: "Director, Flood Control & Sewerage Management", positionFil: "Direktor, Flood Control & Sewerage Management" },
+const mandates = [
+  { label: "Development Planning", icon: MapTrifold },
+  { label: "Transport and Traffic Management", icon: TrafficSign },
+  { label: "Solid Waste Disposal and Management", icon: Recycle },
+  { label: "Flood Control and Sewerage Management", icon: Drop },
+  { label: "Urban Renewal, Zoning and Land Use Planning and Shelter Services", icon: Buildings },
+  { label: "Health and Sanitation, Urban Protection and Pollution Control", icon: Heartbeat },
+  { label: "Public Safety", icon: ShieldCheck },
+];
+
+const frontlineOffices = [
+  {
+    name: "Traffic Discipline Office",
+    mission:
+      "To provide better management services resulting from a balanced integration of traffic education, engineering and enforcement services.",
+  },
+  {
+    name: "Solid Waste Management Office",
+    mission:
+      "To promote door to door garbage collection in all LGUs of Metro Manila as a means to achieve litter-free, garbage-free streets, sidewalks, vacant lots and waterways and as a tool in advancing proper collection of recyclable materials thereby reducing the amount of solid waste that would require land filling to the final disposal facilities that MMDA assures to provide.",
+  },
+  {
+    name: "Flood Control and Sewerage Management Office",
+    mission:
+      "To prevent flooding in Metro Manila and to make all roads flood-free and passable to all types of vehicles and pedestrians at all times.",
+  },
+  {
+    name: "Health, Public Safety and Environmental Protection Office",
+    mission:
+      "To safeguard the health and sanitation of the region, enhance ecological balance and prevent, control and abate environmental pollution. To continuously implement programs, policies and procedures to achieve public safety, especially disaster preparedness for preventive or rescue operations during times of calamities and disasters.",
+  },
 ];
 
 const history = [
@@ -40,92 +76,169 @@ export default function AboutPage() {
         </p>
       </div>
 
-      {/* Mandate */}
+      {/* Vision & Mission */}
       <section className="mb-10">
         <h2 className="text-xl font-bold tracking-tight mb-4">
-          {language === "en" ? "Mandate" : "Mandato"}
+          {language === "en" ? "Vision & Mission" : "Bisyon at Misyon"}
         </h2>
         <Separator className="mb-6" />
-        <div className="space-y-4 text-sm leading-relaxed text-foreground/90 max-w-[75ch]">
-          <p>
-            {language === "en"
-              ? "The MMDA is a government agency created by Republic Act No. 7924 in 1995. It is mandated to perform planning, monitoring, and coordinative functions — and in the process, exercise regulatory and supervisory authority over the delivery of metro-wide services in Metro Manila."
-              : "Ang MMDA ay isang ahensya ng gobyerno na nilikha ng Republic Act No. 7924 noong 1995. Ito ay mandatong magsagawa ng mga tungkulin sa pagpaplano, pagsubaybay, at koordinasyon — at sa proseso, mag-ehersisyo ng regulatory at supervisory authority sa paghahatid ng mga serbisyong metro-wide sa Metro Manila."}
-          </p>
-          <p>
-            {language === "en"
-              ? "These metro-wide services include: transport and traffic management, flood control and sewerage management, solid waste disposal and management, urban renewal and zoning, health and sanitation, urban protection, and public safety."
-              : "Kabilang sa mga serbisyong metro-wide na ito ang: transport at traffic management, flood control at sewerage management, solid waste disposal at management, urban renewal at zoning, health at sanitation, urban protection, at public safety."}
-          </p>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl">
+          {/* Vision */}
+          <div className="rounded-lg border border-border p-6">
+            <div className="flex items-center gap-2 mb-3">
+              <Eye weight="bold" className="size-5 text-primary" />
+              <h3 className="text-sm font-bold uppercase tracking-wider text-primary">
+                {language === "en" ? "Vision" : "Bisyon"}
+              </h3>
+            </div>
+            <p className="text-sm font-semibold mb-3">
+              &ldquo;TOWARDS A HUMANE, WORLD-CLASS METROPOLIS&rdquo;
+            </p>
+            <p className="text-sm leading-relaxed text-foreground/90">
+              As a humane metropolis, Metropolitan Manila will become a livable and workable physical
+              environment for all.
+            </p>
+          </div>
+
+          {/* Mission */}
+          <div className="rounded-lg border border-border p-6">
+            <div className="flex items-center gap-2 mb-3">
+              <Target weight="bold" className="size-5 text-primary" />
+              <h3 className="text-sm font-bold uppercase tracking-wider text-primary">
+                {language === "en" ? "Mission" : "Misyon"}
+              </h3>
+            </div>
+            <div className="space-y-3 text-sm leading-relaxed text-foreground/90">
+              <p>
+                As a global-oriented metropolis, Metropolitan Manila will evolve into a major business
+                and transaction center in the Asia-Pacific region.
+              </p>
+              <p>
+                As a center of a growth polygon for Luzon Island, Metropolitan Manila will influence
+                the creation of socio-economic opportunities in the areas beyond its political and
+                administrative boundaries.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* The MMDA's Vision (expanded) */}
+        <div className="mt-6 max-w-5xl rounded-lg border border-border bg-muted/30 p-6">
+          <h3 className="text-sm font-bold mb-3">
+            {language === "en" ? "The MMDA's Vision" : "Ang Bisyon ng MMDA"}
+          </h3>
+          <div className="space-y-3 text-sm leading-relaxed text-foreground/90">
+            <p>
+              With Metro Manila as the seat of the National Government and center of Private Business
+              in the country, the challenge of making it a livable, ecological-friendly and dynamic
+              urban center rests with the MMDA and the 17 political units therein.
+            </p>
+            <p>
+              Thus, the role of the MMDA is to assist the 17 political units in crafting and
+              implementing an integrated development plan characterized by unity of purpose,
+              innovation, resiliency, sustainability, adaptability and creativity in meeting the
+              challenges of transport decongestion, climate change, waste management, and disaster
+              prevention among others, in order to achieve a decent quality of life for Metro
+              Manilans.
+            </p>
+          </div>
         </div>
       </section>
 
-      {/* Leadership */}
+      {/* Mandates */}
       <section className="mb-10">
         <h2 className="text-xl font-bold tracking-tight mb-4">
-          {language === "en" ? "Leadership" : "Pamunuan"}
+          {language === "en" ? "Mandates" : "Mga Mandato"}
         </h2>
         <Separator className="mb-6" />
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {leadership.map((person) => (
-            <div key={person.name} className="flex items-center gap-4">
-              <Image
-                src={`https://picsum.photos/seed/${person.name.replace(/\s/g, "")}/200/200`}
-                alt={person.name}
-                width={64}
-                height={64}
-                className="size-16 rounded-full object-cover border border-border"
-              />
-              <div>
-                <p className="text-sm font-semibold">{person.name}</p>
-                <p className="text-xs text-muted-foreground">
-                  {language === "en" ? person.position : person.positionFil}
-                </p>
-              </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 max-w-5xl">
+          {mandates.map((m) => (
+            <div
+              key={m.label}
+              className="flex items-center gap-3 rounded-lg border border-border px-4 py-3"
+            >
+              <m.icon weight="bold" className="size-5 shrink-0 text-primary" />
+              <span className="text-sm font-medium">{m.label}</span>
             </div>
           ))}
         </div>
       </section>
 
-      {/* Organizational Structure */}
+      {/* Statement of Policy */}
       <section className="mb-10">
         <h2 className="text-xl font-bold tracking-tight mb-4">
-          {language === "en" ? "Organizational Structure" : "Istraktura ng Organisasyon"}
+          {language === "en" ? "Statement of Policy" : "Pahayag ng Patakaran"}
         </h2>
         <Separator className="mb-6" />
-        <div className="max-w-2xl">
-          {/* Simple hierarchy */}
-          <div className="space-y-3 text-sm">
-            <div className="rounded-lg border border-primary bg-primary/5 px-4 py-3 font-semibold text-primary text-center">
-              {language === "en" ? "Chairman" : "Tagapangulo"}
+        <div className="flex gap-3 max-w-[75ch]">
+          <Scroll weight="bold" className="size-5 shrink-0 text-primary mt-0.5" />
+          <p className="text-sm leading-relaxed text-foreground/90">
+            Metropolitan Manila as a special development and administrative region shall delineate
+            and consider basic services affecting or involving Metropolitan Manila. The Authority
+            shall plan, supervise, regulate, monitor, coordinate or implement policies, programs and
+            projects where appropriate, in conformity with the national government policies without
+            prejudice to the autonomy of metro local government units.
+          </p>
+        </div>
+      </section>
+
+      {/* Frontline Offices' Mission */}
+      <section className="mb-10">
+        <h2 className="text-xl font-bold tracking-tight mb-4">
+          {language === "en" ? "Frontline Offices" : "Mga Frontline na Tanggapan"}
+        </h2>
+        <Separator className="mb-6" />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-5xl">
+          {frontlineOffices.map((office) => (
+            <div key={office.name} className="rounded-lg border border-border p-5">
+              <h3 className="text-sm font-bold mb-2">{office.name}</h3>
+              <p className="text-sm leading-relaxed text-foreground/80">{office.mission}</p>
             </div>
-            <div className="flex justify-center">
-              <div className="h-6 w-px bg-border" />
-            </div>
-            <div className="rounded-lg border border-border bg-muted/50 px-4 py-3 font-medium text-center">
-              {language === "en" ? "General Manager" : "General Manager"}
-            </div>
-            <div className="flex justify-center">
-              <div className="h-6 w-px bg-border" />
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {[
-                { en: "Traffic Discipline Office", fil: "Traffic Discipline Office" },
-                { en: "Flood Control & Sewerage", fil: "Flood Control & Sewerage" },
-                { en: "Road Safety & Traffic Engineering", fil: "Road Safety & Traffic Engineering" },
-                { en: "Solid Waste Management", fil: "Solid Waste Management" },
-                { en: "Planning Office", fil: "Planning Office" },
-                { en: "Public Safety Office", fil: "Public Safety Office" },
-              ].map((office) => (
-                <div
-                  key={office.en}
-                  className="rounded-lg border border-border px-3 py-2 text-xs text-center"
-                >
-                  {language === "en" ? office.en : office.fil}
-                </div>
-              ))}
-            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Citizen's Charter — Performance Pledge */}
+      <section className="mb-10">
+        <h2 className="text-xl font-bold tracking-tight mb-4">
+          {language === "en" ? "MMDA Citizen's Charter" : "MMDA Citizen's Charter"}
+        </h2>
+        <Separator className="mb-6" />
+        <div className="max-w-[75ch] rounded-lg border border-primary/20 bg-primary/5 p-6">
+          <div className="flex items-center gap-2 mb-4">
+            <Handshake weight="bold" className="size-5 text-primary" />
+            <h3 className="text-sm font-bold uppercase tracking-wider text-primary">
+              Performance Pledge
+            </h3>
           </div>
+          <p className="text-sm leading-relaxed text-foreground/90 mb-4">
+            We, the officers and employees of the Metropolitan Manila Development Authority, commit
+            to:
+          </p>
+          <ul className="space-y-3 text-sm leading-relaxed text-foreground/90 list-disc pl-5">
+            <li>
+              Serve the public efficiently with sincerity and utmost courtesy Mondays to Fridays,
+              8:00 a.m. to 5:00 p.m. and if necessary, shall extend our services beyond office hours
+              to immediately respond to the needs of the public.
+            </li>
+            <li>
+              Promptly provide and deliver efficient and effective metro-wide services that are
+              responsive to the needs of Metro Manilans pursuant to the mandates of MMDA under RA
+              7924.
+            </li>
+            <li>
+              Ensure strict compliance with service standards, with written explanation for any delays
+              in frontline services.
+            </li>
+            <li>
+              Empower the public through 24/7 access to information on policies, activities, programs
+              and projects thru the website (www.mmda.gov.ph) and thru hotline 136.
+            </li>
+          </ul>
+          <p className="mt-4 text-sm font-semibold text-primary">
+            All these we pledge because YOU deserve the BEST.
+          </p>
         </div>
       </section>
 
@@ -136,7 +249,6 @@ export default function AboutPage() {
         </h2>
         <Separator className="mb-6" />
         <div className="relative max-w-2xl">
-          {/* Timeline */}
           <div className="absolute left-[18px] top-2 bottom-2 w-px bg-border" aria-hidden="true" />
           <div className="space-y-6">
             {history.map((item) => (
