@@ -108,27 +108,24 @@ export default function ReportConcernPage() {
         />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(200,16,46,0.2),transparent_45%),linear-gradient(180deg,rgba(2,8,23,0.12),rgba(2,8,23,0))]" />
 
-        <div className="relative mx-auto max-w-7xl rounded-[2.5rem] border border-white/14 bg-[#071428]/88 px-6 py-14 text-white shadow-[0_32px_120px_-48px_rgba(7,20,40,0.9)] backdrop-blur xl:px-12 xl:py-18">
-          <div className="mx-auto max-w-6xl text-center">
+        <div className="relative mx-auto max-w-7xl overflow-hidden rounded-[2.5rem] border border-white/14 bg-[#071428]/88 px-6 py-14 text-white shadow-[0_32px_120px_-48px_rgba(7,20,40,0.9)] backdrop-blur xl:px-12 xl:py-18">
+          <div
+            className="absolute inset-0 bg-cover bg-center opacity-16 mix-blend-luminosity"
+            style={{ backgroundImage: "url('https://picsum.photos/seed/report-inline/1280/960')" }}
+          />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(200,16,46,0.18),transparent_42%),linear-gradient(180deg,rgba(2,8,23,0.12),rgba(2,8,23,0.42))]" />
+
+          <div className="relative mx-auto max-w-6xl text-center">
             <p className="text-sm font-medium leading-7 text-white/72">
               {language === "en"
                 ? "Use this channel to report road hazards, flooding, illegal obstructions, and operational concerns across Metro Manila."
                 : "Gamitin ang channel na ito upang mag-ulat ng road hazard, pagbaha, ilegal na obstruction, at iba pang operational concern sa Metro Manila."}
             </p>
 
-            <h1 className="mx-auto mt-8 max-w-6xl text-[clamp(3rem,5vw,5.4rem)] font-semibold leading-[0.94] tracking-[-0.05em]">
-              {language === "en" ? "Escalate public road concerns with " : "I-escalate ang public road concern gamit ang "}
-              <span
-                className="mx-2 inline-block h-12 w-24 rounded-full border border-white/20 align-middle opacity-95 md:h-16 md:w-32"
-                style={{
-                  backgroundImage: "url('https://picsum.photos/seed/report-inline/640/320')",
-                  backgroundPosition: "center",
-                  backgroundSize: "cover",
-                }}
-              />
+            <h1 className="mx-auto mt-8 max-w-6xl text-[clamp(3rem,5vw,5.4rem)] font-semibold leading-[0.94] tracking-tighter">
               {language === "en"
-                ? "the right details for faster action."
-                : "tamang detalye para sa mas mabilis na aksyon."}
+                ? "Escalate public road concerns with the right details for faster action."
+                : "I-escalate ang public road concern gamit ang tamang detalye para sa mas mabilis na aksyon."}
             </h1>
 
             <p className="mx-auto mt-8 max-w-3xl text-base leading-8 text-white/72 md:text-lg">
@@ -140,14 +137,14 @@ export default function ReportConcernPage() {
             <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
               <a
                 href="tel:136"
-                className="inline-flex min-w-[220px] items-center justify-center gap-2 rounded-full bg-white px-7 py-4 text-sm font-semibold text-slate-950 transition-transform hover:-translate-y-0.5 hover:bg-white/92 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                className="inline-flex min-w-55 items-center justify-center gap-2 rounded-full bg-white px-7 py-4 text-sm font-semibold text-slate-950 transition-transform hover:-translate-y-0.5 hover:bg-white/92 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
               >
                 <Phone className="size-4" weight="bold" />
                 {language === "en" ? "Call Metrobase 136" : "Tumawag sa Metrobase 136"}
               </a>
               <Link
                 href="/services"
-                className="inline-flex min-w-[220px] items-center justify-center gap-2 rounded-full border border-white/20 bg-white/10 px-7 py-4 text-sm font-semibold text-white transition-colors hover:bg-white/16 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                className="inline-flex min-w-55 items-center justify-center gap-2 rounded-full border border-white/20 bg-white/10 px-7 py-4 text-sm font-semibold text-white transition-colors hover:bg-white/16 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
               >
                 {language === "en" ? "Back to services" : "Bumalik sa services"}
                 <ArrowRight className="size-4" weight="bold" />
@@ -158,7 +155,7 @@ export default function ReportConcernPage() {
       </section>
 
       <section className="mx-auto max-w-7xl px-4 pb-12 sm:px-6 lg:px-8">
-        <div className="hidden h-[360px] overflow-hidden rounded-[2rem] border border-border lg:flex">
+        <div className="hidden h-90 overflow-hidden rounded-[2rem] border border-border lg:flex">
           {responseSteps.map((step, index) => (
             <article
               key={step.seed}
@@ -389,7 +386,7 @@ export default function ReportConcernPage() {
                   <textarea
                     id="description"
                     rows={5}
-                    className="mt-1.5 flex min-h-[130px] w-full resize-y rounded-xl border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    className="mt-1.5 flex min-h-32.5 w-full resize-y rounded-xl border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                     placeholder={language === "en" ? "Provide details about the concern..." : "Magbigay ng detalye tungkol sa problema..."}
                     {...register("description", { required: true, minLength: 20 })}
                     aria-invalid={!!errors.description}

@@ -140,7 +140,7 @@ export function Footer() {
               </li>
               <li>
                 <a
-                  href="https://x.com/ABORMMDA"
+                  href="https://x.com/MMDA"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 text-sm text-white/68 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
@@ -152,7 +152,7 @@ export function Footer() {
               </li>
               <li>
                 <a
-                  href="https://facebook.com/mabormmda"
+                  href="https://www.facebook.com/MMDAPH"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 text-sm text-white/68 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
