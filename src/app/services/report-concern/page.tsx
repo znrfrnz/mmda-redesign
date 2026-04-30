@@ -150,7 +150,7 @@ export default function ReportConcernPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-4 pb-12 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 pt-16 pb-12 sm:px-6 lg:px-8 lg:pt-24">
         <div className="hidden h-90 overflow-hidden rounded-[2rem] border border-border lg:flex">
           {responseSteps.map((step, index) => (
             <article

@@ -27,6 +27,13 @@ const mandates = [
   { label: "Public Safety", icon: ShieldCheck },
 ];
 
+const officesImages = [
+  "/images/about/offices/offices-1.jpg",
+  "/images/about/offices/offices-2.jpg",
+  "/images/about/offices/offices-3.jpg",
+  "/images/about/offices/offices-4.jpg",
+] as const;
+
 const frontlineOffices = [
   {
     name: "Traffic Discipline Office",
@@ -244,7 +251,10 @@ export default function AboutPage() {
         </div>
 
         <div className="mt-10 hidden h-[360px] overflow-hidden rounded-[2rem] border border-border lg:flex">
-          {frontlineOffices.map((office, index) => (
+          {frontlineOffices.map((office, index) => {
+            const officeImage = officesImages[index % officesImages.length];
+
+            return (
             <article
               key={office.name}
               className="group relative flex-1 overflow-hidden border-l border-white/10 first:border-l-0 transition-[flex] duration-700 ease-out hover:flex-[1.75]"
@@ -252,7 +262,7 @@ export default function AboutPage() {
               <div
                 className="absolute inset-0 opacity-24 transition-transform duration-700 ease-out group-hover:scale-105"
                 style={{
-                  backgroundImage: `url('https://picsum.photos/seed/frontline-${index + 1}/1000/1200')`,
+                  backgroundImage: `url('${officeImage}')`,
                   backgroundPosition: "center",
                   backgroundSize: "cover",
                 }}
@@ -265,7 +275,8 @@ export default function AboutPage() {
                 </p>
               </div>
             </article>
-          ))}
+            );
+          })}
         </div>
 
         <div className="mt-10 grid gap-4 lg:hidden">
