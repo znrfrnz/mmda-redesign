@@ -6,10 +6,17 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useSettingsStore } from "@/stores/useSettingsStore";
 import { t } from "@/lib/translations";
-import { MagnifyingGlass, List, Phone, Warning } from "@phosphor-icons/react";
+import { MagnifyingGlass, List, Phone } from "@phosphor-icons/react";
 import { MobileNav } from "./MobileNav";
 import { SearchDialog } from "./SearchDialog";
 import { cn } from "@/lib/utils";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { ChevronDownIcon } from "lucide-react";
 
 const NAV_ITEMS = [
   { key: "nav.home" as const, href: "/" },
@@ -20,11 +27,17 @@ const NAV_ITEMS = [
   { key: "nav.contact" as const, href: "/contact" },
 ] as const;
 
+const PRIMARY_NAV_ITEMS = NAV_ITEMS.filter((item) => item.href !== "/services");
+const SERVICES_NAV_ITEM = NAV_ITEMS.find((item) => item.href === "/services")!;
+
 export function Header() {
   const { language } = useSettingsStore();
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const servicesLabel = pathname.startsWith("/services/report-concern")
+    ? t("nav.report", language)
+    : t("nav.services", language);
 
   return (
     <header className="sticky top-3 z-40 px-3 sm:px-4 lg:px-6">
@@ -54,7 +67,7 @@ export function Header() {
             className="hidden min-w-0 flex-1 flex-nowrap items-center justify-center gap-0.5 overflow-x-auto whitespace-nowrap [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden xl:flex"
             aria-label={t("a11y.mainNav", language)}
           >
-            {NAV_ITEMS.map((item) => {
+            {PRIMARY_NAV_ITEMS.map((item) => {
               const isActive =
                 item.href === "/"
                   ? pathname === "/"
@@ -76,6 +89,34 @@ export function Header() {
                 </Link>
               );
             })}
+
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button
+                  type="button"
+                  className={cn(
+                    "inline-flex items-center gap-1 rounded-full px-2.5 py-2 text-[0.78rem] font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white",
+                    pathname === "/services" || pathname.startsWith("/services/")
+                      ? "bg-white text-slate-950"
+                      : "text-white/72 hover:bg-white/10 hover:text-white"
+                  )}
+                  aria-haspopup="menu"
+                >
+                  {servicesLabel}
+                  <ChevronDownIcon className="size-3.5 opacity-80" />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="center" className="w-56">
+                <DropdownMenuItem asChild>
+                  <Link href={SERVICES_NAV_ITEM.href}>{t("nav.services", language)}</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/services/report-concern">
+                    {language === "en" ? "Report a concern" : "Mag-ulat ng problema"}
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </nav>
 
           <div className="ml-auto hidden items-center gap-2 md:flex xl:ml-0 xl:justify-self-end">
@@ -86,14 +127,6 @@ export function Header() {
               <Phone className="size-4" weight="bold" />
               136
             </a>
-
-            <Link
-              href="/services/report-concern"
-              className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white px-3 py-2 text-[0.78rem] font-semibold text-slate-950 transition-transform hover:-translate-y-0.5 hover:bg-white/92 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
-            >
-              <Warning className="size-4" weight="bold" />
-              {language === "en" ? "Report a concern" : "Mag-ulat ng problema"}
-            </Link>
 
             <button
               onClick={() => setSearchOpen(true)}
