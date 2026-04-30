@@ -107,7 +107,7 @@ export function NewsArticleDetail({ article }: { article: NewsArticle }) {
         <div className="grid gap-8 lg:grid-cols-[0.68fr_0.32fr]">
           <article className="rounded-[1.9rem] border border-border bg-card p-7 md:p-9">
             {article.imageUrl && (
-              <div className="relative mb-8 aspect-[16/9] w-full overflow-hidden rounded-[1.5rem]">
+              <div className="relative mb-8 aspect-video w-full overflow-hidden rounded-[1.5rem]">
                 <Image
                   src={article.imageUrl}
                   alt={title}

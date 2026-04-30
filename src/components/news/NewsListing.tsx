@@ -54,10 +54,10 @@ export function NewsListing() {
       <section className="relative isolate overflow-hidden px-4 pb-24 pt-16 sm:px-6 lg:px-8 lg:pb-32">
         <div
           className="absolute inset-0 bg-cover bg-center opacity-24 mix-blend-luminosity"
-          style={{ backgroundImage: "url('https://picsum.photos/seed/mmda-news-hero/1920/1080')" }}
+          style={{ backgroundImage: "url('/images/newsAdvisories/news.jpg')" }}
         />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(43,92,182,0.36),transparent_48%),linear-gradient(180deg,rgba(2,8,23,0.12),rgba(2,8,23,0))]" />
-        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-32 bg-linear-to-t from-background to-transparent" />
 
         <div className="relative mx-auto max-w-7xl rounded-[2.5rem] border border-white/14 bg-[#071428]/88 px-6 py-14 text-white shadow-[0_32px_120px_-48px_rgba(7,20,40,0.9)] backdrop-blur xl:px-12 xl:py-18">
           <div className="mx-auto max-w-6xl text-center">
@@ -67,7 +67,7 @@ export function NewsListing() {
                 : "Subaybayan ang MMDA advisories, operational notice, at press release mula sa iisang consolidated newsroom."}
             </p>
 
-            <h1 className="mx-auto mt-8 max-w-6xl text-[clamp(3rem,5vw,5.4rem)] font-semibold leading-[0.94] tracking-[-0.05em]">
+            <h1 className="mx-auto mt-8 max-w-6xl text-[clamp(3rem,5vw,5.4rem)] font-semibold leading-[0.94] tracking-tighter">
               {language === "en"
                 ? "News, advisories, and public notices."
                 : "Balita, abiso, at pampublikong paunawa."}
@@ -82,14 +82,14 @@ export function NewsListing() {
             <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
               <Link
                 href="/traffic"
-                className="inline-flex min-w-[220px] items-center justify-center gap-2 rounded-full bg-white px-7 py-4 text-sm font-semibold text-slate-950 transition-transform hover:-translate-y-0.5 hover:bg-white/92 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                className="inline-flex min-w-55 items-center justify-center gap-2 rounded-full bg-white px-7 py-4 text-sm font-semibold text-slate-950 transition-transform hover:-translate-y-0.5 hover:bg-white/92 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
               >
                 {language === "en" ? "Open traffic tools" : "Buksan ang traffic tools"}
                 <ArrowRight className="size-4" weight="bold" />
               </Link>
               <Link
                 href="/services/report-concern"
-                className="inline-flex min-w-[220px] items-center justify-center gap-2 rounded-full border border-white/20 bg-white/10 px-7 py-4 text-sm font-semibold text-white transition-colors hover:bg-white/16 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                className="inline-flex min-w-55 items-center justify-center gap-2 rounded-full border border-white/20 bg-white/10 px-7 py-4 text-sm font-semibold text-white transition-colors hover:bg-white/16 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
               >
                 {language === "en" ? "Report a concern" : "Mag-ulat ng problema"}
                 <ArrowRight className="size-4" weight="bold" />
@@ -134,12 +134,12 @@ export function NewsListing() {
                 className="group mt-8 block overflow-hidden rounded-[2rem] border border-border bg-card shadow-[0_2px_16px_-6px_rgba(0,0,0,0.08)] transition-shadow hover:shadow-[0_4px_24px_-8px_rgba(0,0,0,0.12)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
                 <div className="grid gap-0 lg:grid-cols-[1.05fr_0.95fr]">
-                  <div className="relative min-h-[280px] overflow-hidden">
+                  <div className="relative min-h-70 overflow-hidden">
                     <Image
                       src={featured.imageUrl || "https://picsum.photos/seed/news-fallback/1200/900"}
                       alt={language === "en" ? featured.title : featured.titleFil}
                       fill
-                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                      className="object-cover brightness-95 transition-transform duration-700 ease-out group-hover:scale-105"
                       sizes="(max-width: 1024px) 100vw, 50vw"
                     />
                     <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,20,45,0.1),rgba(6,20,45,0.75))] lg:hidden" />
@@ -187,14 +187,14 @@ export function NewsListing() {
                     className={`group relative overflow-hidden rounded-[1.65rem] border border-border bg-card p-6 shadow-[0_2px_16px_-6px_rgba(0,0,0,0.08)] transition-all hover:border-primary/30 hover:shadow-[0_4px_24px_-8px_rgba(0,0,0,0.12)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${spanClass}`}
                   >
                     <div
-                      className="absolute inset-0 opacity-16 transition-transform duration-700 ease-out group-hover:scale-105"
+                      className="absolute inset-0 opacity-30 brightness-95 transition-transform duration-700 ease-out group-hover:scale-105"
                       style={{
-                        backgroundImage: `url('https://picsum.photos/seed/${article.slug}-card/1200/800')`,
+                        backgroundImage: `url('${article.imageUrl ?? "/images/1.jpg"}')`,
                         backgroundPosition: "center",
                         backgroundSize: "cover",
                       }}
                     />
-                    <div className="absolute inset-0 bg-[linear-gradient(140deg,rgba(255,255,255,0.94),rgba(248,250,252,0.88))] dark:bg-[linear-gradient(140deg,rgba(6,20,45,0.9),rgba(10,30,66,0.84))]" />
+                    <div className="absolute inset-0 bg-[linear-gradient(140deg,rgba(255,255,255,0.88),rgba(248,250,252,0.78))] dark:bg-[linear-gradient(140deg,rgba(6,20,45,0.84),rgba(10,30,66,0.76))]" />
                     <div className="relative">
                       <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">
                         {categoryLabels[article.category][language]}

@@ -29,6 +29,12 @@ const reportSchema = z.object({
   description: z.string().min(20, "Description must be at least 20 characters"),
 });
 
+const stepsImages = [
+  "/images/report/steps/steps-1.jpg",
+  "/images/report/steps/steps-2.jpg",
+  "/images/report/steps/steps-3.jpg",
+] as const;
+
 type ReportFormData = z.infer<typeof reportSchema>;
 
 const responseSteps = [
@@ -104,31 +110,24 @@ export default function ReportConcernPage() {
       <section className="relative isolate overflow-hidden px-4 pb-24 pt-16 sm:px-6 lg:px-8 lg:pb-32">
         <div
           className="absolute inset-0 bg-cover bg-center opacity-22 mix-blend-luminosity"
-          style={{ backgroundImage: "url('https://picsum.photos/seed/mmda-reporting-hero/1920/1080')" }}
+          style={{ backgroundImage: "url('/images/report/report.jpg')" }}
         />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(200,16,46,0.2),transparent_45%),linear-gradient(180deg,rgba(2,8,23,0.12),rgba(2,8,23,0))]" />
 
-        <div className="relative mx-auto max-w-7xl rounded-[2.5rem] border border-white/14 bg-[#071428]/88 px-6 py-14 text-white shadow-[0_32px_120px_-48px_rgba(7,20,40,0.9)] backdrop-blur xl:px-12 xl:py-18">
-          <div className="mx-auto max-w-6xl text-center">
+        <div className="relative mx-auto max-w-7xl overflow-hidden rounded-[2.5rem] border border-white/14 bg-[#071428]/88 px-6 py-14 text-white shadow-[0_32px_120px_-48px_rgba(7,20,40,0.9)] backdrop-blur xl:px-12 xl:py-18">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(200,16,46,0.18),transparent_42%),linear-gradient(180deg,rgba(2,8,23,0.12),rgba(2,8,23,0.42))]" />
+
+          <div className="relative mx-auto max-w-6xl text-center">
             <p className="text-sm font-medium leading-7 text-white/72">
               {language === "en"
                 ? "Use this channel to report road hazards, flooding, illegal obstructions, and operational concerns across Metro Manila."
                 : "Gamitin ang channel na ito upang mag-ulat ng road hazard, pagbaha, ilegal na obstruction, at iba pang operational concern sa Metro Manila."}
             </p>
 
-            <h1 className="mx-auto mt-8 max-w-6xl text-[clamp(3rem,5vw,5.4rem)] font-semibold leading-[0.94] tracking-[-0.05em]">
-              {language === "en" ? "Escalate public road concerns with " : "I-escalate ang public road concern gamit ang "}
-              <span
-                className="mx-2 inline-block h-12 w-24 rounded-full border border-white/20 align-middle opacity-95 md:h-16 md:w-32"
-                style={{
-                  backgroundImage: "url('https://picsum.photos/seed/report-inline/640/320')",
-                  backgroundPosition: "center",
-                  backgroundSize: "cover",
-                }}
-              />
+            <h1 className="mx-auto mt-8 max-w-6xl text-[clamp(3rem,5vw,5.4rem)] font-semibold leading-[0.94] tracking-tighter">
               {language === "en"
-                ? "the right details for faster action."
-                : "tamang detalye para sa mas mabilis na aksyon."}
+                ? "Escalate public road concerns with the right details for faster action."
+                : "I-escalate ang public road concern gamit ang tamang detalye para sa mas mabilis na aksyon."}
             </h1>
 
             <p className="mx-auto mt-8 max-w-3xl text-base leading-8 text-white/72 md:text-lg">
@@ -140,14 +139,14 @@ export default function ReportConcernPage() {
             <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
               <a
                 href="tel:136"
-                className="inline-flex min-w-[220px] items-center justify-center gap-2 rounded-full bg-white px-7 py-4 text-sm font-semibold text-slate-950 transition-transform hover:-translate-y-0.5 hover:bg-white/92 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                className="inline-flex min-w-55 items-center justify-center gap-2 rounded-full bg-white px-7 py-4 text-sm font-semibold text-slate-950 transition-transform hover:-translate-y-0.5 hover:bg-white/92 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
               >
                 <Phone className="size-4" weight="bold" />
                 {language === "en" ? "Call Metrobase 136" : "Tumawag sa Metrobase 136"}
               </a>
               <Link
                 href="/services"
-                className="inline-flex min-w-[220px] items-center justify-center gap-2 rounded-full border border-white/20 bg-white/10 px-7 py-4 text-sm font-semibold text-white transition-colors hover:bg-white/16 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                className="inline-flex min-w-55 items-center justify-center gap-2 rounded-full border border-white/20 bg-white/10 px-7 py-4 text-sm font-semibold text-white transition-colors hover:bg-white/16 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
               >
                 {language === "en" ? "Back to services" : "Bumalik sa services"}
                 <ArrowRight className="size-4" weight="bold" />
@@ -157,38 +156,39 @@ export default function ReportConcernPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-4 pb-12 sm:px-6 lg:px-8">
-        <div className="hidden h-[360px] overflow-hidden rounded-[2rem] border border-border lg:flex">
-          {responseSteps.map((step, index) => (
-            <article
-              key={step.seed}
-              className={`
-                group relative flex-1 overflow-hidden border-l border-white/10 first:border-l-0
-                transition-[flex] duration-700 ease-out hover:flex-[1.75]
-              `}
-            >
-              <div
-                className="absolute inset-0 opacity-28 transition-transform duration-700 ease-out group-hover:scale-105"
-                style={{
-                  backgroundImage: `url('https://picsum.photos/seed/${step.seed}/900/1200')`,
-                  backgroundPosition: "center",
-                  backgroundSize: "cover",
-                }}
-              />
-              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,20,45,0.2),rgba(6,20,45,0.9))]" />
-              <div className="relative flex h-full flex-col justify-end p-6 text-white">
-                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/62">
-                  {language === "en" ? `Step ${index + 1}` : `Hakbang ${index + 1}`}
-                </p>
-                <h2 className="mt-3 text-xl font-semibold leading-snug">
-                  {language === "en" ? step.enTitle : step.filTitle}
-                </h2>
-                <p className="mt-3 max-h-0 overflow-hidden text-sm leading-7 text-white/72 opacity-0 transition-all duration-500 group-hover:max-h-48 group-hover:opacity-100">
-                  {language === "en" ? step.enBody : step.filBody}
-                </p>
-              </div>
-            </article>
-          ))}
+      <section className="mx-auto max-w-7xl px-4 pt-16 pb-12 sm:px-6 lg:px-8 lg:pt-24">
+        <div className="hidden h-90 overflow-hidden rounded-[2rem] border border-border lg:flex">
+          {responseSteps.map((step, index) => {
+            const stepImage = stepsImages[index % stepsImages.length];
+
+            return (
+              <article
+                key={step.seed}
+                className="group relative flex-1 overflow-hidden border-l border-white/10 first:border-l-0 transition-[flex] duration-700 ease-out hover:flex-[1.75]"
+              >
+                <div
+                  className="absolute inset-0 opacity-28 transition-transform duration-700 ease-out group-hover:scale-105"
+                  style={{
+                    backgroundImage: `url('${stepImage}')`,
+                    backgroundPosition: "center",
+                    backgroundSize: "cover",
+                  }}
+                />
+                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,20,45,0.2),rgba(6,20,45,0.9))]" />
+                <div className="relative flex h-full flex-col justify-end p-6 text-white">
+                  <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/62">
+                    {language === "en" ? `Step ${index + 1}` : `Hakbang ${index + 1}`}
+                  </p>
+                  <h2 className="mt-3 text-xl font-semibold leading-snug">
+                    {language === "en" ? step.enTitle : step.filTitle}
+                  </h2>
+                  <p className="mt-3 max-h-0 overflow-hidden text-sm leading-7 text-white/72 opacity-0 transition-all duration-500 group-hover:max-h-48 group-hover:opacity-100">
+                    {language === "en" ? step.enBody : step.filBody}
+                  </p>
+                </div>
+              </article>
+            );
+          })}
         </div>
 
         <div className="grid gap-4 lg:hidden">
@@ -389,7 +389,7 @@ export default function ReportConcernPage() {
                   <textarea
                     id="description"
                     rows={5}
-                    className="mt-1.5 flex min-h-[130px] w-full resize-y rounded-xl border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    className="mt-1.5 flex min-h-32.5 w-full resize-y rounded-xl border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                     placeholder={language === "en" ? "Provide details about the concern..." : "Magbigay ng detalye tungkol sa problema..."}
                     {...register("description", { required: true, minLength: 20 })}
                     aria-invalid={!!errors.description}

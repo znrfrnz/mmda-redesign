@@ -27,6 +27,13 @@ const mandates = [
   { label: "Public Safety", icon: ShieldCheck },
 ];
 
+const officesImages = [
+  "/images/about/offices/offices-1.jpg",
+  "/images/about/offices/offices-2.jpg",
+  "/images/about/offices/offices-3.jpg",
+  "/images/about/offices/offices-4.jpg",
+] as const;
+
 const frontlineOffices = [
   {
     name: "Traffic Discipline Office",
@@ -96,7 +103,7 @@ export default function AboutPage() {
       <section className="relative isolate overflow-hidden px-4 pb-24 pt-16 sm:px-6 lg:px-8 lg:pb-32">
         <div
           className="absolute inset-0 bg-cover bg-center opacity-24 mix-blend-luminosity"
-          style={{ backgroundImage: "url('https://picsum.photos/seed/mmda-about-hero/1920/1080')" }}
+          style={{ backgroundImage: "url('/images/about/mmda_logo.jpg')" }}
         />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(43,92,182,0.36),transparent_48%),linear-gradient(180deg,rgba(2,8,23,0.12),rgba(2,8,23,0))]" />
         <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background to-transparent" />
@@ -244,7 +251,10 @@ export default function AboutPage() {
         </div>
 
         <div className="mt-10 hidden h-[360px] overflow-hidden rounded-[2rem] border border-border lg:flex">
-          {frontlineOffices.map((office, index) => (
+          {frontlineOffices.map((office, index) => {
+            const officeImage = officesImages[index % officesImages.length];
+
+            return (
             <article
               key={office.name}
               className="group relative flex-1 overflow-hidden border-l border-white/10 first:border-l-0 transition-[flex] duration-700 ease-out hover:flex-[1.75]"
@@ -252,7 +262,7 @@ export default function AboutPage() {
               <div
                 className="absolute inset-0 opacity-24 transition-transform duration-700 ease-out group-hover:scale-105"
                 style={{
-                  backgroundImage: `url('https://picsum.photos/seed/frontline-${index + 1}/1000/1200')`,
+                  backgroundImage: `url('${officeImage}')`,
                   backgroundPosition: "center",
                   backgroundSize: "cover",
                 }}
@@ -265,7 +275,8 @@ export default function AboutPage() {
                 </p>
               </div>
             </article>
-          ))}
+            );
+          })}
         </div>
 
         <div className="mt-10 grid gap-4 lg:hidden">

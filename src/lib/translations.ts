@@ -13,6 +13,7 @@ const translations = {
 
     // Navigation
     "nav.services": "Services",
+    "nav.report": "Report",
     "nav.traffic": "Traffic & Roads",
     "nav.news": "News & Advisories",
     "nav.about": "About MMDA",
@@ -92,6 +93,7 @@ const translations = {
 
     // Navigation
     "nav.services": "Mga Serbisyo",
+    "nav.report": "Iulat",
     "nav.traffic": "Trapiko at Kalsada",
     "nav.news": "Balita at Abiso",
     "nav.about": "Tungkol sa MMDA",

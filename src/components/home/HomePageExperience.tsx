@@ -36,6 +36,7 @@ const journeyCards = [
   {
     href: "/traffic",
     imageSeed: "edsa-rhythm",
+    imagePath: "/images/road_traffic.jpg",
     icon: NavigationArrow,
     title: {
       en: "See real-time road conditions before you leave.",
@@ -50,6 +51,7 @@ const journeyCards = [
   {
     href: "/services/report-concern",
     imageSeed: "civic-response",
+    imagePath: "/images/road_hazard.jpg",
     icon: Warning,
     title: {
       en: "Report hazards and road concerns without searching around.",
@@ -64,6 +66,7 @@ const journeyCards = [
   {
     href: "/services",
     imageSeed: "public-counter",
+    imagePath: "/images/services.jpg",
     icon: ShieldCheck,
     title: {
       en: "Find services with less duplication and clearer next steps.",
@@ -122,18 +125,18 @@ export function HomePageExperience() {
       const journeyItems = gsap.utils.toArray<HTMLElement>(".js-journey-card");
       gsap.fromTo(
         journeyItems,
-        { y: 120, opacity: 0.24, scale: 0.94 },
+        { y: 40, opacity: 0, scale: 0.98 },
         {
           y: 0,
           opacity: 1,
           scale: 1,
-          stagger: 0.16,
-          ease: "power3.out",
+          duration: 0.8,
+          stagger: 0.12,
+          ease: "power2.out",
           scrollTrigger: {
             trigger: pinSectionRef.current,
-            start: "top 72%",
-            end: "bottom 60%",
-            scrub: true,
+            start: "top 85%",
+            toggleActions: "play none none reverse",
           },
         }
       );
@@ -142,16 +145,17 @@ export function HomePageExperience() {
       mediaPanels.forEach((panel) => {
         gsap.fromTo(
           panel,
-          { scale: 0.86, opacity: 0.38 },
+          { y: 20, scale: 0.96, opacity: 0.6 },
           {
+            y: 0,
             scale: 1,
             opacity: 1,
-            ease: "power3.out",
+            duration: 0.9,
+            ease: "power2.out",
             scrollTrigger: {
               trigger: panel,
-              start: "top 82%",
-              end: "bottom top",
-              scrub: true,
+              start: "top 85%",
+              toggleActions: "play none none reverse",
             },
           }
         );
@@ -160,16 +164,17 @@ export function HomePageExperience() {
       const words = gsap.utils.toArray<HTMLElement>(".js-reveal-word");
       gsap.fromTo(
         words,
-        { opacity: 0.12 },
+        { opacity: 0.12, y: 6 },
         {
           opacity: 1,
-          stagger: 0.05,
-          ease: "none",
+          y: 0,
+          duration: 0.6,
+          stagger: 0.04,
+          ease: "power1.out",
           scrollTrigger: {
             trigger: revealRef.current,
-            start: "top 78%",
-            end: "bottom 42%",
-            scrub: true,
+            start: "top 88%",
+            toggleActions: "play none none reverse",
           },
         }
       );
@@ -184,10 +189,10 @@ export function HomePageExperience() {
       <section className="relative isolate overflow-hidden px-4 pb-24 pt-16 sm:px-6 lg:px-8 lg:pb-32">
         <div
           className="absolute inset-0 bg-cover bg-center opacity-20 mix-blend-luminosity"
-          style={{ backgroundImage: "url('https://picsum.photos/seed/manila-civic-axis/1920/1080')" }}
+          style={{ backgroundImage: "url('images/home_page1.jpg')" }}
         />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(43,92,182,0.38),transparent_48%),linear-gradient(180deg,rgba(2,8,23,0.08),rgba(2,8,23,0))]" />
-        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-32 bg-linear-to-t from-background to-transparent" />
 
         <div className="relative mx-auto max-w-7xl rounded-[2.5rem] border border-white/14 bg-[#071428]/88 px-6 py-14 text-white shadow-[0_32px_120px_-48px_rgba(7,20,40,0.9)] backdrop-blur xl:px-12 xl:py-18">
           <div className="mx-auto max-w-6xl text-center">
@@ -248,7 +253,7 @@ export function HomePageExperience() {
             <div
               className="js-scale-media absolute inset-0 opacity-20 transition-transform duration-700 ease-out group-hover:scale-105"
               style={{
-                backgroundImage: "url('https://picsum.photos/seed/mmda-service-hub/1200/900')",
+                backgroundImage: "url('/images/servicing.jpg')",
                 backgroundPosition: "center",
                 backgroundSize: "cover",
               }}
@@ -309,12 +314,12 @@ export function HomePageExperience() {
               <div
                 className="js-scale-media absolute inset-0 opacity-25 transition-transform duration-700 ease-out group-hover:scale-105"
                 style={{
-                  backgroundImage: "url('https://picsum.photos/seed/mmda-newswire/1200/720')",
+                  backgroundImage: "url('/images/edsa_traffic.jpg')",
                   backgroundPosition: "center",
                   backgroundSize: "cover",
                 }}
               />
-              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,20,45,0.2),rgba(6,20,45,0.92))]" />
+              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,20,45,0.45),rgba(6,20,45,0.95))]" />
               <div className="relative flex h-full flex-col justify-between p-7">
                 <div>
                   <div className="flex flex-wrap items-center gap-3 text-xs font-medium uppercase tracking-[0.18em] text-white/65">
@@ -463,7 +468,7 @@ export function HomePageExperience() {
                     <div
                       className="js-scale-media h-full min-h-72 transition-transform duration-700 ease-out group-hover:scale-105"
                       style={{
-                        backgroundImage: `url('https://picsum.photos/seed/${card.imageSeed}/960/1080')`,
+                        backgroundImage: `url('${card.imagePath}')`,
                         backgroundPosition: "center",
                         backgroundSize: "cover",
                       }}

@@ -2,13 +2,27 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { useSettingsStore } from "@/stores/useSettingsStore";
 import { t } from "@/lib/translations";
 import { ArrowRight, FacebookLogo, Phone, Warning, XLogo } from "@phosphor-icons/react";
 
 export function Footer() {
   const { language } = useSettingsStore();
+  const pathname = usePathname();
   const year = new Date().getFullYear();
+
+  function handleTopOfPageClick(event: React.MouseEvent<HTMLAnchorElement>, targetPath: string) {
+    const isSameRoute =
+      pathname === targetPath ||
+      pathname.startsWith(targetPath + "/") ||
+      (targetPath === "/services/report-concern" && pathname.startsWith("/services/report-concern"));
+
+    if (!isSameRoute) return;
+
+    event.preventDefault();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
 
   return (
     <footer className="mt-auto border-t border-white/10 bg-[#06142d] text-white">
@@ -34,6 +48,7 @@ export function Footer() {
             <div className="flex flex-col gap-3 sm:flex-row lg:justify-end">
               <Link
                 href="/services/report-concern"
+                onClick={(event) => handleTopOfPageClick(event, "/services/report-concern")}
                 className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3.5 text-sm font-semibold text-slate-950 transition-transform hover:-translate-y-0.5 hover:bg-white/92 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
               >
                 <Warning className="size-4" weight="bold" />
@@ -41,6 +56,7 @@ export function Footer() {
               </Link>
               <Link
                 href="/traffic"
+                onClick={(event) => handleTopOfPageClick(event, "/traffic")}
                 className="inline-flex items-center justify-center gap-2 rounded-full border border-white/12 bg-white/8 px-6 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-white/14 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
               >
                 {language === "en" ? "Open traffic tools" : "Buksan ang traffic tools"}
@@ -140,7 +156,7 @@ export function Footer() {
               </li>
               <li>
                 <a
-                  href="https://x.com/ABORMMDA"
+                  href="https://x.com/MMDA"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 text-sm text-white/68 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
@@ -152,7 +168,7 @@ export function Footer() {
               </li>
               <li>
                 <a
-                  href="https://facebook.com/mabormmda"
+                  href="https://www.facebook.com/MMDAPH"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 text-sm text-white/68 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"

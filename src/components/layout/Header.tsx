@@ -6,10 +6,17 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useSettingsStore } from "@/stores/useSettingsStore";
 import { t } from "@/lib/translations";
-import { MagnifyingGlass, List, Phone, Warning } from "@phosphor-icons/react";
+import { MagnifyingGlass, List, Phone } from "@phosphor-icons/react";
 import { MobileNav } from "./MobileNav";
 import { SearchDialog } from "./SearchDialog";
 import { cn } from "@/lib/utils";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { ChevronDownIcon } from "lucide-react";
 
 const NAV_ITEMS = [
   { key: "nav.home" as const, href: "/" },
@@ -20,16 +27,22 @@ const NAV_ITEMS = [
   { key: "nav.contact" as const, href: "/contact" },
 ] as const;
 
+const PRIMARY_NAV_ITEMS = NAV_ITEMS.filter((item) => item.href !== "/services");
+const SERVICES_NAV_ITEM = NAV_ITEMS.find((item) => item.href === "/services")!;
+
 export function Header() {
   const { language } = useSettingsStore();
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const servicesLabel = pathname.startsWith("/services/report-concern")
+    ? t("nav.report", language)
+    : t("nav.services", language);
 
   return (
     <header className="sticky top-3 z-40 px-3 sm:px-4 lg:px-6">
       <div className="mx-auto max-w-7xl">
-        <div className="flex min-h-[78px] items-center gap-4 rounded-[1.8rem] border border-white/10 bg-[#06142d]/88 px-4 shadow-[0_24px_80px_-42px_rgba(7,20,40,0.95)] backdrop-blur sm:px-6">
+        <div className="flex min-h-19.5 flex-wrap items-center gap-4 rounded-[1.8rem] border border-white/10 bg-[#06142d]/88 px-4 py-3 shadow-[0_24px_80px_-42px_rgba(7,20,40,0.95)] backdrop-blur sm:px-6 xl:grid xl:min-h-19.5 xl:grid-cols-[auto_minmax(0,1fr)_auto] xl:gap-4 xl:py-0">
           <Link
             href="/"
             className="flex shrink-0 items-center gap-3 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
@@ -51,10 +64,10 @@ export function Header() {
           </Link>
 
           <nav
-            className="ml-3 hidden items-center gap-1 xl:flex"
+            className="hidden min-w-0 flex-1 flex-nowrap items-center justify-center gap-0.5 overflow-x-auto whitespace-nowrap [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden xl:flex"
             aria-label={t("a11y.mainNav", language)}
           >
-            {NAV_ITEMS.map((item) => {
+            {PRIMARY_NAV_ITEMS.map((item) => {
               const isActive =
                 item.href === "/"
                   ? pathname === "/"
@@ -65,7 +78,7 @@ export function Header() {
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    "rounded-full px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white",
+                    "whitespace-nowrap rounded-full px-3 py-2.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white",
                     isActive
                       ? "bg-white text-slate-950"
                       : "text-white/72 hover:bg-white/10 hover:text-white"
@@ -76,28 +89,40 @@ export function Header() {
                 </Link>
               );
             })}
+
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button
+                  type="button"
+                  className={cn(
+                    "inline-flex items-center whitespace-nowrap rounded-full px-3 py-2.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white",
+                    pathname === "/services" || pathname.startsWith("/services/")
+                      ? "bg-white text-slate-950"
+                      : "text-white/72 hover:bg-white/10 hover:text-white"
+                  )}
+                  aria-haspopup="menu"
+                >
+                  {servicesLabel}
+                  <ChevronDownIcon className="ml-1 size-4 opacity-80" />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="center" className="w-56">
+                <DropdownMenuItem asChild>
+                  <Link href={SERVICES_NAV_ITEM.href}>{t("nav.services", language)}</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/services/report-concern">
+                    {language === "en" ? "Report a concern" : "Mag-ulat ng problema"}
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </nav>
 
-          <div className="ml-auto hidden items-center gap-2 md:flex">
-            <a
-              href="tel:136"
-              className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/6 px-4 py-2 text-sm font-medium text-white/80 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
-            >
-              <Phone className="size-4" weight="bold" />
-              136
-            </a>
-
-            <Link
-              href="/services/report-concern"
-              className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white px-4 py-2 text-sm font-semibold text-slate-950 transition-transform hover:-translate-y-0.5 hover:bg-white/92 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
-            >
-              <Warning className="size-4" weight="bold" />
-              {language === "en" ? "Report a concern" : "Mag-ulat ng problema"}
-            </Link>
-
+          <div className="ml-auto hidden items-center gap-2 md:flex xl:ml-0 xl:justify-self-end">
             <button
               onClick={() => setSearchOpen(true)}
-              className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/6 px-4 py-2 text-sm font-medium text-white/80 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+              className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/6 px-4 py-2.5 text-sm font-medium text-white/80 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
               aria-label={t("search.label", language)}
             >
               <MagnifyingGlass className="size-4" weight="bold" />
@@ -105,17 +130,17 @@ export function Header() {
             </button>
           </div>
 
-          <div className="ml-auto flex items-center gap-2 md:hidden">
+          <div className="ml-auto flex items-center gap-2 md:hidden xl:hidden">
             <button
               onClick={() => setSearchOpen(true)}
-              className="inline-flex size-10 items-center justify-center rounded-full border border-white/10 bg-white/6 text-white/78 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+              className="inline-flex items-center justify-center min-w-11 min-h-11 p-2.5 rounded-full border border-white/10 bg-white/6 text-white/78 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
               aria-label={t("util.search", language)}
             >
               <MagnifyingGlass className="size-5" weight="bold" />
             </button>
             <button
               type="button"
-              className="inline-flex size-10 items-center justify-center rounded-full border border-white/10 bg-white/6 text-white/78 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+              className="inline-flex items-center justify-center min-w-11 min-h-11 p-2.5 rounded-full border border-white/10 bg-white/6 text-white/78 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
               onClick={() => setMobileOpen(true)}
               aria-label={t("nav.menu", language)}
             >
