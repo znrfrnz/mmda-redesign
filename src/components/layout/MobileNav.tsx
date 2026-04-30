@@ -61,7 +61,7 @@ export function MobileNav({ open, onOpenChange, items, pathname }: MobileNavProp
                 <button
                   type="button"
                   className={cn(
-                    "flex w-full items-center justify-between rounded-[1.2rem] px-4 py-3 text-sm font-medium transition-colors",
+                    "flex w-full items-center justify-between rounded-[1.2rem] px-5 py-4 text-base font-medium transition-colors",
                     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white",
                     pathname.startsWith("/services")
                       ? "bg-white text-slate-950"
@@ -73,30 +73,30 @@ export function MobileNav({ open, onOpenChange, items, pathname }: MobileNavProp
                   <CaretDown className={cn("size-4 transition-transform", servicesOpen && "rotate-180")} weight="bold" />
                 </button>
               </CollapsibleTrigger>
-              <CollapsibleContent className="mt-2 space-y-2 pl-4">
+                <CollapsibleContent className="mt-2 space-y-2 pl-4">
                 <Link
                   href={servicesItem.href}
                   onClick={() => onOpenChange(false)}
-                  className={cn(
-                    "block rounded-[1rem] px-4 py-3 text-sm font-medium transition-colors",
-                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white",
-                    pathname === "/services"
-                      ? "bg-white text-slate-950"
-                      : "border border-white/10 bg-white/6 text-white/72 hover:bg-white/10 hover:text-white"
-                  )}
+                    className={cn(
+                      "block rounded-[1rem] px-5 py-4 text-base font-medium transition-colors",
+                      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white",
+                      pathname === "/services"
+                        ? "bg-white text-slate-950"
+                        : "border border-white/10 bg-white/6 text-white/72 hover:bg-white/10 hover:text-white"
+                    )}
                 >
                   {language === "en" ? "All services" : "Lahat ng serbisyo"}
                 </Link>
                 <Link
                   href="/services/report-concern"
                   onClick={() => onOpenChange(false)}
-                  className={cn(
-                    "block rounded-[1rem] px-4 py-3 text-sm font-medium transition-colors",
-                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white",
-                    pathname.startsWith("/services/report-concern")
-                      ? "bg-white text-slate-950"
-                      : "border border-white/10 bg-white/6 text-white/72 hover:bg-white/10 hover:text-white"
-                  )}
+                    className={cn(
+                      "block rounded-[1rem] px-5 py-4 text-base font-medium transition-colors",
+                      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white",
+                      pathname.startsWith("/services/report-concern")
+                        ? "bg-white text-slate-950"
+                        : "border border-white/10 bg-white/6 text-white/72 hover:bg-white/10 hover:text-white"
+                    )}
                 >
                   {language === "en" ? "Report a concern" : "Mag-ulat ng problema"}
                 </Link>
@@ -116,7 +116,7 @@ export function MobileNav({ open, onOpenChange, items, pathname }: MobileNavProp
                 href={item.href}
                 onClick={() => onOpenChange(false)}
                 className={cn(
-                  "rounded-[1.2rem] px-4 py-3 text-sm font-medium transition-colors",
+                  "rounded-[1.2rem] px-5 py-4 text-base font-medium transition-colors",
                   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white",
                   isActive
                     ? "bg-white text-slate-950"
@@ -130,17 +130,7 @@ export function MobileNav({ open, onOpenChange, items, pathname }: MobileNavProp
           })}
         </nav>
 
-        <div className="border-t border-white/10 px-4 py-5">
-          <div className="space-y-3 rounded-[1.5rem] border border-white/10 bg-white/6 p-4">
-            <a
-              href="tel:136"
-              className="inline-flex w-full items-center justify-between rounded-[1.15rem] border border-white/10 bg-white/6 px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
-            >
-              {language === "en" ? "Call Metrobase 136" : "Tumawag sa Metrobase 136"}
-              <Phone className="size-4" weight="bold" />
-            </a>
-          </div>
-        </div>
+        {/* Metrobase 136 removed from mobile navigation per request */}
       </SheetContent>
     </Sheet>
   );

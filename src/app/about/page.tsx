@@ -96,7 +96,7 @@ export default function AboutPage() {
       <section className="relative isolate overflow-hidden px-4 pb-24 pt-16 sm:px-6 lg:px-8 lg:pb-32">
         <div
           className="absolute inset-0 bg-cover bg-center opacity-24 mix-blend-luminosity"
-          style={{ backgroundImage: "url('https://picsum.photos/seed/mmda-about-hero/1920/1080')" }}
+          style={{ backgroundImage: "url('/images/about/mmda_logo.jpg')" }}
         />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(43,92,182,0.36),transparent_48%),linear-gradient(180deg,rgba(2,8,23,0.12),rgba(2,8,23,0))]" />
         <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background to-transparent" />

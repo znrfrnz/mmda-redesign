@@ -52,6 +52,19 @@ const actionLabels: Record<ServiceItem["category"], { en: string; fil: string }>
   permits: { en: "Open permit flow", fil: "Buksan ang permit flow" },
 };
 
+const serviceCardImages = [
+  "/images/services/service-1.jpg",
+  "/images/services/service-2.jpg",
+  "/images/services/service-3.jpg",
+  "/images/services/service-4.jpg",
+  "/images/services/service-5.jpg",
+  "/images/services/services-6.jpg",
+  "/images/services/services-7.jpg",
+  "/images/services/services-8.jpg",
+  "/images/services/services-9.jpg",
+  "/images/services/services-10.jpg",
+] as const;
+
 export default function ServicesPage() {
   const { language } = useSettingsStore();
   const [activeFilter, setActiveFilter] = useState<ServiceFilter>("all");
@@ -78,10 +91,10 @@ export default function ServicesPage() {
       <section className="relative isolate overflow-hidden px-4 pb-24 pt-16 sm:px-6 lg:px-8 lg:pb-32">
         <div
           className="absolute inset-0 bg-cover bg-center opacity-25 mix-blend-luminosity"
-          style={{ backgroundImage: "url('https://picsum.photos/seed/mmda-services-hall/1920/1080')" }}
+          style={{ backgroundImage: "url('/images/mmda_building.jpg')" }}
         />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(43,92,182,0.36),transparent_48%),linear-gradient(180deg,rgba(2,8,23,0.12),rgba(2,8,23,0))]" />
-        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-32 bg-linear-to-t from-background to-transparent" />
 
         <div className="relative mx-auto max-w-7xl rounded-[2.5rem] border border-white/14 bg-[#071428]/88 px-6 py-14 text-white shadow-[0_32px_120px_-48px_rgba(7,20,40,0.9)] backdrop-blur xl:px-12 xl:py-18">
           <div className="mx-auto max-w-6xl text-center">
@@ -91,7 +104,7 @@ export default function ServicesPage() {
                 : "Pinangkat ang citizen services ayon sa kailangang gawin ng residente upang mas mabilis makalipat mula instruction tungo sa action."}
             </p>
 
-                        <h1 className="mx-auto mt-8 max-w-6xl text-[clamp(3rem,5vw,5.4rem)] font-semibold leading-[0.94] tracking-[-0.05em]">
+                        <h1 className="mx-auto mt-8 max-w-6xl text-[clamp(3rem,5vw,5.4rem)] font-semibold leading-[0.94] tracking-tighter">
               {language === "en"
                 ? "MMDA Citizen Services — Licensing, Violations, Permits, and Assistance."
                 : "Mga Serbisyo ng MMDA sa Mamamayan — Lisensya, Paglabag, Permit, at Tulong."}
@@ -106,14 +119,14 @@ export default function ServicesPage() {
             <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
               <Link
                 href="/services/report-concern"
-                className="inline-flex min-w-[240px] items-center justify-center gap-2 rounded-full bg-white px-7 py-4 text-sm font-semibold text-slate-950 transition-transform hover:-translate-y-0.5 hover:bg-white/92 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                className="inline-flex min-w-60 items-center justify-center gap-2 rounded-full bg-white px-7 py-4 text-sm font-semibold text-slate-950 transition-transform hover:-translate-y-0.5 hover:bg-white/92 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
               >
                 <Warning className="size-4" weight="bold" />
                 {language === "en" ? "Report a concern" : "Mag-ulat ng problema"}
               </Link>
               <Link
                 href="/traffic"
-                className="inline-flex min-w-[240px] items-center justify-center gap-2 rounded-full border border-white/20 bg-white/10 px-7 py-4 text-sm font-semibold text-white transition-colors hover:bg-white/16 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                className="inline-flex min-w-60 items-center justify-center gap-2 rounded-full border border-white/20 bg-white/10 px-7 py-4 text-sm font-semibold text-white transition-colors hover:bg-white/16 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
               >
                 <NavigationArrow className="size-4" weight="bold" />
                 {language === "en" ? "Open traffic tools" : "Buksan ang traffic tools"}
@@ -197,6 +210,7 @@ export default function ServicesPage() {
             <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2">
               {visibleServices.map((service, index) => {
                 const isLead = index === 0;
+                const cardImage = serviceCardImages[index % serviceCardImages.length];
 
                 const action = actionLabels[service.category];
 
@@ -210,14 +224,14 @@ export default function ServicesPage() {
                     )}
                   >
                     <div
-                      className="absolute inset-0 opacity-22 transition-transform duration-700 ease-out group-hover:scale-105"
+                      className="absolute inset-0 opacity-30 transition-transform duration-700 ease-out group-hover:scale-105"
                       style={{
-                        backgroundImage: `url('https://picsum.photos/seed/${service.id}-panel/1200/900')`,
+                        backgroundImage: `url('${cardImage}')`,
                         backgroundPosition: "center",
                         backgroundSize: "cover",
                       }}
                     />
-                    <div className="absolute inset-0 bg-[linear-gradient(140deg,rgba(255,255,255,0.94),rgba(248,250,252,0.86))] dark:bg-[linear-gradient(140deg,rgba(6,20,45,0.9),rgba(10,30,66,0.84))]" />
+                    <div className="absolute inset-0 bg-[linear-gradient(140deg,rgba(255,255,255,0.88),rgba(248,250,252,0.78))] dark:bg-[linear-gradient(140deg,rgba(6,20,45,0.84),rgba(10,30,66,0.76))]" />
 
                     <div className="relative flex flex-col p-6 md:p-7">
                       <div>

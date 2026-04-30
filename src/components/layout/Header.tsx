@@ -78,7 +78,7 @@ export function Header() {
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    "whitespace-nowrap rounded-full px-2.5 py-2 text-[0.78rem] font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white",
+                    "whitespace-nowrap rounded-full px-3 py-2.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white",
                     isActive
                       ? "bg-white text-slate-950"
                       : "text-white/72 hover:bg-white/10 hover:text-white"
@@ -95,7 +95,7 @@ export function Header() {
                 <button
                   type="button"
                   className={cn(
-                    "inline-flex items-center gap-1 rounded-full px-2.5 py-2 text-[0.78rem] font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white",
+                    "inline-flex items-center whitespace-nowrap rounded-full px-3 py-2.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white",
                     pathname === "/services" || pathname.startsWith("/services/")
                       ? "bg-white text-slate-950"
                       : "text-white/72 hover:bg-white/10 hover:text-white"
@@ -103,7 +103,7 @@ export function Header() {
                   aria-haspopup="menu"
                 >
                   {servicesLabel}
-                  <ChevronDownIcon className="size-3.5 opacity-80" />
+                  <ChevronDownIcon className="ml-1 size-4 opacity-80" />
                 </button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="center" className="w-56">
@@ -120,17 +120,9 @@ export function Header() {
           </nav>
 
           <div className="ml-auto hidden items-center gap-2 md:flex xl:ml-0 xl:justify-self-end">
-            <a
-              href="tel:136"
-              className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/6 px-3 py-2 text-[0.78rem] font-medium text-white/80 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
-            >
-              <Phone className="size-4" weight="bold" />
-              136
-            </a>
-
             <button
               onClick={() => setSearchOpen(true)}
-              className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/6 px-3 py-2 text-[0.78rem] font-medium text-white/80 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+              className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/6 px-4 py-2.5 text-sm font-medium text-white/80 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
               aria-label={t("search.label", language)}
             >
               <MagnifyingGlass className="size-4" weight="bold" />
@@ -141,14 +133,14 @@ export function Header() {
           <div className="ml-auto flex items-center gap-2 md:hidden xl:hidden">
             <button
               onClick={() => setSearchOpen(true)}
-              className="inline-flex size-10 items-center justify-center rounded-full border border-white/10 bg-white/6 text-white/78 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+              className="inline-flex items-center justify-center min-w-11 min-h-11 p-2.5 rounded-full border border-white/10 bg-white/6 text-white/78 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
               aria-label={t("util.search", language)}
             >
               <MagnifyingGlass className="size-5" weight="bold" />
             </button>
             <button
               type="button"
-              className="inline-flex size-10 items-center justify-center rounded-full border border-white/10 bg-white/6 text-white/78 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+              className="inline-flex items-center justify-center min-w-11 min-h-11 p-2.5 rounded-full border border-white/10 bg-white/6 text-white/78 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
               onClick={() => setMobileOpen(true)}
               aria-label={t("nav.menu", language)}
             >
