@@ -29,6 +29,12 @@ const reportSchema = z.object({
   description: z.string().min(20, "Description must be at least 20 characters"),
 });
 
+const stepsImages = [
+  "/images/report/steps/steps-1.jpg",
+  "/images/report/steps/steps-2.jpg",
+  "/images/report/steps/steps-3.jpg",
+] as const;
+
 type ReportFormData = z.infer<typeof reportSchema>;
 
 const responseSteps = [
@@ -152,36 +158,37 @@ export default function ReportConcernPage() {
 
       <section className="mx-auto max-w-7xl px-4 pt-16 pb-12 sm:px-6 lg:px-8 lg:pt-24">
         <div className="hidden h-90 overflow-hidden rounded-[2rem] border border-border lg:flex">
-          {responseSteps.map((step, index) => (
-            <article
-              key={step.seed}
-              className={`
-                group relative flex-1 overflow-hidden border-l border-white/10 first:border-l-0
-                transition-[flex] duration-700 ease-out hover:flex-[1.75]
-              `}
-            >
-              <div
-                className="absolute inset-0 opacity-28 transition-transform duration-700 ease-out group-hover:scale-105"
-                style={{
-                  backgroundImage: `url('https://picsum.photos/seed/${step.seed}/900/1200')`,
-                  backgroundPosition: "center",
-                  backgroundSize: "cover",
-                }}
-              />
-              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,20,45,0.2),rgba(6,20,45,0.9))]" />
-              <div className="relative flex h-full flex-col justify-end p-6 text-white">
-                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/62">
-                  {language === "en" ? `Step ${index + 1}` : `Hakbang ${index + 1}`}
-                </p>
-                <h2 className="mt-3 text-xl font-semibold leading-snug">
-                  {language === "en" ? step.enTitle : step.filTitle}
-                </h2>
-                <p className="mt-3 max-h-0 overflow-hidden text-sm leading-7 text-white/72 opacity-0 transition-all duration-500 group-hover:max-h-48 group-hover:opacity-100">
-                  {language === "en" ? step.enBody : step.filBody}
-                </p>
-              </div>
-            </article>
-          ))}
+          {responseSteps.map((step, index) => {
+            const stepImage = stepsImages[index % stepsImages.length];
+
+            return (
+              <article
+                key={step.seed}
+                className="group relative flex-1 overflow-hidden border-l border-white/10 first:border-l-0 transition-[flex] duration-700 ease-out hover:flex-[1.75]"
+              >
+                <div
+                  className="absolute inset-0 opacity-28 transition-transform duration-700 ease-out group-hover:scale-105"
+                  style={{
+                    backgroundImage: `url('${stepImage}')`,
+                    backgroundPosition: "center",
+                    backgroundSize: "cover",
+                  }}
+                />
+                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,20,45,0.2),rgba(6,20,45,0.9))]" />
+                <div className="relative flex h-full flex-col justify-end p-6 text-white">
+                  <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/62">
+                    {language === "en" ? `Step ${index + 1}` : `Hakbang ${index + 1}`}
+                  </p>
+                  <h2 className="mt-3 text-xl font-semibold leading-snug">
+                    {language === "en" ? step.enTitle : step.filTitle}
+                  </h2>
+                  <p className="mt-3 max-h-0 overflow-hidden text-sm leading-7 text-white/72 opacity-0 transition-all duration-500 group-hover:max-h-48 group-hover:opacity-100">
+                    {language === "en" ? step.enBody : step.filBody}
+                  </p>
+                </div>
+              </article>
+            );
+          })}
         </div>
 
         <div className="grid gap-4 lg:hidden">
