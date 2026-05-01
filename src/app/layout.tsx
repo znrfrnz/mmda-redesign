@@ -16,6 +16,9 @@ export const metadata: Metadata = {
   title: "MMDA — Metropolitan Manila Development Authority",
   description:
     "Official portal of the Metropolitan Manila Development Authority. Access traffic updates, road advisories, public services, and citizen resources for Metro Manila.",
+  icons: {
+    icon: '/Logo.svg',
+  },
 };
 
 export default function RootLayout({

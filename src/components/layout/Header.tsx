@@ -6,7 +6,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useSettingsStore } from "@/stores/useSettingsStore";
 import { t } from "@/lib/translations";
-import { MagnifyingGlass, List, Phone } from "@phosphor-icons/react";
+import { MagnifyingGlass, List } from "@phosphor-icons/react";
 import { MobileNav } from "./MobileNav";
 import { SearchDialog } from "./SearchDialog";
 import { cn } from "@/lib/utils";

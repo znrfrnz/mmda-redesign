@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useSettingsStore } from "@/stores/useSettingsStore";
-import { CaretDown, Phone, Warning } from "@phosphor-icons/react";
+import { CaretDown } from "@phosphor-icons/react";
 import { t, type TranslationKey } from "@/lib/translations";
 import {
   Sheet,

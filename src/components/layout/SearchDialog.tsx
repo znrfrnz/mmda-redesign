@@ -1,12 +1,12 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
-import Link from "next/link";
+// removed unused Link import
 import { useRouter } from "next/navigation";
 import { MagnifyingGlass, ArrowRight, X } from "@phosphor-icons/react";
 import { useSettingsStore } from "@/stores/useSettingsStore";
 import { mockNews, mockServices } from "@/lib/mock-data";
-import { cn } from "@/lib/utils";
+// removed unused `cn`
 
 const pages = [
   {
@@ -58,7 +58,10 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
 
   // Reset query when dialog closes
   useEffect(() => {
-    if (!open) setQuery("");
+    if (!open) {
+      const t = setTimeout(() => setQuery(""), 0);
+      return () => clearTimeout(t);
+    }
   }, [open]);
 
   // Keyboard shortcut: Ctrl/Cmd + K
