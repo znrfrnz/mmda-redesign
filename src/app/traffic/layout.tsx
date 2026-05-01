@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Traffic & Roads — MMDA",
+  title: "Traffic & Roads",
   description:
     "Real-time traffic conditions, route status, number coding schedule, and road information for Metro Manila.",
 };

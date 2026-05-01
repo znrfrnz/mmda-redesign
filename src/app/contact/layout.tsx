@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Contact — MMDA",
+  title: "Contact",
   description:
     "Contact the Metropolitan Manila Development Authority. Hotline 136, office address, email, and contact form.",
 };

@@ -10,10 +10,10 @@ interface Props {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const article = mockNews.find((a) => a.slug === slug);
-  if (!article) return { title: "Article Not Found — MMDA" };
+  if (!article) return { title: "Article Not Found" };
 
   return {
-    title: `${article.title} — MMDA`,
+    title: article.title,
     description: article.excerpt,
   };
 }

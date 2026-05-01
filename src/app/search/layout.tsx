@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Search — MMDA",
+  title: "Search",
   description:
     "Search across MMDA services, news, advisories, and pages.",
 };

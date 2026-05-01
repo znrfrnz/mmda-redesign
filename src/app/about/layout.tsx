@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "About MMDA — Metropolitan Manila Development Authority",
+  title: "About",
   description:
     "Learn about the MMDA's mandate, leadership, organizational structure, and history of serving Metro Manila.",
 };
