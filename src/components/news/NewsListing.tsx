@@ -13,6 +13,8 @@ type CategoryFilter = "all" | NewsArticle["category"];
 
 const ITEMS_PER_PAGE = 5;
 
+const LOCAL_NEWS_FALLBACK = "/images/newsAdvisories/news.jpg";
+
 const categoryLabels = {
   advisory: { en: "Advisory", fil: "Abiso" },
   press: { en: "Press release", fil: "Pahayag sa press" },
@@ -34,9 +36,26 @@ const filterLabels = {
   },
 } as const;
 
-export function NewsListing() {
+function normalizeCategoryFilter(category?: string): CategoryFilter {
+  if (!category) return "all";
+
+  const normalized = category.toLowerCase().trim();
+  if (normalized === "advisory" || normalized === "advisories") return "advisory";
+  if (normalized === "press" || normalized === "press-release" || normalized === "press-releases") {
+    return "press";
+  }
+  if (normalized === "notice" || normalized === "notices" || normalized === "public-notice") {
+    return "notice";
+  }
+
+  return "all";
+}
+
+export function NewsListing({ initialCategory }: { initialCategory?: string }) {
   const { language } = useSettingsStore();
-  const [activeFilter, setActiveFilter] = useState<CategoryFilter>("all");
+  const [activeFilter, setActiveFilter] = useState<CategoryFilter>(() =>
+    normalizeCategoryFilter(initialCategory)
+  );
   const [visibleCount, setVisibleCount] = useState(ITEMS_PER_PAGE);
 
   const filtered = useMemo(() => {
@@ -136,7 +155,7 @@ export function NewsListing() {
                 <div className="grid gap-0 lg:grid-cols-[1.05fr_0.95fr]">
                   <div className="relative min-h-70 overflow-hidden">
                     <Image
-                      src={featured.imageUrl || "https://picsum.photos/seed/news-fallback/1200/900"}
+                      src={featured.imageUrl || LOCAL_NEWS_FALLBACK}
                       alt={language === "en" ? featured.title : featured.titleFil}
                       fill
                       className="object-cover brightness-95 transition-transform duration-700 ease-out group-hover:scale-105"

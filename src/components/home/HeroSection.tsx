@@ -76,7 +76,7 @@ const quickActions = [
     size: "small" as const,
   },
   {
-    href: "/news?category=advisories",
+    href: "/news?category=advisory",
     icon: CloudRain,
     label: { en: "Flood Updates", fil: "Update sa Baha" },
     desc: { en: "Alerts & advisories", fil: "Mga alerto at abiso" },

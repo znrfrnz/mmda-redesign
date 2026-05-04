@@ -23,6 +23,8 @@ const categoryConfig: Record<NewsArticle["category"], { en: string; fil: string 
   notice: { en: "Public notice", fil: "Pampublikong abiso" },
 };
 
+const LOCAL_NEWS_DETAIL_FALLBACK = "/images/newsAdvisories/news.jpg";
+
 export function NewsArticleDetail({ article }: { article: NewsArticle }) {
   const { language } = useSettingsStore();
   const [copied, setCopied] = useState(false);
@@ -55,7 +57,7 @@ export function NewsArticleDetail({ article }: { article: NewsArticle }) {
       <section className="relative isolate overflow-hidden px-4 pb-24 pt-16 sm:px-6 lg:px-8 lg:pb-32">
         <div className="absolute inset-0">
           <Image
-            src={article.imageUrl || "https://picsum.photos/seed/news-detail-hero/1920/1080"}
+            src={article.imageUrl || LOCAL_NEWS_DETAIL_FALLBACK}
             alt={title}
             fill
             priority

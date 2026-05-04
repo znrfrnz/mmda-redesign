@@ -123,7 +123,7 @@ export function Footer() {
             <ul className="mt-5 space-y-3" role="list">
               {[
                 { label: "footer.trafficUpdates" as const, href: "/traffic" },
-                { label: "footer.floodUpdates" as const, href: "/news?category=advisories" },
+                { label: "footer.floodUpdates" as const, href: "/news?category=advisory" },
                 { label: "footer.numberCoding" as const, href: "/traffic#number-coding" },
                 { label: "footer.pressReleases" as const, href: "/news?category=press" },
                 { label: "footer.careers" as const, href: "/about" },

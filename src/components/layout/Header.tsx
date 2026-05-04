@@ -60,7 +60,7 @@ export function Header() {
   return (
     <header className="sticky top-3 z-40 px-3 sm:px-4 lg:px-6">
       <div className="mx-auto max-w-7xl">
-        <div className="flex min-h-19.5 flex-wrap items-center gap-4 rounded-[1.8rem] border border-white/10 bg-[#06142d]/88 px-4 py-3 shadow-[0_24px_80px_-42px_rgba(7,20,40,0.95)] backdrop-blur sm:px-6 xl:grid xl:min-h-19.5 xl:grid-cols-[auto_minmax(0,1fr)_auto] xl:gap-4 xl:py-0">
+        <div className="flex min-h-19.5 flex-wrap items-center gap-4 rounded-[1.8rem] border border-white/10 bg-[#06142d]/88 px-4 py-3 shadow-[0_24px_80px_-42px_rgba(7,20,40,0.95)] backdrop-blur sm:px-6 lg:grid lg:min-h-19.5 lg:grid-cols-[auto_minmax(0,1fr)_auto] lg:gap-4 lg:py-0">
           <Link
             href="/"
             className="flex shrink-0 items-center gap-3 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
@@ -82,7 +82,7 @@ export function Header() {
           </Link>
 
           <nav
-            className="hidden min-w-0 flex-1 flex-nowrap items-center justify-center gap-0.5 overflow-x-auto whitespace-nowrap [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden xl:flex"
+            className="hidden min-w-0 flex-1 flex-nowrap items-center justify-center gap-0.5 overflow-x-auto whitespace-nowrap [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden lg:flex"
             aria-label={t("a11y.mainNav", language)}
           >
             {PRIMARY_NAV_ITEMS_BEFORE.map((item) => {
@@ -236,18 +236,18 @@ export function Header() {
             })}
           </nav>
 
-          <div className="ml-auto hidden items-center gap-2 md:flex xl:ml-0 xl:justify-self-end">
+          <div className="ml-auto hidden items-center gap-2 lg:flex lg:justify-self-end">
             <button
               onClick={() => setSearchOpen(true)}
               className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/6 px-4 py-2.5 text-sm font-medium text-white/80 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
               aria-label={t("search.label", language)}
             >
               <MagnifyingGlass className="size-4" weight="bold" />
-              <span className="hidden lg:inline">{t("util.search", language)}</span>
+              <span>{t("util.search", language)}</span>
             </button>
           </div>
 
-          <div className="ml-auto flex items-center gap-2 md:hidden xl:hidden">
+          <div className="ml-auto flex items-center gap-2 lg:hidden">
             <button
               onClick={() => setSearchOpen(true)}
               className="inline-flex items-center justify-center min-w-11 min-h-11 p-2.5 rounded-full border border-white/10 bg-white/6 text-white/78 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"

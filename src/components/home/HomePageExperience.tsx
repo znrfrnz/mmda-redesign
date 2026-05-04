@@ -93,6 +93,7 @@ export function HomePageExperience() {
   const rootRef = useRef<HTMLDivElement>(null);
   const pinSectionRef = useRef<HTMLDivElement>(null);
   const pinTitleRef = useRef<HTMLDivElement>(null);
+  const journeyColumnRef = useRef<HTMLDivElement>(null);
   const revealRef = useRef<HTMLParagraphElement>(null);
 
   const featuredNews = mockNews[0];
@@ -111,15 +112,20 @@ export function HomePageExperience() {
       const media = gsap.matchMedia();
 
       media.add("(min-width: 1024px)", () => {
-        if (pinSectionRef.current && pinTitleRef.current) {
-          ScrollTrigger.create({
-            trigger: pinSectionRef.current,
-            start: "top top+=128",
-            end: "bottom bottom-=96",
-            pin: pinTitleRef.current,
-            anticipatePin: 1,
-          });
+        if (!pinTitleRef.current || !journeyColumnRef.current) {
+          return;
         }
+
+        ScrollTrigger.create({
+          trigger: pinTitleRef.current,
+          start: "top top+=128",
+          endTrigger: journeyColumnRef.current,
+          end: "bottom bottom-=120",
+          pin: true,
+          pinSpacing: true,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+        });
       });
 
       const journeyItems = gsap.utils.toArray<HTMLElement>(".js-journey-card");
@@ -189,7 +195,7 @@ export function HomePageExperience() {
       <section className="relative isolate overflow-hidden px-4 pb-24 pt-16 sm:px-6 lg:px-8 lg:pb-32">
         <div
           className="absolute inset-0 bg-cover bg-center opacity-20 mix-blend-luminosity"
-          style={{ backgroundImage: "url('images/home_page1.jpg')" }}
+          style={{ backgroundImage: "url('/images/home_page1.jpg')" }}
         />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(43,92,182,0.38),transparent_48%),linear-gradient(180deg,rgba(2,8,23,0.08),rgba(2,8,23,0))]" />
         <div className="absolute inset-x-0 bottom-0 h-32 bg-linear-to-t from-background to-transparent" />
@@ -234,7 +240,7 @@ export function HomePageExperience() {
           </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
+      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-24">
         <div className="max-w-3xl">
           <h2 className="max-w-3xl text-[clamp(2.4rem,4vw,4rem)] font-semibold leading-[0.96] tracking-[-0.04em] text-foreground">
             {language === "en"
@@ -433,27 +439,29 @@ export function HomePageExperience() {
 
       <section
         ref={pinSectionRef}
-        className="mx-auto grid max-w-7xl gap-16 px-4 py-24 sm:px-6 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:px-8 lg:py-32"
+        className="mx-auto grid max-w-7xl gap-12 px-4 py-20 sm:px-6 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:px-8 lg:py-24"
       >
-        <div ref={pinTitleRef} className="lg:pr-10">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">
-            {language === "en" ? "How it works" : "Paano ito gumagana"}
-          </p>
-          <h2 className="mt-5 max-w-xl text-[clamp(2.35rem,4vw,4.1rem)] font-semibold leading-[0.98] tracking-[-0.04em] text-foreground">
-            {language === "en"
-              ? "From checking traffic to reporting incidents — in just a few steps."
-              : "Mula sa pagsuri ng trapiko hanggang pag-uulat ng insidente — sa ilang hakbang lamang."}
-          </h2>
-          <p ref={revealRef} className="mt-8 max-w-lg text-lg leading-8 text-muted-foreground">
-            {revealSentence.split(" ").map((word, index) => (
-              <span key={`${word}-${index}`} className="js-reveal-word mr-[0.35em] inline-block opacity-10">
-                {word}
-              </span>
-            ))}
-          </p>
+        <div className="lg:pr-10 lg:self-start">
+          <div ref={pinTitleRef}>
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">
+              {language === "en" ? "How it works" : "Paano ito gumagana"}
+            </p>
+            <h2 className="mt-5 max-w-xl text-[clamp(2.35rem,4vw,4.1rem)] font-semibold leading-[0.98] tracking-[-0.04em] text-foreground">
+              {language === "en"
+                ? "From checking traffic to reporting incidents — in just a few steps."
+                : "Mula sa pagsuri ng trapiko hanggang pag-uulat ng insidente — sa ilang hakbang lamang."}
+            </h2>
+            <p ref={revealRef} className="mt-8 max-w-lg text-lg leading-8 text-muted-foreground">
+              {revealSentence.split(" ").map((word, index) => (
+                <span key={`${word}-${index}`} className="js-reveal-word mr-[0.35em] inline-block opacity-10">
+                  {word}
+                </span>
+              ))}
+            </p>
+          </div>
         </div>
 
-        <div className="space-y-6">
+        <div ref={journeyColumnRef} className="space-y-6">
           {journeyCards.map((card) => {
             const Icon = card.icon;
 
@@ -499,7 +507,7 @@ export function HomePageExperience() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-4 pb-24 sm:px-6 lg:px-8 lg:pb-32">
+      <section className="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8 lg:pb-24">
         <div className="overflow-hidden rounded-[2.5rem] border border-white/10 bg-[#06142d] text-white shadow-[0_30px_100px_-50px_rgba(7,20,40,1)]">
           <div className="grid gap-12 px-6 py-8 md:px-10 md:py-12 lg:grid-cols-[1fr_1fr] lg:px-14 lg:py-16">
             <div>
