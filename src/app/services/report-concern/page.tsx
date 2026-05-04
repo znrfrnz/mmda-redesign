@@ -113,6 +113,7 @@ export default function ReportConcernPage() {
           style={{ backgroundImage: "url('/images/report/report.jpg')" }}
         />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(200,16,46,0.2),transparent_45%),linear-gradient(180deg,rgba(2,8,23,0.12),rgba(2,8,23,0))]" />
+        <div className="absolute inset-x-0 bottom-0 h-32 bg-linear-to-t from-background to-transparent" />
 
         <div className="relative mx-auto max-w-7xl overflow-hidden rounded-[2.5rem] border border-white/14 bg-[#071428]/88 px-6 py-14 text-white shadow-[0_32px_120px_-48px_rgba(7,20,40,0.9)] backdrop-blur xl:px-12 xl:py-18">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(200,16,46,0.18),transparent_42%),linear-gradient(180deg,rgba(2,8,23,0.12),rgba(2,8,23,0.42))]" />
