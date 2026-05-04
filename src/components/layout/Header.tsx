@@ -14,9 +14,24 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuGroup,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ChevronDownIcon } from "lucide-react";
+import {
+  Car,
+  CreditCard,
+  Megaphone,
+  IdentificationCard,
+  Truck,
+  HardHat,
+  CalendarCheck,
+  Certificate,
+  Wrench,
+  SquaresFour,
+} from "@phosphor-icons/react";
 
 const NAV_ITEMS = [
   { key: "nav.home" as const, href: "/" },
@@ -27,7 +42,10 @@ const NAV_ITEMS = [
   { key: "nav.contact" as const, href: "/contact" },
 ] as const;
 
-const PRIMARY_NAV_ITEMS = NAV_ITEMS.filter((item) => item.href !== "/services");
+const PRIMARY_NAV_ITEMS_BEFORE = NAV_ITEMS.filter((item) => item.href === "/");
+const PRIMARY_NAV_ITEMS_AFTER = NAV_ITEMS.filter(
+  (item) => item.href !== "/" && item.href !== "/services"
+);
 const SERVICES_NAV_ITEM = NAV_ITEMS.find((item) => item.href === "/services")!;
 
 export function Header() {
@@ -67,11 +85,8 @@ export function Header() {
             className="hidden min-w-0 flex-1 flex-nowrap items-center justify-center gap-0.5 overflow-x-auto whitespace-nowrap [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden xl:flex"
             aria-label={t("a11y.mainNav", language)}
           >
-            {PRIMARY_NAV_ITEMS.map((item) => {
-              const isActive =
-                item.href === "/"
-                  ? pathname === "/"
-                  : pathname === item.href || pathname.startsWith(item.href + "/");
+            {PRIMARY_NAV_ITEMS_BEFORE.map((item) => {
+              const isActive = item.href === "/" ? pathname === "/" : pathname === item.href || pathname.startsWith(item.href + "/");
 
               return (
                 <Link
@@ -106,17 +121,119 @@ export function Header() {
                   <ChevronDownIcon className="ml-1 size-4 opacity-80" />
                 </button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="center" className="w-56">
-                <DropdownMenuItem asChild>
-                  <Link href={SERVICES_NAV_ITEM.href}>{t("nav.services", language)}</Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link href="/services/report-concern">
-                    {language === "en" ? "Report a concern" : "Mag-ulat ng problema"}
+              <DropdownMenuContent align="center" className="w-64 p-2">
+                <DropdownMenuItem asChild className="gap-2.5 rounded-lg px-3 py-2.5 font-semibold">
+                  <Link href={SERVICES_NAV_ITEM.href}>
+                    <SquaresFour className="size-4 text-primary" weight="bold" />
+                    {language === "en" ? "All services" : "Lahat ng serbisyo"}
                   </Link>
                 </DropdownMenuItem>
+
+                <DropdownMenuSeparator />
+
+                <DropdownMenuLabel className="px-3 pt-2 pb-1">
+                  {language === "en" ? "Violations & payments" : "Paglabag at pagbabayad"}
+                </DropdownMenuLabel>
+                <DropdownMenuGroup>
+                  <DropdownMenuItem asChild className="gap-2.5 rounded-lg px-3 py-2">
+                    <Link href="/services/traffic-violations#lookup-form">
+                      <Car className="size-4 text-muted-foreground" weight="bold" />
+                      {language === "en" ? "Traffic violations" : "Paglabag sa trapiko"}
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild className="gap-2.5 rounded-lg px-3 py-2">
+                    <Link href="/services/unpaid-fines#payment-form">
+                      <CreditCard className="size-4 text-muted-foreground" weight="bold" />
+                      {language === "en" ? "Pay fines" : "Magbayad ng multa"}
+                    </Link>
+                  </DropdownMenuItem>
+                </DropdownMenuGroup>
+
+                <DropdownMenuSeparator />
+
+                <DropdownMenuLabel className="px-3 pt-2 pb-1">
+                  {language === "en" ? "Permits & licensing" : "Permit at lisensya"}
+                </DropdownMenuLabel>
+                <DropdownMenuGroup>
+                  <DropdownMenuItem asChild className="gap-2.5 rounded-lg px-3 py-2">
+                    <Link href="/services/drivers-license#license-form">
+                      <IdentificationCard className="size-4 text-muted-foreground" weight="bold" />
+                      {language === "en" ? "Driver's license" : "Lisensya sa pagmamaneho"}
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild className="gap-2.5 rounded-lg px-3 py-2">
+                    <Link href="/services/vehicle-registration#registration-form">
+                      <Car className="size-4 text-muted-foreground" weight="bold" />
+                      {language === "en" ? "Vehicle registration" : "Rehistro ng sasakyan"}
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild className="gap-2.5 rounded-lg px-3 py-2">
+                    <Link href="/services/construction-permits#construction-form">
+                      <HardHat className="size-4 text-muted-foreground" weight="bold" />
+                      {language === "en" ? "Construction permits" : "Permit sa konstruksyon"}
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild className="gap-2.5 rounded-lg px-3 py-2">
+                    <Link href="/services/event-permits#event-form">
+                      <CalendarCheck className="size-4 text-muted-foreground" weight="bold" />
+                      {language === "en" ? "Event permits" : "Permit sa event"}
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild className="gap-2.5 rounded-lg px-3 py-2">
+                    <Link href="/services/special-permits#special-form">
+                      <Certificate className="size-4 text-muted-foreground" weight="bold" />
+                      {language === "en" ? "Special permits" : "Espesyal na permit"}
+                    </Link>
+                  </DropdownMenuItem>
+                </DropdownMenuGroup>
+
+                <DropdownMenuSeparator />
+
+                <DropdownMenuLabel className="px-3 pt-2 pb-1">
+                  {language === "en" ? "Assistance & reporting" : "Tulong at pag-uulat"}
+                </DropdownMenuLabel>
+                <DropdownMenuGroup>
+                  <DropdownMenuItem asChild className="gap-2.5 rounded-lg px-3 py-2">
+                    <Link href="/services/report-concern#report-form">
+                      <Megaphone className="size-4 text-muted-foreground" weight="bold" />
+                      {language === "en" ? "Report a concern" : "Mag-ulat ng problema"}
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild className="gap-2.5 rounded-lg px-3 py-2">
+                    <Link href="/services/roadside-assistance#assistance-form">
+                      <Wrench className="size-4 text-muted-foreground" weight="bold" />
+                      {language === "en" ? "Roadside assistance" : "Tulong sa kalsada"}
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild className="gap-2.5 rounded-lg px-3 py-2">
+                    <Link href="/services/towing-impound#towing-form">
+                      <Truck className="size-4 text-muted-foreground" weight="bold" />
+                      {language === "en" ? "Towing & impound" : "Pag-tow at impound"}
+                    </Link>
+                  </DropdownMenuItem>
+                </DropdownMenuGroup>
               </DropdownMenuContent>
             </DropdownMenu>
+
+            {PRIMARY_NAV_ITEMS_AFTER.map((item) => {
+              const isActive = pathname === item.href || pathname.startsWith(item.href + "/");
+
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={cn(
+                    "whitespace-nowrap rounded-full px-3 py-2.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white",
+                    isActive
+                      ? "bg-white text-slate-950"
+                      : "text-white/72 hover:bg-white/10 hover:text-white"
+                  )}
+                  aria-current={isActive ? "page" : undefined}
+                >
+                  {t(item.key, language)}
+                </Link>
+              );
+            })}
           </nav>
 
           <div className="ml-auto hidden items-center gap-2 md:flex xl:ml-0 xl:justify-self-end">

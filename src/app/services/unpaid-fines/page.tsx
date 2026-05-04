@@ -11,9 +11,12 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 
 const paymentMethods = [
-  { value: "counter", en: "Over-the-counter at MMDA", fil: "Over-the-counter sa MMDA" },
-  { value: "bank", en: "Bank deposit", fil: "Bank deposit" },
+  { value: "gcash", en: "GCash", fil: "GCash" },
+  { value: "maya", en: "Maya", fil: "Maya" },
+  { value: "bank-transfer", en: "Bank transfer (BDO, BPI, Landbank, UnionBank)", fil: "Bank transfer (BDO, BPI, Landbank, UnionBank)" },
   { value: "online", en: "Online payment portal", fil: "Online payment portal" },
+  { value: "counter", en: "Over-the-counter at MMDA", fil: "Over-the-counter sa MMDA" },
+  { value: "bayad-center", en: "Bayad Center / 7-Eleven / Cebuana Lhuillier", fil: "Bayad Center / 7-Eleven / Cebuana Lhuillier" },
 ];
 
 const fineSchema = z.object({
@@ -181,19 +184,23 @@ export default function UnpaidFinesPage() {
                 <ul className="mt-5 space-y-3 text-sm leading-7 text-muted-foreground">
                   <li className="flex gap-3">
                     <span className="mt-1 block size-1.5 shrink-0 rounded-full bg-primary" />
+                    {language === "en" ? "GCash / Maya" : "GCash / Maya"}
+                  </li>
+                  <li className="flex gap-3">
+                    <span className="mt-1 block size-1.5 shrink-0 rounded-full bg-primary" />
+                    {language === "en"
+                      ? "Bank transfer (BDO, BPI, Landbank, UnionBank)"
+                      : "Bank transfer (BDO, BPI, Landbank, UnionBank)"}
+                  </li>
+                  <li className="flex gap-3">
+                    <span className="mt-1 block size-1.5 shrink-0 rounded-full bg-primary" />
                     {language === "en" ? "Cash at MMDA office" : "Cash sa MMDA office"}
                   </li>
                   <li className="flex gap-3">
                     <span className="mt-1 block size-1.5 shrink-0 rounded-full bg-primary" />
                     {language === "en"
-                      ? "Bank deposit (BDO, BPI, Landbank)"
-                      : "Bank deposit (BDO, BPI, Landbank)"}
-                  </li>
-                  <li className="flex gap-3">
-                    <span className="mt-1 block size-1.5 shrink-0 rounded-full bg-primary" />
-                    {language === "en"
-                      ? "GCash / Maya (coming soon)"
-                      : "GCash / Maya (paparating na)"}
+                      ? "Bayad Center / 7-Eleven / Cebuana Lhuillier"
+                      : "Bayad Center / 7-Eleven / Cebuana Lhuillier"}
                   </li>
                 </ul>
               </CardContent>

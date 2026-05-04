@@ -4,11 +4,13 @@ import { useState } from "react";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { ArrowRight, MagnifyingGlass, ShieldCheck, CreditCard, CaretLeft, CheckCircle } from "@phosphor-icons/react";
+import { ArrowRight, MagnifyingGlass, ShieldCheck, CreditCard, CaretLeft, CheckCircle, Wallet, Bank, Storefront, CurrencyCircleDollar } from "@phosphor-icons/react";
 import { useSettingsStore } from "@/stores/useSettingsStore";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose } from "@/components/ui/dialog";
+import { cn } from "@/lib/utils";
 
 const mockViolations = [
   {
@@ -42,13 +44,24 @@ const lookupSchema = z.object({
   searchValue: z.string().min(3, "Must be at least 3 characters"),
 });
 
+const paymentMethodOptions = [
+  { id: "gcash", label: "GCash", icon: Wallet },
+  { id: "maya", label: "Maya", icon: Wallet },
+  { id: "bank", label: "Bank transfer", sublabel: "BDO, BPI, Landbank, UnionBank", icon: Bank },
+  { id: "online", label: "Online portal", icon: CurrencyCircleDollar },
+  { id: "counter", label: "MMDA cashier office", icon: Storefront },
+  { id: "bayad", label: "Bayad Center / 7-Eleven", icon: Storefront },
+];
+
 type LookupFormData = z.infer<typeof lookupSchema>;
 
 export default function TrafficViolationsPage() {
   const { language } = useSettingsStore();
   const [showResults, setShowResults] = useState(false);
   const [selectedFines, setSelectedFines] = useState<number[]>([]);
-  const [paymentSent, setPaymentSent] = useState(false);
+  const [paymentModalOpen, setPaymentModalOpen] = useState(false);
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string | null>(null);
+  const [paymentConfirmed, setPaymentConfirmed] = useState(false);
 
   const {
     register,
@@ -71,7 +84,8 @@ export default function TrafficViolationsPage() {
   function handleBackToSearch() {
     setShowResults(false);
     setSelectedFines([]);
-    setPaymentSent(false);
+    setPaymentConfirmed(false);
+    setSelectedPaymentMethod(null);
     reset();
   }
 
@@ -81,9 +95,14 @@ export default function TrafficViolationsPage() {
     );
   }
 
-  function handlePaySelected() {
-    setPaymentSent(true);
-    setTimeout(() => setPaymentSent(false), 3000);
+  function handleOpenPaymentModal() {
+    setSelectedPaymentMethod(null);
+    setPaymentConfirmed(false);
+    setPaymentModalOpen(true);
+  }
+
+  function handleConfirmPayment() {
+    setPaymentConfirmed(true);
   }
 
   const unpaidViolations = mockViolations.filter((v) => v.status === "unpaid");
@@ -185,24 +204,116 @@ export default function TrafficViolationsPage() {
                   : `${selectedFines.length} (mga) multa ang napili — Kabuuan: ₱${selectedTotal.toLocaleString()}`}
               </p>
               <Button
-                onClick={handlePaySelected}
-                className="rounded-full px-6"
-                disabled={paymentSent}
+                onClick={handleOpenPaymentModal}
+                className="gap-2 rounded-full px-6"
               >
-                {paymentSent
-                  ? language === "en" ? "Redirecting..." : "Nire-redirect..."
-                  : language === "en" ? "Pay selected fines" : "Bayaran ang napiling multa"}
+                <CreditCard className="size-4" weight="bold" />
+                {language === "en" ? "Pay selected fines" : "Bayaran ang napiling multa"}
               </Button>
             </div>
           )}
 
-          {paymentSent && (
-            <div className="mt-4 rounded-xl border border-emerald-500/20 bg-emerald-500/8 p-4 text-sm text-emerald-700">
-              {language === "en"
-                ? "Payment request received. You will be redirected to the payment portal shortly."
-                : "Natanggap ang request sa pagbabayad. Mare-redirect ka sa payment portal sa ilang sandali."}
-            </div>
-          )}
+          {/* Payment modal */}
+          <Dialog open={paymentModalOpen} onOpenChange={setPaymentModalOpen}>
+            <DialogContent className="sm:max-w-lg rounded-2xl p-0 gap-0">
+              {!paymentConfirmed ? (
+                <>
+                  <DialogHeader className="p-6 pb-4">
+                    <DialogTitle className="text-lg">
+                      {language === "en" ? "Choose payment method" : "Pumili ng paraan ng pagbabayad"}
+                    </DialogTitle>
+                    <DialogDescription>
+                      {language === "en"
+                        ? `Paying ${selectedFines.length} fine(s) — Total: ₱${selectedTotal.toLocaleString()}`
+                        : `Nagbabayad ng ${selectedFines.length} (mga) multa — Kabuuan: ₱${selectedTotal.toLocaleString()}`}
+                    </DialogDescription>
+                  </DialogHeader>
+
+                  <div className="px-6 pb-2 space-y-2">
+                    {paymentMethodOptions.map((method) => {
+                      const Icon = method.icon;
+                      const isActive = selectedPaymentMethod === method.id;
+                      return (
+                        <button
+                          key={method.id}
+                          type="button"
+                          onClick={() => setSelectedPaymentMethod(method.id)}
+                          className={cn(
+                            "flex w-full items-center gap-3 rounded-xl border px-4 py-3 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                            isActive
+                              ? "border-primary bg-primary/8 ring-1 ring-primary/30"
+                              : "border-border hover:border-primary/30 hover:bg-muted/50"
+                          )}
+                        >
+                          <div className={cn(
+                            "flex size-9 items-center justify-center rounded-lg",
+                            isActive ? "bg-primary/15 text-primary" : "bg-muted text-muted-foreground"
+                          )}>
+                            <Icon className="size-5" weight="bold" />
+                          </div>
+                          <div className="flex-1">
+                            <p className="text-sm font-semibold text-foreground">{method.label}</p>
+                            {method.sublabel && (
+                              <p className="text-xs text-muted-foreground">{method.sublabel}</p>
+                            )}
+                          </div>
+                          <div className={cn(
+                            "flex size-5 items-center justify-center rounded-full border-2 transition-colors",
+                            isActive ? "border-primary bg-primary" : "border-input"
+                          )}>
+                            {isActive && <CheckCircle className="size-3 text-primary-foreground" weight="bold" />}
+                          </div>
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  <DialogFooter className="mt-2 rounded-b-2xl">
+                    <DialogClose asChild>
+                      <Button variant="outline" className="rounded-full">
+                        {language === "en" ? "Cancel" : "Kanselahin"}
+                      </Button>
+                    </DialogClose>
+                    <Button
+                      onClick={handleConfirmPayment}
+                      disabled={!selectedPaymentMethod}
+                      className="gap-2 rounded-full"
+                    >
+                      <CreditCard className="size-4" weight="bold" />
+                      {language === "en"
+                        ? `Pay ₱${selectedTotal.toLocaleString()}`
+                        : `Bayaran ₱${selectedTotal.toLocaleString()}`}
+                    </Button>
+                  </DialogFooter>
+                </>
+              ) : (
+                <div className="p-8 text-center">
+                  <div className="mx-auto flex size-16 items-center justify-center rounded-full bg-emerald-500/10">
+                    <CheckCircle className="size-10 text-emerald-500" weight="bold" />
+                  </div>
+                  <h3 className="mt-5 text-lg font-semibold text-foreground">
+                    {language === "en" ? "Payment submitted!" : "Naisumite ang pagbabayad!"}
+                  </h3>
+                  <p className="mt-2 text-sm text-muted-foreground">
+                    {language === "en"
+                      ? `Your ₱${selectedTotal.toLocaleString()} payment via ${paymentMethodOptions.find((m) => m.id === selectedPaymentMethod)?.label} has been received. Allow 3–5 business days for your record to update.`
+                      : `Ang iyong ₱${selectedTotal.toLocaleString()} na pagbabayad sa pamamagitan ng ${paymentMethodOptions.find((m) => m.id === selectedPaymentMethod)?.label} ay natanggap na. Maghintay ng 3–5 business days para ma-update ang iyong record.`}
+                  </p>
+                  <Button
+                    onClick={() => {
+                      setPaymentModalOpen(false);
+                      setSelectedFines([]);
+                      setPaymentConfirmed(false);
+                      setSelectedPaymentMethod(null);
+                    }}
+                    className="mt-6 rounded-full px-6"
+                  >
+                    {language === "en" ? "Done" : "Tapos na"}
+                  </Button>
+                </div>
+              )}
+            </DialogContent>
+          </Dialog>
         </section>
       </main>
     );
@@ -290,13 +401,27 @@ export default function TrafficViolationsPage() {
                   </li>
                   <li className="flex gap-3">
                     <span className="mt-1 block size-1.5 shrink-0 rounded-full bg-primary" />
+                    {language === "en" ? "GCash" : "GCash"}
+                  </li>
+                  <li className="flex gap-3">
+                    <span className="mt-1 block size-1.5 shrink-0 rounded-full bg-primary" />
+                    {language === "en" ? "Maya" : "Maya"}
+                  </li>
+                  <li className="flex gap-3">
+                    <span className="mt-1 block size-1.5 shrink-0 rounded-full bg-primary" />
+                    {language === "en"
+                      ? "Bank transfer (BDO, BPI, Landbank, UnionBank)"
+                      : "Bank transfer (BDO, BPI, Landbank, UnionBank)"}
+                  </li>
+                  <li className="flex gap-3">
+                    <span className="mt-1 block size-1.5 shrink-0 rounded-full bg-primary" />
                     {language === "en" ? "Online payment portal" : "Online payment portal"}
                   </li>
                   <li className="flex gap-3">
                     <span className="mt-1 block size-1.5 shrink-0 rounded-full bg-primary" />
                     {language === "en"
-                      ? "Authorized banks (BDO, BPI, Landbank)"
-                      : "Mga awtorisadong bangko (BDO, BPI, Landbank)"}
+                      ? "7-Eleven / Bayad Center / Cebuana Lhuillier"
+                      : "7-Eleven / Bayad Center / Cebuana Lhuillier"}
                   </li>
                 </ul>
               </CardContent>
