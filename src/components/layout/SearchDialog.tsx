@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 // removed unused Link import
 import { useRouter } from "next/navigation";
 import { MagnifyingGlass, ArrowRight, X } from "@phosphor-icons/react";
@@ -54,6 +54,9 @@ interface SearchDialogProps {
 export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
   const { language } = useSettingsStore();
   const router = useRouter();
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const previousFocusedRef = useRef<HTMLElement | null>(null);
+  const titleId = useId();
   const [query, setQuery] = useState("");
 
   // Reset query when dialog closes
@@ -78,6 +81,48 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [open, onOpenChange]);
+
+  useEffect(() => {
+    if (open) {
+      previousFocusedRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    }
+
+    if (!open && previousFocusedRef.current) {
+      previousFocusedRef.current.focus();
+      previousFocusedRef.current = null;
+    }
+  }, [open]);
+
+  useEffect(() => {
+    if (!open) return;
+
+    function trapFocus(e: KeyboardEvent) {
+      if (e.key !== "Tab" || !dialogRef.current) return;
+
+      const focusables = Array.from(
+        dialogRef.current.querySelectorAll<HTMLElement>(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        )
+      ).filter((el) => !el.hasAttribute("disabled") && !el.getAttribute("aria-hidden"));
+
+      if (focusables.length === 0) return;
+
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      const active = document.activeElement;
+
+      if (e.shiftKey && active === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && active === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+
+    document.addEventListener("keydown", trapFocus);
+    return () => document.removeEventListener("keydown", trapFocus);
+  }, [open]);
 
   const results = useMemo(() => {
     const q = query.toLowerCase().trim();
@@ -127,7 +172,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-[100]" role="dialog" aria-modal="true" aria-label="Search">
+    <div className="fixed inset-0 z-[100]" role="dialog" aria-modal="true" aria-labelledby={titleId}>
       {/* Backdrop */}
       <div
         className="absolute inset-0 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150"
@@ -135,8 +180,11 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
       />
 
       {/* Dialog */}
-      <div className="relative mx-auto mt-[12vh] w-[calc(100%-2rem)] max-w-2xl animate-in fade-in slide-in-from-top-4 duration-200">
+      <div ref={dialogRef} className="relative mx-auto mt-[12vh] w-[calc(100%-2rem)] max-w-2xl animate-in fade-in slide-in-from-top-4 duration-200">
         <div className="overflow-hidden rounded-2xl border border-border/80 bg-card shadow-2xl">
+          <h2 id={titleId} className="sr-only">
+            {language === "en" ? "Search MMDA site content" : "Maghanap sa nilalaman ng MMDA site"}
+          </h2>
           {/* Search input */}
           <div className="flex items-center gap-3 border-b border-border px-4">
             <MagnifyingGlass className="size-5 shrink-0 text-muted-foreground" weight="bold" />
@@ -155,6 +203,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
             <button
               onClick={() => onOpenChange(false)}
               className="flex size-7 items-center justify-center rounded-md border border-border text-xs text-muted-foreground hover:bg-muted"
+              aria-label={language === "en" ? "Close search dialog" : "Isara ang search dialog"}
             >
               <X className="size-3.5" weight="bold" />
             </button>

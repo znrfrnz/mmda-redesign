@@ -38,7 +38,7 @@ export function AdvisoryStrip() {
           {language === "en" ? mockAdvisory.title : mockAdvisory.titleFil}
         </p>
         <Link
-          href="/news?category=advisories"
+          href="/news?category=advisory"
           className="hidden shrink-0 items-center gap-1 text-xs font-semibold text-primary hover:underline sm:inline-flex"
         >
           {language === "en" ? "View details" : "Tingnan ang detalye"}

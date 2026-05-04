@@ -15,6 +15,30 @@ interface SettingsState {
   toggleHighContrast: () => void;
 }
 
+type PersistedSettings = Pick<
+  SettingsState,
+  "language" | "darkMode" | "fontSize" | "highContrast"
+>;
+
+function normalizePersistedSettings(value: unknown): PersistedSettings {
+  const source =
+    value && typeof value === "object" && "state" in value
+      ? (value as { state?: unknown }).state
+      : value;
+
+  const state = (source && typeof source === "object" ? source : {}) as Partial<PersistedSettings>;
+
+  return {
+    language: state.language === "fil" ? "fil" : "en",
+    darkMode: Boolean(state.darkMode),
+    fontSize:
+      typeof state.fontSize === "number"
+        ? Math.min(Math.max(Math.trunc(state.fontSize), 0), 2)
+        : 0,
+    highContrast: Boolean(state.highContrast),
+  };
+}
+
 export const useSettingsStore = create<SettingsState>()(
   persist(
     (set) => ({
@@ -32,6 +56,16 @@ export const useSettingsStore = create<SettingsState>()(
       toggleHighContrast: () =>
         set((state) => ({ highContrast: !state.highContrast })),
     }),
-    { name: "mmda-settings" }
+    {
+      name: "mmda-settings",
+      version: 1,
+      partialize: (state): PersistedSettings => ({
+        language: state.language,
+        darkMode: state.darkMode,
+        fontSize: state.fontSize,
+        highContrast: state.highContrast,
+      }),
+      migrate: (persistedState) => normalizePersistedSettings(persistedState),
+    }
   )
 );

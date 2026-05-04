@@ -30,7 +30,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${publicSans.variable} h-full scroll-smooth antialiased`} suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`${publicSans.variable} h-full scroll-smooth antialiased`}
+      data-scroll-behavior="smooth"
+      suppressHydrationWarning
+    >
       <body className="min-h-full bg-background text-foreground">
         <SettingsProvider>
           <div className="relative flex min-h-screen flex-col">

@@ -7,6 +7,11 @@ export const metadata: Metadata = {
     "Stay informed with the latest traffic advisories, press releases, and public notices from the Metropolitan Manila Development Authority.",
 };
 
-export default function NewsPage() {
-  return <NewsListing />;
+export default async function NewsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ category?: string }>;
+}) {
+  const params = await searchParams;
+  return <NewsListing initialCategory={params.category} />;
 }

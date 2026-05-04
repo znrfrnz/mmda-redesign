@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -179,9 +179,29 @@ function getNumberCodingResult(plate: string, language: "en" | "fil") {
 
 export default function TrafficPage() {
   const { language } = useSettingsStore();
+  const [activeTab, setActiveTab] = useState("traffic");
   const [plateNumber, setPlateNumber] = useState("");
   const [codingResult, setCodingResult] = useState<{ coded: boolean; message: string } | null>(null);
   const [selectedRoute, setSelectedRoute] = useState<string | null>(null);
+
+  useEffect(() => {
+    function syncTabFromHash() {
+      const hash = window.location.hash.toLowerCase();
+      if (hash === "#number-coding") {
+        setActiveTab("coding");
+        return;
+      }
+      if (hash === "#flood-advisory") {
+        setActiveTab("flood");
+        return;
+      }
+      setActiveTab("traffic");
+    }
+
+    syncTabFromHash();
+    window.addEventListener("hashchange", syncTabFromHash);
+    return () => window.removeEventListener("hashchange", syncTabFromHash);
+  }, []);
 
   function handleCheckCoding() {
     setCodingResult(getNumberCodingResult(plateNumber, language));
@@ -238,7 +258,7 @@ export default function TrafficPage() {
 
       {/* Tabbed dashboard */}
       <section className="mx-auto max-w-7xl px-4 pb-24 sm:px-6 lg:px-8 lg:pb-32">
-        <Tabs defaultValue="traffic" className="gap-0">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="gap-0">
           <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <h2 className="text-[clamp(2.1rem,3.8vw,3.6rem)] font-semibold leading-[0.98] tracking-[-0.04em] text-foreground">
               {language === "en" ? "Roads dashboard" : "Dashboard ng kalsada"}
@@ -356,7 +376,7 @@ export default function TrafficPage() {
           </TabsContent>
 
           {/* ── Number coding tab ── */}
-          <TabsContent value="coding">
+          <TabsContent value="coding" id="number-coding">
             <div className="rounded-[2.2rem] border border-primary/20 bg-primary/[0.03] p-3 shadow-[0_0_40px_-12px] shadow-primary/10 dark:border-primary/15 dark:bg-primary/[0.02] md:p-4">
               <Card className="rounded-[1.9rem] border-border">
                 <CardContent className="p-6 md:p-8">
@@ -433,7 +453,7 @@ export default function TrafficPage() {
           </TabsContent>
 
           {/* ── Flood advisory tab ── */}
-          <TabsContent value="flood">
+          <TabsContent value="flood" id="flood-advisory">
             <div className="mb-4">
               <p className="inline-flex items-center gap-2 rounded-full border border-border/70 bg-card px-4 py-2 text-xs text-muted-foreground">
                 <Drop className="size-3.5" weight="bold" />
