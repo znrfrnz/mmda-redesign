@@ -73,7 +73,10 @@ export default function ReportConcernPage() {
 
   function onSubmit(data: ReportFormData) {
     const result = reportSchema.safeParse(data);
-    if (result.success) setSubmitted(true);
+    if (result.success) {
+      setSubmitted(true);
+      window.scrollTo({ top: 0 });
+    }
   }
 
   if (submitted) {

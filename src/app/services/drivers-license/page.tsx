@@ -62,7 +62,10 @@ export default function DriversLicensePage() {
 
   function onSubmit(data: LicenseFormData) {
     const result = licenseSchema.safeParse(data);
-    if (result.success) setSubmitted(true);
+    if (result.success) {
+      setSubmitted(true);
+      window.scrollTo({ top: 0 });
+    }
   }
 
   if (submitted) {

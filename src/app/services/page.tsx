@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useRef, useMemo, useState } from "react";
 import Link from "next/link";
 import { ArrowRight, NavigationArrow, Phone, Warning } from "@phosphor-icons/react";
 import { useSettingsStore } from "@/stores/useSettingsStore";
@@ -69,6 +69,7 @@ export default function ServicesPage() {
   const { language } = useSettingsStore();
   const [activeFilter, setActiveFilter] = useState<ServiceFilter>("all");
   const [visibleCount, setVisibleCount] = useState(ITEMS_PER_PAGE);
+  const tabsRef = useRef<HTMLElement>(null);
 
   const filteredServices = useMemo(() => {
     if (activeFilter === "all") return mockServices;
@@ -175,7 +176,7 @@ export default function ServicesPage() {
           </a>
         </div>
 
-        <nav className="mt-9 flex flex-wrap gap-2" role="tablist" aria-label="Service categories">
+        <nav ref={tabsRef} className="mt-9 flex flex-wrap gap-2" role="tablist" aria-label="Service categories">
           {filterTabs.map((tab) => {
             const label = tabLabels[language][tab];
 
@@ -187,6 +188,7 @@ export default function ServicesPage() {
                 onClick={() => {
                   setActiveFilter(tab);
                   setVisibleCount(ITEMS_PER_PAGE);
+                  tabsRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
                 }}
                 className={cn(
                   "rounded-full px-4 py-2.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",

@@ -64,7 +64,10 @@ export default function VehicleRegistrationPage() {
 
   function onSubmit(data: RegistrationFormData) {
     const result = registrationSchema.safeParse(data);
-    if (result.success) setSubmitted(true);
+    if (result.success) {
+      setSubmitted(true);
+      window.scrollTo({ top: 0 });
+    }
   }
 
   if (submitted) {

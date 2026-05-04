@@ -61,7 +61,10 @@ export default function EventPermitsPage() {
 
   function onSubmit(data: EventFormData) {
     const result = eventSchema.safeParse(data);
-    if (result.success) setSubmitted(true);
+    if (result.success) {
+      setSubmitted(true);
+      window.scrollTo({ top: 0 });
+    }
   }
 
   if (submitted) {
@@ -105,7 +108,7 @@ export default function EventPermitsPage() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(43,92,182,0.36),transparent_48%),linear-gradient(180deg,rgba(2,8,23,0.12),rgba(2,8,23,0))]" />
         <div className="absolute inset-x-0 bottom-0 h-32 bg-linear-to-t from-background to-transparent" />
 
-        <div className="relative mx-auto max-w-7xl overflow-hidden rounded-[2.5rem]border border-white/14 bg-[#071428]/88 px-6 py-14 text-white shadow-[0_32px_120px_-48px_rgba(7,20,40,0.9)] backdrop-blur xl:px-12 xl:py-18">
+        <div className="relative mx-auto max-w-7xl overflow-hidden rounded-[2.5rem] border border-white/14 bg-[#071428]/88 px-6 py-14 text-white shadow-[0_32px_120px_-48px_rgba(7,20,40,0.9)] backdrop-blur xl:px-12 xl:py-18">
           <div className="relative mx-auto max-w-6xl text-center">
             <p className="text-sm font-medium leading-7 text-white/72">
               {language === "en" ? "Permits" : "Permits"}
