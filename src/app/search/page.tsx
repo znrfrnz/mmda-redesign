@@ -18,7 +18,7 @@ const pages = [
   {
     title: "About MMDA",
     titleFil: "Tungkol sa MMDA",
-    href: "/about",
+    href: "/transparency/about",
     description: "Mandate, charter commitments, frontline offices, and history.",
     descriptionFil: "Mandato, charter commitments, frontline offices, at kasaysayan.",
   },
@@ -85,7 +85,7 @@ export default function SearchPage() {
                 : "Maghanap ng MMDA services, advisories, at information page sa iisang unified index."}
             </p>
 
-            <h1 className="mx-auto mt-8 max-w-6xl text-[clamp(3rem,5vw,5.4rem)] font-semibold leading-[0.94] tracking-[-0.05em]">
+            <h1 className="mx-auto mt-8 max-w-6xl text-[clamp(3rem,5vw,5.4rem)] font-semibold leading-[0.94] tracking-tighter">
               {language === "en" ? "Find what you need with " : "Hanapin ang kailangan mo gamit ang "}
               <span
                 className="mx-2 inline-block h-12 w-24 rounded-full border border-white/20 align-middle opacity-95 md:h-16 md:w-32"

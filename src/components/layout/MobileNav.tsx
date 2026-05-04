@@ -27,12 +27,16 @@ interface MobileNavProps {
 export function MobileNav({ open, onOpenChange, items, pathname }: MobileNavProps) {
   const { language } = useSettingsStore();
   const [servicesOpen, setServicesOpen] = useState(pathname.startsWith("/services"));
+  const [transparencyOpen, setTransparencyOpen] = useState(
+    pathname.startsWith("/transparency")
+  );
   const servicesItem = items.find((item) => item.href === "/services");
+  const transparencyItem = items.find((item) => item.href === "/transparency");
   const homeItem = items.find((item) => item.href === "/");
-  const remainingItems = items.filter((item) => item.href !== "/services" && item.href !== "/");
-  const servicesLabel = pathname.startsWith("/services/report-concern")
-    ? t("nav.report", language)
-    : t("nav.services", language);
+  const remainingItems = items.filter(
+    (item) => item.href !== "/services" && item.href !== "/transparency" && item.href !== "/"
+  );
+  const servicesLabel = t("nav.services", language);
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
@@ -143,6 +147,76 @@ export function MobileNav({ open, onOpenChange, items, pathname }: MobileNavProp
                     )}
                 >
                   {language === "en" ? "Report a concern" : "Mag-ulat ng problema"}
+                </Link>
+              </CollapsibleContent>
+            </Collapsible>
+          )}
+
+          {transparencyItem && (
+            <Collapsible open={transparencyOpen} onOpenChange={setTransparencyOpen}>
+              <CollapsibleTrigger asChild>
+                <button
+                  type="button"
+                  className={cn(
+                    "flex w-full items-center justify-between rounded-[1.2rem] px-5 py-4 text-base font-medium transition-colors",
+                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white",
+                    pathname.startsWith("/transparency")
+                      ? "bg-white text-slate-950"
+                      : "border border-white/10 bg-white/6 text-white/72 hover:bg-white/10 hover:text-white"
+                  )}
+                  aria-haspopup="menu"
+                >
+                  {t("nav.transparency", language)}
+                  <CaretDown className={cn("size-4 transition-transform", transparencyOpen && "rotate-180")} weight="bold" />
+                </button>
+              </CollapsibleTrigger>
+              <CollapsibleContent className="mt-2 space-y-2 pl-4">
+                <Link
+                  href={transparencyItem.href}
+                  onClick={() => onOpenChange(false)}
+                  className={cn(
+                    "block rounded-[1rem] px-5 py-4 text-base font-medium transition-colors",
+                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white",
+                    pathname === "/transparency"
+                      ? "bg-white text-slate-950"
+                      : "border border-white/10 bg-white/6 text-white/72 hover:bg-white/10 hover:text-white"
+                  )}
+                >
+                  {language === "en" ? "Transparency overview" : "Pangkalahatang transparency"}
+                </Link>
+                <Link
+                  href="/transparency/about"
+                  onClick={() => onOpenChange(false)}
+                  className={cn(
+                    "block rounded-[1rem] px-5 py-4 text-base font-medium transition-colors",
+                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white",
+                    pathname.startsWith("/transparency/about")
+                      ? "bg-white text-slate-950"
+                      : "border border-white/10 bg-white/6 text-white/72 hover:bg-white/10 hover:text-white"
+                  )}
+                >
+                  {language === "en" ? "About MMDA" : "Tungkol sa MMDA"}
+                </Link>
+                <Link
+                  href="/transparency/organizational-profile"
+                  onClick={() => onOpenChange(false)}
+                  className="block rounded-[1rem] border border-white/10 bg-white/6 px-5 py-4 text-base font-medium text-white/72 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                >
+                  {language === "en" ? "Organizational profile" : "Organisasyonal na profile"}
+                </Link>
+                <Link
+                  href="/transparency/citizen-charter"
+                  onClick={() => onOpenChange(false)}
+                  className="block rounded-[1rem] border border-white/10 bg-white/6 px-5 py-4 text-base font-medium text-white/72 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                >
+                  {language === "en" ? "Citizen charter" : "Citizen charter"}
+                </Link>
+                <Link
+                  href="/transparency/plans-and-reports"
+                  onClick={() => onOpenChange(false)}
+                  className="block rounded-[1rem] border border-white/10 bg-white/6 px-5 py-4 text-base font-medium text-white/72 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                >
+                  {language === "en" ? "Plans and reports" : "Mga plano at ulat"}
                 </Link>
               </CollapsibleContent>
             </Collapsible>

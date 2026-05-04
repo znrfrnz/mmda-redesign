@@ -13,6 +13,7 @@ const translations = {
 
     // Navigation
     "nav.services": "Services",
+    "nav.transparency": "Transparency",
     "nav.report": "Report",
     "nav.traffic": "Traffic & Roads",
     "nav.news": "News & Advisories",
@@ -93,6 +94,7 @@ const translations = {
 
     // Navigation
     "nav.services": "Mga Serbisyo",
+    "nav.transparency": "Transparency",
     "nav.report": "Iulat",
     "nav.traffic": "Trapiko at Kalsada",
     "nav.news": "Balita at Abiso",
