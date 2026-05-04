@@ -30,13 +30,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${geist.variable} h-full scroll-smooth antialiased`} suppressHydrationWarning>
-      <body className="min-h-full bg-background text-foreground">
+    <html lang="en" className={`${geist.variable} scroll-smooth antialiased`} suppressHydrationWarning>
+      <body className="min-h-screen bg-background text-foreground">
         <SettingsProvider>
           <div className="relative flex min-h-screen flex-col">
             <UtilityBar />
             <Header />
-            <main id="main-content" className="flex-1 overflow-x-hidden w-full max-w-full">
+            <main id="main-content" className="flex-1 overflow-x-clip w-full max-w-full">
               {children}
             </main>
             <Footer />

@@ -147,11 +147,14 @@
   html {
     @apply font-sans;
     scroll-behavior: smooth;
+    overflow-y: auto;
+    overflow-x: hidden;
   }
   body {
     @apply bg-background text-foreground;
     min-height: 100vh;
-    overflow-x: hidden;
+    overflow-x: clip;
+    overflow-y: clip;
     background-image:
       radial-gradient(circle at top, oklch(0.93 0.03 255 / 0.9), transparent 32%),
       linear-gradient(180deg, oklch(0.99 0.002 255), oklch(0.97 0.01 255));

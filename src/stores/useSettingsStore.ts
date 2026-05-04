@@ -15,13 +15,33 @@ interface SettingsState {
   toggleHighContrast: () => void;
 }
 
+const DEFAULT_SETTINGS = {
+  language: "en" as Language,
+  darkMode: false,
+  fontSize: 0,
+  highContrast: false,
+};
+
+function sanitizePersistedSettings(input: unknown) {
+  const state = typeof input === "object" && input !== null ? input as Record<string, unknown> : {};
+  const language = state.language === "fil" ? "fil" : "en";
+  const darkMode = typeof state.darkMode === "boolean" ? state.darkMode : false;
+  const fontSizeRaw = typeof state.fontSize === "number" ? state.fontSize : 0;
+  const fontSize = Math.max(0, Math.min(2, Math.round(fontSizeRaw)));
+  const highContrast = typeof state.highContrast === "boolean" ? state.highContrast : false;
+
+  return {
+    language,
+    darkMode,
+    fontSize,
+    highContrast,
+  };
+}
+
 export const useSettingsStore = create<SettingsState>()(
   persist(
     (set) => ({
-      language: "en",
-      darkMode: false,
-      fontSize: 0,
-      highContrast: false,
+      ...DEFAULT_SETTINGS,
       setLanguage: (language) => set({ language }),
       toggleDarkMode: () =>
         set((state) => ({ darkMode: !state.darkMode })),
@@ -32,6 +52,13 @@ export const useSettingsStore = create<SettingsState>()(
       toggleHighContrast: () =>
         set((state) => ({ highContrast: !state.highContrast })),
     }),
-    { name: "mmda-settings" }
+    {
+      name: "mmda-settings",
+      version: 1,
+      migrate: (persistedState) => ({
+        ...DEFAULT_SETTINGS,
+        ...sanitizePersistedSettings(persistedState),
+      }),
+    }
   )
 );

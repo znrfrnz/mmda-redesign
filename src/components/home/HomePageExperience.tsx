@@ -92,7 +92,6 @@ export function HomePageExperience() {
   const { language } = useSettingsStore();
   const rootRef = useRef<HTMLDivElement>(null);
   const pinSectionRef = useRef<HTMLDivElement>(null);
-  const pinTitleRef = useRef<HTMLDivElement>(null);
   const revealRef = useRef<HTMLParagraphElement>(null);
 
   const featuredNews = mockNews[0];
@@ -109,20 +108,8 @@ export function HomePageExperience() {
   useGSAP(
     () => {
       const media = gsap.matchMedia();
-
-      media.add("(min-width: 1024px)", () => {
-        if (pinSectionRef.current && pinTitleRef.current) {
-          ScrollTrigger.create({
-            trigger: pinSectionRef.current,
-            start: "top top+=128",
-            end: "bottom bottom-=96",
-            pin: pinTitleRef.current,
-            anticipatePin: 1,
-          });
-        }
-      });
-
       const journeyItems = gsap.utils.toArray<HTMLElement>(".js-journey-card");
+
       gsap.fromTo(
         journeyItems,
         { y: 40, opacity: 0, scale: 0.98 },
@@ -185,7 +172,7 @@ export function HomePageExperience() {
   );
 
   return (
-    <div ref={rootRef} className="overflow-x-hidden">
+    <div ref={rootRef} className="overflow-x-clip">
       <section className="relative isolate overflow-hidden px-4 pb-24 pt-16 sm:px-6 lg:px-8 lg:pb-32">
         <div
           className="absolute inset-0 bg-cover bg-center opacity-20 mix-blend-luminosity"
@@ -433,9 +420,9 @@ export function HomePageExperience() {
 
       <section
         ref={pinSectionRef}
-        className="mx-auto grid max-w-7xl gap-16 px-4 py-24 sm:px-6 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:px-8 lg:py-32"
+        className="mx-auto grid max-w-7xl gap-16 px-4 py-24 sm:px-6 lg:items-start lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:px-8 lg:py-32"
       >
-        <div ref={pinTitleRef} className="lg:pr-10">
+        <div className="lg:sticky lg:top-32 lg:self-start lg:pr-10">
           <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">
             {language === "en" ? "How it works" : "Paano ito gumagana"}
           </p>
@@ -453,7 +440,7 @@ export function HomePageExperience() {
           </p>
         </div>
 
-        <div className="space-y-6">
+        <div className="space-y-6 lg:space-y-10 lg:pb-32">
           {journeyCards.map((card) => {
             const Icon = card.icon;
 
