@@ -28,7 +28,8 @@ export function MobileNav({ open, onOpenChange, items, pathname }: MobileNavProp
   const { language } = useSettingsStore();
   const [servicesOpen, setServicesOpen] = useState(pathname.startsWith("/services"));
   const servicesItem = items.find((item) => item.href === "/services");
-  const primaryItems = items.filter((item) => item.href !== "/services");
+  const homeItem = items.find((item) => item.href === "/");
+  const remainingItems = items.filter((item) => item.href !== "/services" && item.href !== "/");
   const servicesLabel = pathname.startsWith("/services/report-concern")
     ? t("nav.report", language)
     : t("nav.services", language);
@@ -55,6 +56,23 @@ export function MobileNav({ open, onOpenChange, items, pathname }: MobileNavProp
           className="flex flex-col gap-2 px-4 py-5"
           aria-label={t("a11y.mainNav", language)}
         >
+          {homeItem && (
+            <Link
+              href={homeItem.href}
+              onClick={() => onOpenChange(false)}
+              className={cn(
+                "rounded-[1.2rem] px-5 py-4 text-base font-medium transition-colors",
+                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white",
+                pathname === "/"
+                  ? "bg-white text-slate-950"
+                  : "border border-white/10 bg-white/6 text-white/72 hover:bg-white/10 hover:text-white"
+              )}
+              aria-current={pathname === "/" ? "page" : undefined}
+            >
+              {t(homeItem.key, language)}
+            </Link>
+          )}
+
           {servicesItem && (
             <Collapsible open={servicesOpen} onOpenChange={setServicesOpen}>
               <CollapsibleTrigger asChild>
@@ -88,6 +106,32 @@ export function MobileNav({ open, onOpenChange, items, pathname }: MobileNavProp
                   {language === "en" ? "All services" : "Lahat ng serbisyo"}
                 </Link>
                 <Link
+                  href="/services/traffic-violations"
+                  onClick={() => onOpenChange(false)}
+                    className={cn(
+                      "block rounded-[1rem] px-5 py-4 text-base font-medium transition-colors",
+                      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white",
+                      pathname.startsWith("/services/traffic-violations")
+                        ? "bg-white text-slate-950"
+                        : "border border-white/10 bg-white/6 text-white/72 hover:bg-white/10 hover:text-white"
+                    )}
+                >
+                  {language === "en" ? "Traffic violations" : "Paglabag sa trapiko"}
+                </Link>
+                <Link
+                  href="/services/unpaid-fines"
+                  onClick={() => onOpenChange(false)}
+                    className={cn(
+                      "block rounded-[1rem] px-5 py-4 text-base font-medium transition-colors",
+                      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white",
+                      pathname.startsWith("/services/unpaid-fines")
+                        ? "bg-white text-slate-950"
+                        : "border border-white/10 bg-white/6 text-white/72 hover:bg-white/10 hover:text-white"
+                    )}
+                >
+                  {language === "en" ? "Pay fines" : "Magbayad ng multa"}
+                </Link>
+                <Link
                   href="/services/report-concern"
                   onClick={() => onOpenChange(false)}
                     className={cn(
@@ -104,11 +148,8 @@ export function MobileNav({ open, onOpenChange, items, pathname }: MobileNavProp
             </Collapsible>
           )}
 
-          {primaryItems.map((item) => {
-            const isActive =
-              item.href === "/"
-                ? pathname === "/"
-                : pathname === item.href || pathname.startsWith(item.href + "/");
+          {remainingItems.map((item) => {
+            const isActive = pathname === item.href || pathname.startsWith(item.href + "/");
 
             return (
               <Link

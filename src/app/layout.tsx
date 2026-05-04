@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
+import { Public_Sans } from "next/font/google";
 import "./globals.css";
 import { UtilityBar } from "@/components/layout/UtilityBar";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { SettingsProvider } from "@/components/layout/SettingsProvider";
 
-const geist = Geist({
+const publicSans = Public_Sans({
   variable: "--font-sans",
   subsets: ["latin"],
   display: "swap",
@@ -30,8 +30,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${geist.variable} scroll-smooth antialiased`} suppressHydrationWarning>
-      <body className="min-h-screen bg-background text-foreground">
+    <html lang="en" className={`${publicSans.variable} h-full scroll-smooth antialiased`} suppressHydrationWarning>
+      <body className="min-h-full bg-background text-foreground">
         <SettingsProvider>
           <div className="relative flex min-h-screen flex-col">
             <UtilityBar />
