@@ -19,7 +19,7 @@ const pages = [
   {
     title: "About MMDA",
     titleFil: "Tungkol sa MMDA",
-    href: "/about",
+    href: "/transparency/about",
     description: "Mandate, charter commitments, frontline offices, and history.",
     descriptionFil: "Mandato, charter commitments, frontline offices, at kasaysayan.",
   },
@@ -172,7 +172,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-[100]" role="dialog" aria-modal="true" aria-labelledby={titleId}>
+    <div className="fixed inset-0 z-100" role="dialog" aria-modal="true" aria-labelledby={titleId}>
       {/* Backdrop */}
       <div
         className="absolute inset-0 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150"

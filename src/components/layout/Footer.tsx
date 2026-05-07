@@ -126,7 +126,7 @@ export function Footer() {
                 { label: "footer.floodUpdates" as const, href: "/news?category=advisory" },
                 { label: "footer.numberCoding" as const, href: "/traffic#number-coding" },
                 { label: "footer.pressReleases" as const, href: "/news?category=press" },
-                { label: "footer.careers" as const, href: "/about" },
+                { label: "footer.careers" as const, href: "/transparency/about" },
               ].map((item) => (
                 <li key={item.href}>
                   <Link
