@@ -40,18 +40,18 @@ import {
 const NAV_ITEMS = [
   { key: "nav.home" as const, href: "/" },
   { key: "nav.services" as const, href: "/services" },
-  { key: "nav.transparency" as const, href: "/transparency" },
   { key: "nav.traffic" as const, href: "/traffic" },
   { key: "nav.news" as const, href: "/news" },
+  { key: "nav.about" as const, href: "/about" },
   { key: "nav.contact" as const, href: "/contact" },
 ] as const;
 
 const PRIMARY_NAV_ITEMS_BEFORE = NAV_ITEMS.filter((item) => item.href === "/");
 const PRIMARY_NAV_ITEMS_AFTER = NAV_ITEMS.filter(
-  (item) => item.href !== "/" && item.href !== "/services" && item.href !== "/transparency"
+  (item) => item.href !== "/" && item.href !== "/services" && item.href !== "/about"
 );
 const SERVICES_NAV_ITEM = NAV_ITEMS.find((item) => item.href === "/services")!;
-const TRANSPARENCY_NAV_ITEM = NAV_ITEMS.find((item) => item.href === "/transparency")!;
+const ABOUT_NAV_ITEM = NAV_ITEMS.find((item) => item.href === "/about")!;
 
 export function Header() {
   const { language } = useSettingsStore();
@@ -224,63 +224,29 @@ export function Header() {
                   type="button"
                   className={cn(
                     "inline-flex items-center whitespace-nowrap rounded-full px-3 py-2.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white",
-                    pathname === "/transparency" || pathname.startsWith("/transparency/")
+                    pathname === "/about" || pathname.startsWith("/about/") || pathname === "/transparency" || pathname.startsWith("/transparency/")
                       ? "bg-white text-slate-950"
                       : "text-white/72 hover:bg-white/10 hover:text-white"
                   )}
                   aria-haspopup="menu"
                 >
-                  {t("nav.transparency", language)}
+                  {t("nav.about", language)}
                   <ChevronDownIcon className="ml-1 size-4 opacity-80" />
                 </button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="center" className="w-64 p-2">
                 <DropdownMenuItem asChild className="gap-2.5 rounded-lg px-3 py-2.5 font-semibold">
-                  <Link href={TRANSPARENCY_NAV_ITEM.href}>
+                  <Link href="/about">
+                    <Info className="size-4 text-primary" weight="bold" />
+                    {language === "en" ? "About MMDA" : "Tungkol sa MMDA"}
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild className="gap-2.5 rounded-lg px-3 py-2.5 font-semibold">
+                  <Link href="/transparency">
                     <Files className="size-4 text-primary" weight="bold" />
                     {language === "en" ? "Transparency overview" : "Pangkalahatang transparency"}
                   </Link>
                 </DropdownMenuItem>
-
-                <DropdownMenuSeparator />
-
-                <DropdownMenuLabel className="px-3 pt-2 pb-1">
-                  {language === "en" ? "Institutional profile" : "Profile ng institusyon"}
-                </DropdownMenuLabel>
-                <DropdownMenuGroup>
-                  <DropdownMenuItem asChild className="gap-2.5 rounded-lg px-3 py-2">
-                    <Link href="/transparency/about">
-                      <Info className="size-4 text-muted-foreground" weight="bold" />
-                      {language === "en" ? "About MMDA" : "Tungkol sa MMDA"}
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild className="gap-2.5 rounded-lg px-3 py-2">
-                    <Link href="/transparency/organizational-profile">
-                      <FolderOpen className="size-4 text-muted-foreground" weight="bold" />
-                      {language === "en" ? "Organizational profile" : "Organisasyonal na profile"}
-                    </Link>
-                  </DropdownMenuItem>
-                </DropdownMenuGroup>
-
-                <DropdownMenuSeparator />
-
-                <DropdownMenuLabel className="px-3 pt-2 pb-1">
-                  {language === "en" ? "Public documents" : "Mga pampublikong dokumento"}
-                </DropdownMenuLabel>
-                <DropdownMenuGroup>
-                  <DropdownMenuItem asChild className="gap-2.5 rounded-lg px-3 py-2">
-                    <Link href="/transparency/citizen-charter">
-                      <ClipboardText className="size-4 text-muted-foreground" weight="bold" />
-                      {language === "en" ? "Citizen charter" : "Citizen charter"}
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild className="gap-2.5 rounded-lg px-3 py-2">
-                    <Link href="/transparency/plans-and-reports">
-                      <Files className="size-4 text-muted-foreground" weight="bold" />
-                      {language === "en" ? "Plans and reports" : "Mga plano at ulat"}
-                    </Link>
-                  </DropdownMenuItem>
-                </DropdownMenuGroup>
               </DropdownMenuContent>
             </DropdownMenu>
 
